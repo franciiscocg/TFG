@@ -1,0 +1,94 @@
+{
+    "asignatura": {
+      "nombre": "Nombre de la Asignatura",
+      "grado": "Nombre del Grado",
+      "departamento": "Nombre del Departamento",
+      "universidad": "Nombre de la Universidad",
+      "creditos": {
+        "teoria": 3.0,
+        "laboratorio": 1.5
+      },
+      "horarios": [
+        {
+          "grupo": "Grupo Ejemplo",
+          "teoria": {
+            "dia": "Día de la Semana",
+            "hora": "Horario de Teoría",
+            "aula": "Aula de Teoría"
+          },
+          "laboratorio": {
+            "dia": "Día de la Semana",
+            "hora": "Horario de Laboratorio",
+            "aula": "Aula de Laboratorio"
+          }
+        }
+      ],
+      "practicas_laboratorio_inicio": "Fecha de Inicio",
+      "fechas_excepcionales": ["Fecha 1", "Fecha 2", "Fecha 3"],
+      "profesorado": [
+        {
+          "nombre": "Nombre del Profesor",
+          "despacho": "Ubicación del Despacho",
+          "enlace": "URL del Profesor",
+          "email": "correo@universidad.es",
+          "horario_tutorias": "Día y Hora de Tutorías"
+        }
+      ],
+      "contenido_de_la_asignatura": [
+        "Tema 1",
+        "Tema 2",
+        "Tema 3",
+        "Tema 4",
+        "Tema 5"
+      ],
+      "evaluacion": {
+        "continua": {
+          "examenes": [
+            {
+              "nombre": "Nombre del Examen",
+              "fecha": "Fecha del Examen",
+              "tipo": "Tipo de Examen",
+              "ponderacion_o_puntos": "Porcentaje o Puntos"
+            }
+          ],
+          "trabajo_proyecto": {
+            "ponderacion_o_puntos": "Porcentaje o Puntos",
+            "miembros_maximos": "Número Máximo",
+            "fecha_exposiciones": ["Fecha 1", "Fecha 2"]
+          },
+          "laboratorio": {
+            "ponderacion_o_puntos": 5,
+            "asistencia_obligatoria": true
+          },
+          "condiciones_aprobado": {
+            "minimo_por_examen": 4,
+            "formula": "Fórmula de Evaluación"
+          }
+        },
+        "ordinaria": {
+          "examenes": [
+            {
+              "nombre": "Nombre del Examen",
+              "fecha": "Fecha del Examen",
+              "tipo": "Tipo de Examen",
+              "ponderacion_o_puntos": "Porcentaje o Puntos"
+            }
+          ],
+          "trabajo_proyecto": {
+            "ponderacion_o_puntos": "Porcentaje o Puntos",
+            "miembros_maximos": "Número Máximo",
+            "fecha_exposiciones": ["Fecha 1", "Fecha 2"]
+          },
+          "laboratorio": {
+            "ponderacion_o_puntos": 5,
+            "asistencia_obligatoria": true
+          },
+          "condiciones_aprobado": {
+            "minimo_por_examen": 4,
+            "formula": "Fórmula de Evaluación"
+          }
+        }
+      },
+      "objetivos": "Descripción de los Objetivos de la Asignatura"
+    }
+  }

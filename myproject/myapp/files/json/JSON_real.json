@@ -1,0 +1,100 @@
+{
+  "asignatura": {
+    "nombre": "Complementos de Bases de Datos",
+    "grado": "Grado en Ingeniería del Software",
+    "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+    "universidad": "Universidad de Sevilla",
+    "creditos": {
+      "teoria": 3.6,
+      "laboratorio": 2.4
+    },
+    "horarios": [
+      {
+        "grupo": "Grupo 1",
+        "teoria": {
+          "dia": "Miércoles",
+          "hora": "10:40-12:30",
+          "aula": "A2.14"
+        },
+        "laboratorio": {
+          "dia": "Martes",
+          "hora": "12:40-14:30",
+          "aula": "F1.32, F1.33-A2.14"
+        }
+      }
+    ],
+    "practicas_laboratorio_inicio": "11 de febrero",
+    "fechas_excepcionales": ["4/2/25", "22/4/25", "13/5/25"],
+    "profesorado": [
+      {
+        "nombre": "María Teresa Gómez López",
+        "despacho": "F1.43",
+        "enlace": "https://www.idea.us.es/maria-teresa-gomez/",
+        "email": "maria@us.es",
+        "horario_tutorias": "Miércoles 12:30-14:30"
+      }
+    ],
+    "contenido_de_la_asignatura": [
+      "Data mining",
+      "Bases de datos NoSQL",
+      "Blockchain",
+      "Ingeniería inversa",
+      "Bases de datos orientadas a objetos",
+      "Data warehouse",
+      "Web semántica",
+      "Big data",
+      "Bases de datos móviles",
+      "Administración de bases de datos",
+      "Bases de datos distribuidas"
+    ],
+    "evaluacion": {
+      "continua": {
+        "examenes": [
+          {
+            "nombre": "EXA1",
+            "fecha": "18 de marzo",
+            "tipo": "Test",
+            "ponderacion_o_puntos":"20%"
+          }
+        ],
+        "trabajo_proyecto": {
+          "ponderacion_o_puntos":"20%",
+          "miembros_maximos": "2",
+          "fecha_exposiciones": ["30 abril", "13 mayo", "14 mayo", "21 mayo"]
+        },
+        "laboratorio": {
+          "ponderacion_o_puntos": 6,
+          "asistencia_obligatoria": true
+        },
+        "condiciones_aprobado": {
+          "minimo_por_examen": 4,
+          "formula": "(0.2*EXA1 + 0.2*EXA2 + TCL) + 0.6*PROY"
+        }
+      },
+      "ordinaria": {
+        "examenes": [
+          {
+            "nombre": "EXA1",
+            "fecha": "18 de marzo",
+            "tipo": "Test",
+            "ponderacion_o_puntos":"20%"
+          }
+        ],
+        "trabajo_proyecto": {
+          "ponderacion_o_puntos":"20%",
+          "miembros_maximos": "2",
+          "fecha_exposiciones": ["30 abril", "13 mayo", "14 mayo", "21 mayo"]
+        },
+        "laboratorio": {
+          "ponderacion_o_puntos": 6,
+          "asistencia_obligatoria": true
+        },
+        "condiciones_aprobado": {
+          "minimo_por_examen": 4,
+          "formula": "(0.2*EXA1 + 0.2*EXA2 + TCL) + 0.6*PROY"
+        }
+      }
+    },
+    "objetivos": "Proporcionar conocimientos avanzados en bases de datos, incluyendo tecnologías emergentes como NoSQL, blockchain, big data, y bases de datos distribuidas."
+  }
+}

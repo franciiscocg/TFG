@@ -1,0 +1,102 @@
+{
+  "asignatura": {
+    "nombre": "Análisis de Sistemas",
+    "grado": "Carrera de Ingeniería",
+    "departamento": "Matemática Aplicada y Estadística",
+    "universidad": "Universidad Politécnica Salesiana",
+    "creditos": {
+      "teoria": 3.0,
+      "laboratorio": 1.5
+    },
+    "horarios": [
+      {
+        "grupo": "Grupo 1",
+        "teoria": {
+          "dia": "Lunes",
+          "hora": "11:00",
+          "aula": "Aula 2"
+        },
+        "laboratorio": {
+          "dia": "Miércoles",
+          "hora": "13:00",
+          "aula": "Laboratorio 1"
+        }
+      },
+      {
+        "grupo": "Grupo 2",
+        "teoria": {
+          "dia": "Jueves",
+          "hora": "14:00",
+          "aula": "Aula 3"
+        },
+        "laboratorio": {
+          "dia": "Viernes",
+          "hora": "15:00",
+          "aula": "Laboratorio 2"
+        }
+      }
+    ],
+    "practicas_laboratorio_inicio": "25 de Febrero",
+    "fechas_excepcionales": [
+      "31 de Diciembre",
+      "1 de Enero"
+    ],
+    "profesorado": [
+      {
+        "nombre": "Dr. Carlos",
+        "despacho": "Despacho 001",
+        "enlace": "mailto:carlos@universidad.com",
+        "horario_tutorias": "Domingo a las 16:00 y martes a las 17:00"
+      },
+      {
+        "nombre": "Luis",
+        "despacho": "Despacho 002",
+        "enlace": "mailto:luis@universidad.com",
+        "horario_tutorias": "Miércoles a las 16:30 y jueves a las 15:30"
+      }
+    ],
+    "contenido_de_la_asignatura": [
+      "Introducción a los Sistemas",
+      "Análisis de Variables",
+      "Ecuaciones Diferenciales",
+      "Modelos Matemáticos",
+      "Aplicaciones en Ingeniería"
+    ],
+    "evaluacion": {
+      "continua": [
+        {
+          "Nombre del estudiante": "Paciente John",
+          "APS": 56,
+          "puntaje": "14/20"
+        },
+        {
+          "Nombre del estudiante": "AnaMaría Sánchez",
+          "APS": 78,
+          "puntaje": "19/20"
+        }
+      ],
+      "proyecto": [
+        {
+          "Nombre del estudiante": "Paciente John",
+          "APS": "Sin evaluar"
+        },
+        {
+          "Nombre del estudiante": "AnaMaría Sánchez",
+          "APS": "Sin evaluar"
+        }
+      ]
+    },
+    "ordinaria": {
+      "APS": [
+        {
+          "APS": "Sin evaluar"
+        },
+        {
+          "APS": "Sin evaluar"
+        }
+      ],
+      "puntaje": "19/20"
+    }
+  },
+  "objetivos": "Introducción al análisis de sistemas complejos"
+}

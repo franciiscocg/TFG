@@ -1,0 +1,21 @@
+{
+    "asignatura": {
+      "nombre": ""
+    },
+    "horarios": [
+      {
+        "tipo": "",
+        "dia": "",
+        "hora": "",
+        "aula": ""
+      }
+    ],
+    "examenes": [
+      {
+        "fecha": ""
+      }
+    ],
+    "fechas_desconocidas": [
+      ""
+    ]
+  }
