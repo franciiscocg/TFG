@@ -1,0 +1,58 @@
+"""
+Assistant, you need to fill in a JSON structure based on information from a provided text. The JSON has placeholders that should be replaced with data from the text. If a piece of information isn't found in the text, leave its placeholder unchanged.
+
+- Maintain the exact formatting and case from the text for string values.
+- Convert numeric words to numbers for numeric fields.
+- Handle nested structures by filling in their respective fields.
+- Output only the filled JSON as a valid JSON string.
+
+Text: {get_text()}
+JSON structure: {get_json_structure()}
+
+Output only the filled JSON.
+"""
+{
+    "asignatura": {
+      "nombre": "Ingeniería del Software"
+    },
+    "horarios": [
+      {
+        "tipo": "Teoría",
+        "dia": "Miércoles",
+        "hora": "10:40-12:30",
+        "aula": "A2.14"
+      },
+      {
+        "tipo": "Laboratorio",
+        "dia": "Martes",
+        "hora": "12:40-14:30",
+        "aula": "F1.32 y F1.33-A2.14"
+      },
+      {
+        "tipo": "Teoría",
+        "dia": "Miércoles",
+        "hora": "17:40-19:30",
+        "aula": "H1.10"
+      },
+      {
+        "tipo": "Laboratorio",
+        "dia": "Martes",
+        "hora": "15:30-17:20",
+        "aula": "H1.10, F1.30 y F1.33"
+      }
+    ],
+    "examenes": [
+      {
+        "fecha": "18 de marzo"
+      },
+      {
+        "fecha": "13 de mayo"
+      }
+    ],
+    "fechas_desconocidas": [
+      "11 de febrero",
+      "4/2/25",
+      "22/4/25",
+      "13/5/25"
+    ]
+  }

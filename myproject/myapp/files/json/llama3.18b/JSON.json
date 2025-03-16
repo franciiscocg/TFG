@@ -1,0 +1,119 @@
+"""
+Assistant, you need to fill in a JSON structure based on information from a provided text. The JSON has placeholders that should be replaced with data from the text. If a piece of information isn't found in the text, leave its placeholder unchanged.
+
+- Maintain the exact formatting and case from the text for string values.
+- Convert numeric words to numbers for numeric fields.
+- Handle nested structures by filling in their respective fields.
+- Output only the filled JSON as a valid JSON string.
+
+Text: {get_text()}
+JSON structure: {get_json_structure()}
+
+Output only the filled JSON.
+"""
+tiempo 2 minutos
+
+{
+    "asignatura": {
+      "nombre": "Complementos de Bases de Datos",
+      "grado": "Grado en Ingeniería del Software",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos (o similar)",
+      "universidad": "Universidad de Madrid (o similar)",
+      "creditos": {
+        "teoria": 3.0,
+        "laboratorio": 1.5
+      },
+      "horarios": [
+        {
+          "grupo": "Grupo Ejemplo",
+          "teoria": {
+            "dia": "Día de la Semana",
+            "hora": "Horario de Teoría",
+            "aula": "Aula de Teoría"
+          },
+          "laboratorio": {
+            "dia": "Día de la Semana",
+            "hora": "Horario de Laboratorio",
+            "aula": "Aula de Laboratorio"
+          }
+        }
+      ],
+      "practicas_laboratorio_inicio": "Fecha que se inicia el laboratorio",
+      "fechas_excepcionales": [
+        "21/02/2023",
+        "14/03/2023",
+        "04/04/2023"
+      ],
+      "profesorado": [
+        {
+          "nombre": "Nombre del Profesor",
+          "despacho": "Ubicación del Despacho",
+          "enlace": "URL del Profesor",
+          "email": "correo@universidad.es",
+          "horario_tutorias": "Día y Hora de Tutorías"
+        }
+      ],
+      "contenido_de_la_asignatura": [
+        "Tema 1: Bases de Datos Relacionales",
+        "Tema 2: Modelado de datos en bases de datos no relacionales",
+        "Tema 3: Gestión de Bases de Datos",
+        "Tema 4: Consultas avanzadas y optimización en bases de datos",
+        "Tema 5: Seguridad en bases de datos"
+      ],
+      "evaluacion": {
+        "continua": {
+          "examenes": [
+            {
+              "nombre": "Examen de Bases de Datos Relacionales",
+              "fecha": "20/02/2023",
+              "tipo": "Prueba de conocimientos",
+              "ponderacion_o_puntos": 40
+            }
+          ],
+          "trabajo_proyecto": {
+            "ponderacion_o_puntos": 30,
+            "miembros_maximos": 2,
+            "fecha_exposiciones": [
+              "10/03/2023",
+              "24/04/2023"
+            ]
+          },
+          "laboratorio": {
+            "ponderacion_o_puntos": 30,
+            "asistencia_obligatoria": true
+          },
+          "condiciones_aprobado": {
+            "minimo_por_examen": 4,
+            "formula": "0.4*EXA+0.6*PROY"
+          }
+        },
+        "ordinaria": {
+          "examenes": [
+            {
+              "nombre": "Examen de Bases de Datos No Relacionales",
+              "fecha": "15/05/2023",
+              "tipo": "Prueba de conocimientos",
+              "ponderacion_o_puntos": 50
+            }
+          ],
+          "trabajo_proyecto": {
+            "ponderacion_o_puntos": 40,
+            "miembros_maximos": 2,
+            "fecha_exposiciones": [
+              "29/06/2023",
+              "03/08/2023"
+            ]
+          },
+          "laboratorio": {
+            "ponderacion_o_puntos": 10,
+            "asistencia_obligatoria": true
+          },
+          "condiciones_aprobado": {
+            "minimo_por_examen": 4,
+            "formula": "0.4*EXA+0.6*PROY"
+          }
+        }
+      },
+      "objetivos": "Desarrollar habilidades en la creación de bases de datos, su gestión y seguridad."
+    }
+  }
