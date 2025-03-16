@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 class Fechas(models.Model):
     titulo = models.CharField(max_length=100)

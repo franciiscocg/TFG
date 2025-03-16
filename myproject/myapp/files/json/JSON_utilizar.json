@@ -1,0 +1,32 @@
+{
+    "asignatura": {
+      "nombre": "(nombre de la asignatura)",
+      "grado": "(nombre del grado al que pertenece)",
+      "departamento": "(nombre del departamento responsable)",
+      "universidad": "(nombre de la universidad)",
+      "condiciones_aprobado": "(condiciones para aprobar, si se mencionan)"
+    },
+    "fechas": [
+      {
+        "titulo": "(título o propósito de la fecha)",
+        "fecha": "(fecha en formato \"YYYY-MM-DD\")",
+        "descripcion": "(descripción o notas sobre la fecha)"
+      }
+    ],
+    "horarios": [
+      {
+        "grupo": "(nombre o identificador del grupo)",
+        "tipo": "(teoría, práctica o tutoría)",
+        "hora": "(rango de horario, ej. \"10:40-12:30\")",
+        "aula": "(ubicación del aula)"
+      }
+    ],
+    "profesores": [
+      {
+        "nombre": "(nombre del profesor)",
+        "despacho": "(ubicación del despacho)",
+        "enlace": "(URL o enlace del profesor, si aplica)",
+        "horario": "(horario de tutorías, si se menciona)"
+      }
+    ]
+  }

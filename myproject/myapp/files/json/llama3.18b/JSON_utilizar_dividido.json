@@ -1,0 +1,80 @@
+[
+    {
+        "asignatura": {
+            "nombre": "Complementos de Bases de Datos",
+            "grado": "Grado en Ingeniería del Software",
+            "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+            "universidad": "Universidad de Sevilla",
+            "condiciones_aprobado": "Exámenes (EXA1 y EXA2) el 18 de marzo y 13 de mayo. Trabajo en clase (TCL) con un máximo de 2 puntos. Proyecto (6 puntos)"
+        },
+        "fechas": [
+            {
+                "titulo": "Prácticas",
+                "fecha": "2023-02-11",
+                "descripcion": ""
+            },
+            {
+                "titulo": "Exámenes Test de contenidos (EXA1 y EXA2)",
+                "fecha": "2023-03-18",
+                "descripcion": ""
+            },
+            {
+                "titulo": "Exámenes Test de contenidos (EXA1 y EXA2)",
+                "fecha": "2023-05-13",
+                "descripcion": ""
+            }
+        ],
+        "horarios": [
+            {
+                "grupo": "Grupo 1",
+                "tipo": "teoría",
+                "hora": "10:40-12:30",
+                "aula": "A2.14"
+            },
+            {
+                "grupo": "Grupo 1",
+                "tipo": "laboratorio",
+                "hora": "",
+                "aula": "F1.32, F1.33-A2.14"
+            },
+            {
+                "grupo": "Grupo 1",
+                "tipo": "teoría",
+                "hora": "12:40-14:30",
+                "aula": ""
+            },
+            {
+                "grupo": "Grupo 2",
+                "tipo": "teoría",
+                "hora": "17:40-19:30",
+                "aula": "H1.10"
+            },
+            {
+                "grupo": "Grupo 2",
+                "tipo": "laboratorio",
+                "hora": "",
+                "aula": "H1.10, F1.30, F1.33"
+            }
+        ],
+        "profesores": [
+            {
+                "nombre": "María Teresa Gómez López",
+                "despacho": "F1.43",
+                "enlace": "",
+                "horario": ""
+            },
+            {
+                "nombre": "Toñi Reina",
+                "despacho": "F0.52",
+                "enlace": "https://personal.us.es/reinaqu/",
+                "horario": ""
+            },
+            {
+                "nombre": "Octavio Martín",
+                "despacho": "F1.44",
+                "enlace": "https://personal.us.es/omartindiaz",
+                "horario": ""
+            }
+        ]
+    }
+]

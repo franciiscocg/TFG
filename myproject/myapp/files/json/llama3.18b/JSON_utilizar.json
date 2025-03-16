@@ -1,0 +1,50 @@
+"""Eres un asistente de IA avanzado diseñado para resumir textos relacionados con asignaturas universitarias y extraer información estructurada que pueda usarse para rellenar un modelo de base de datos. A continuación, te proporcionaré un texto que describe los contenidos y detalles de una asignatura. Tu tarea es:
+
+1. Analizar el texto y extraer la siguiente información en un formato JSON:
+   [{get_json_structure()}]
+
+2. Si alguna información no está presente en el texto, deja el campo correspondiente como una cadena vacía ("") o un array vacío ([]), pero mantén la estructura JSON intacta.
+3. Asegúrate de que las fechas estén en formato "YYYY-MM-DD" si se proporcionan, y convierte cualquier formato de texto (como "21 de febrero de 2023") a este estándar.
+4. Proporciona solo el JSON como salida, sin explicaciones adicionales.
+
+Ahora, por favor, procesa el siguiente texto:
+
+[{get_text()}]"""
+
+{
+    "asignatura": {
+      "nombre": "Complementos de Bases de Datos",
+      "grado": "Ingeniería del Software",
+      "departamento": "Lenguajes y Sistemas Informáticos",
+      "universidad": "Universidad de Sevilla",
+      "condiciones_aprobado": "Ponderación: 2 puntos TCL, 6 puntos Proyecto, y exámenes"
+    },
+    "fechas": [
+      {
+        "titulo": "Examen 1",
+        "fecha": "2023-03-18",
+        "descripcion": "Examen de contenidos (EXA1)"
+      },
+      {
+        "titulo": "Examen 2",
+        "fecha": "2023-05-13",
+        "descripcion": "Examen de contenidos (EXA2)"
+      }
+    ],
+    "horarios": [],
+    "profesores": [
+      {
+        "nombre": "María Teresa Gómez López",
+        "despacho": "",
+        "enlace": "https://www.idea.us.es/maria-teresa-gomez/",
+        "horario": ""
+      }
+    ],
+    "contenido_de_la_asignatura": [
+      "GIS",
+      "Data mining",
+      "Bases de datos NoSQL",
+      "Blockchain",
+      "Ingeniería inversa"
+    ]
+  }
