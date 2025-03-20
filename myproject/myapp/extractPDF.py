@@ -10,6 +10,6 @@ def extract_text_from_pdf(pdf_path, output_txt_path):
                     txt_file.write(text)
                     txt_file.write("\n")
 
-#pdf_path = "myapp/files/pdf/00-Presentación.pdf"
+#pdf_path = "myapp/files/pdf/T0 - Syllabus.pdf"
 
-#output_txt_path = "myapp/files/txt/result.txt"
+#output_txt_path = "myapp/files/txt/resultT0.txt"

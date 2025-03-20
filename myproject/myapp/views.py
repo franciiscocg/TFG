@@ -43,7 +43,7 @@ Ahora, por favor, procesa el siguiente texto:
 [{get_text()}]"""
 
     payload = {
-        "model": "llama3.1:8b",
+        "model": "gemma2:9b",
         "prompt": prompt,
         "stream": False
     }
@@ -73,7 +73,7 @@ Ahora, por favor, procesa el siguiente texto resumido:
 [{generate_response_sumary()}]"""
 
     payload = {
-        "model": "llama3.1:8b",
+        "model": "gemma2:9b",
         "prompt": prompt,
         "stream": False
     }
@@ -94,7 +94,7 @@ def analyze_text(request):
     try:
         # Intenta parsear la respuesta como JSON
         json_response = json.loads(response)
-        return JsonResponse(json_response)
+        return JsonResponse(json_response, safe=False)  # Permite listas y otros tipos de datos
     except json.JSONDecodeError:
         # Si no es un JSON válido, retorna la respuesta como error
         return JsonResponse({"error": response}, status=500)

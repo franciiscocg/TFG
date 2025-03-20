@@ -10,13 +10,13 @@
       {
         "titulo": "(título o propósito de la fecha)",
         "fecha": "(fecha en formato \"YYYY-MM-DD\")",
-        "descripcion": "(descripción o notas sobre la fecha)"
       }
     ],
     "horarios": [
       {
         "grupo": "(nombre o identificador del grupo)",
         "tipo": "(teoría, práctica o tutoría)",
+        "dia": "(día de la semana, ej. \"Lunes\")",
         "hora": "(rango de horario, ej. \"10:40-12:30\")",
         "aula": "(ubicación del aula)"
       }

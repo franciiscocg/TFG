@@ -1,0 +1,56 @@
+{
+    "asignatura": {
+      "nombre": "Complementos de Bases de Datos",
+      "grado": "Grado en Ingeniería del Software",
+      "departamento": "Departamento de Lenguajes y Sistemas Informáticos",
+      "universidad": "Universidad de Sevilla",
+      "condiciones_aprobado": "- Evaluación Continua (por curso): [0.5*EXA1 + 0.5*EXA2 + TCL >= 4] y PROY >= 4; Calificación evaluación continua: (0.2*EXA1 + 0.2*EXA2 + TCL) + 0.6*PROY\n - Evaluación ordinaria: 0.4*EXA + 0.6*PROY"
+    },
+    "fechas": [
+      { "titulo": "Prácticas comienzan", "fecha": "2023-02-11", "descripcion": null },
+      { "titulo": "Día de prácticas teoría", "fecha": "2023-04-04", "descripcion": null },
+      { "titulo": "Día de prácticas teoría", "fecha": "2023-04-22", "descripcion": null },
+      { "titulo": "Día de prácticas teoría", "fecha": "2023-05-13", "descripcion": null },
+      { "titulo": "EXA1", "fecha": "2023-03-18", "descripcion": null },
+      { "titulo": "EXA2", "fecha": "2023-05-13", "descripcion": null },
+      { "titulo": "Exposición en clase", "fecha": "2023-04-30", "descripcion": null },
+      { "titulo": "Exposición en clase", "fecha": "2023-05-13", "descripcion": null },
+      { "titulo": "Exposición en clase", "fecha": "2023-05-14", "descripcion": null },
+      { "titulo": "Exposición en clase", "fecha": "2023-05-21", "descripcion": null }
+    ],
+    "horarios": [
+      {
+        "grupo": "Grupo 1",
+        "tipo": "teoría",
+        "hora": "10:40-12:30, Martes 12:40-14:30",
+        "aula": "A2.14, F1.32, F1.33-A2.14"
+      },
+      {
+        "grupo": "Grupo 2",
+        "tipo": "teoría",
+        "hora": "17:40-19:30, Martes 15:30-17:20",
+        "aula": "H1.10, F1.30, F1.33"
+      }
+    ],
+    "profesores": [
+      {
+        "nombre": "María Teresa Gómez López",
+        "despacho": "F1.43",
+        "enlace": "https://www.idea.us.es/maria-teresa-gomez/",
+        "horario": null
+      },
+      {
+        "nombre": "Toñi Reina",
+        "despacho": "F0.52",
+        "enlace": "https://personal.us.es/reinaqu/",
+        "horario": null
+      },
+      {
+        "nombre": "Octavio Martín",
+        "despacho": "F1.44",
+        "enlace": "https://personal.us.es/omartindiaz",
+        "horario": null
+      }
+    ]
+  }
+  

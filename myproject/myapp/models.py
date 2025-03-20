@@ -3,7 +3,6 @@ from django.db import models
 class Fechas(models.Model):
     titulo = models.CharField(max_length=100)
     fecha = models.DateField()
-    descripcion = models.TextField(blank=True)
 
 class Asignatura(models.Model):
     nombre = models.CharField(max_length=100)

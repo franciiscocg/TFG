@@ -1,0 +1,112 @@
+ACCESO INTELIGENTE A LA INFORMACIÓN
+CURSO 24/25
+GRUPO 1
+PLANIFICACIÓN CLASES TEÓRICAS/PRÁCTICAS
+Clase Día Actividad
+1 10/9 Presentación
+2 12/9 Python –ExpReg, AccesoWeb, BD – Ejercicios Python I
+3 17/9 Python – Tkinter – Ejercicio Python II
+4 19/9 BS – Beautifulsoup
+5 24/9 BS – Beautifulsoup - Ejercicio
+6 26/9 BeautifulSoup I - Ejercicio
+7 3/10 Introducción RI y SR
+8 10/10 Recuperación de Información Booleana - Whoosh
+9 17/10 Recuperación de Información Vectorial - Whoosh
+10 24/10 Ejercicio de Whoosh II
+11 31/10 Introducción Django
+12 7/11 Introducción Django
+13 14/11 Introducción Django
+14 21/11 SR Colaborativos (parte 1) – Implementación Python de SR
+Colaborativos
+15 28/11 SR Colaborativos (parte 2) - SR basados en Contenidos
+16 5/12 Sistemas de Recomendación II - Ejercicio
+17 12/12
+18 19/12 TEST DE TEORÍA
+PLANIFICACIÓN CLASES LABORATORIOS
+Clase Día Actividad
+1 1/10 BeautifulSoup II Ejercicio
+2 8/10 BeautifulSoup III Ejercicio
+3 15/10 BeautifulSoup IV PRÁCTICA 1
+4 22/10 Whoosh I Ejercicio
+5 29/10 Whoosh III Ejercicio
+6 5/11 Whoosh IV PRÁCTICA 2
+7 12/11 Django I Ejercicio
+8 19/11 Django II Ejercicio
+9 26/11 Django III Ejercicio
+10 3/12 Sistemas de Recomendación I Ejercicio
+11 10/12 Sistemas de Recomendación III Ejercicio
+12 17/12 Sistemas de Recomendación IV PRÁCTICA 3
+MÉTODOS DE EVALUACIÓN
+Prueba % Nota final Comentarios
+EVALUACIÓN Test de la parte teórica 10% Opcional
+ALTERNATIVA Prácticas de laboratorios 60% Opcional
+Asistencia clases 10% Opcional
+laboratorios
+Trabajo de curso 20% Opcional
+Se realizará un trabajo
+PROPUESTO POR EL
+ALUMNO para demostrar
+el dominio de la materia
+EVALUACIÓN Examen escrito y práctico 100% Obligatorio
+NORMAL
+Para aprobar la asignatura hay que obtener un 5 entre los cuatro apartados.
+Clases de teoría. Las clases se impartirán de forma presencial en el aula de teoría. Se
+colgará el material de cada semana en la plataforma de EV.
+Clases de laboratorio. Las clases se impartirán de forma presencial en el aula de
+teoría. No se imparten nuevos contenidos.
+LAS PRÁCTICAS SE REALIZAN, EN PRINCIPIO, EN GRUPOS DE TRES
+PERSONAS.
+Hay dos tipos de prácticas:
+- Ejercicio. Se colgará el enunciado y los grupos la trabajarán en las
+dos horas de clase. Los grupos no entregan nada. Normalmente se
+colgará la solución.
+- Práctica. Se colgará el enunciado y se dará un plazo de entrega a
+través de la plataforma.
+CADA PRÁCTICA TIENE UN VALOR MÁXIMO DE 2 PUNTOS.
+Test de la parte teórica. Se trata de un cuestionario tipo test de los contenidos teóricos
+de la asignatura. Se hará de forma presencial en la fecha indicada en un aula de
+teoría.
+Trabajo de curso. SE REALIZARÁ DE FORMA INDIVIDUAL. La forma de
+presentación se informará durante el desarrollo del curso. Se harán de forma
+presencial. Si no fuera posible o acordásemos otra alternativa, se habilitará otra
+opción.
+En las CLASES DE TEORÍA se explican contenidos teóricos y las herramientas que
+se usarán en los laboratorios. NO HAY CONTROL DE ASISTENCIA.
+En las CLASES DE LABORATORIOS HAY CONTROL DE ASISTENCIA.
+Según el tipo de clase:
+ Si es un EJERCICIO, cuelgo el enunciado:
+o Lo podeis trabajar a lo largo de la clase.
+o NO HAY QUE MANDAR NADA.
+o LAS DUDAS SE ATIENDEN EN LAS CLASES O EN LOS
+HORARIOS DE TUTORÍAS PUBLICADOS.
+ Si es un PRÁCTICA, cuelgo el enunciado como una "Actividad"
+o SÓLO SE EVALÚAN A LOS ALUMNOS QUE ASISTAN A LA
+PRÁCTICA.
+o Lo podeis trabajar durante las dos horas de clase.
+o Antes de la hora de fin de la clase debeis enviarme vuestra solución a
+través de la Actividad. SÓLO SE ENVÍA UNA SOLUCIÓN POR
+GRUPO.
+o LA PUNTUACIÓN MÁXIMA ES DE 2 PUNTOS.
+o NO SE RESUELVEN DUDAS TÉCNICAS DE LAS PRÁCTICAS
+EVALUABLES, SÓLO DEL ENUNCIADO.
+BIBLIOGRAFIA
+Web Scraping with Python
+Richard Lawson
+Packt Publishing
+ISBN: 978-1-78216-436-4
+Introduction to Information Retrieval
+C. D. Manning, P. Raghavan and H.Schutze
+Cambridge University Press
+ISBN: 978-0-521-86571-5
+Programming Collective Intelligence
+Toby Segaran
+O´Reilly
+ISBN: 978-0-596-52932-1
+Recommender Systems: An Introduction
+Dietmar Jannach, Markus Zanker, Alexander Felfernig and Gerhard Friedrich
+Cambridge University Press
+ISBN: 978-0521493369
+Web Data Mining: Exploring Hiperlinks, Contents and Usage Data
+Bing Liu
+Springer
+ISBN: 978-3-642-19459-7

@@ -1,0 +1,56 @@
+[
+    {
+      "asignatura": {
+        "nombre": "Desarrollo de Software",
+        "grado": "Licenciatura en Ciencias Informáticas",
+        "departamento": "Departamento de Ingeniería de Software",
+        "universidad": "Universidad Estatal",
+        "condiciones_aprobado": "Aprobación basada en desempeño individual (PE), peso acumulado en entregas (W) y calificación final de la presentación y proyecto WPL (A & B)"
+      },
+      "fechas": [
+        {
+          "titulo": "Presentación del Proyecto Final",
+          "fecha": "2023-12-15",
+          "descripcion": "Se espera una presentación formal del proyecto final a un público amplio."
+        },
+        {
+          "titulo": "Llamada de Mayo",
+          "fecha": "2023-05-15",
+          "descripcion": "Revisión del progreso y retroalimentación sobre los primeros sprints. La calificación se basa en las entregas del proyecto y las presentaciones."
+        },
+        {
+          "titulo": "Llamada de Julio",
+          "fecha": "2023-07-15",
+          "descripcion": "Evaluación del progreso actual del desarrollo del proyecto, con retroalimentación y orientación."
+        },
+        {
+          "titulo": "Llamada de Noviembre",
+          "fecha": "2023-11-15",
+          "descripcion": "Revisión final del progreso del proyecto, con énfasis en la preparación para el lanzamiento mundial."
+        }
+      ],
+      "horarios": [
+        {
+          "grupo": "Desarrollo de Software - Grupo 1",
+          "tipo": "Teoría",
+          "hora": "10:40-12:30",
+          "aula": "Edificio A, Aula 215"
+        },
+        {
+          "grupo": "Desarrollo de Software - Grupo 2",
+          "tipo": "Práctica",
+          "hora": "14:00-16:00",
+          "aula": "Edificio B, Aula 307"
+        }
+      ],
+      "profesores": [
+        {
+          "nombre": "Dr. Juan Pérez",
+          "despacho": "Oficina 304, Edificio A",
+          "enlace": "https://www.example.edu/faculty/juan.perez",
+          "horario": "Martes y jueves, 16:30-17:30"
+        }
+      ]
+    }
+  ]
+  
