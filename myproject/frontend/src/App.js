@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import Home from './home/home';
 import Register from './login/Register';
 import Login from './login/Login';
@@ -8,6 +9,7 @@ import AppNavbar from './AppNavbar';
 
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <AppNavbar />
       <div className="App-wrapper"> 
@@ -18,6 +20,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 

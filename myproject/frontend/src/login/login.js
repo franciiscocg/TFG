@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import AppNavbar from '../AppNavbar';
 import '../App.css';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +27,10 @@ function Login() {
       const result = await response.json();
       if (response.ok) {
         setMessage('Inicio de sesión exitoso');
-        localStorage.setItem('accessToken', result.access); 
-        localStorage.setItem('refreshToken', result.refresh);
+        login(result.access, result.refresh); // Usa la función del contexto
         setUsername('');
         setPassword('');
-        // Aquí podrías redirigir a otra pantalla, como Home
+        navigate('/');
       } else {
         setMessage('Error: ' + (result.detail || 'Credenciales inválidas'));
       }
@@ -38,6 +41,7 @@ function Login() {
 
   return (
     <div className="screen-container">
+      <AppNavbar />
       <header className="screen-header">
         <h1>Iniciar Sesión</h1>
         <form onSubmit={handleSubmit}>

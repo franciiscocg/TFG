@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AppNavbar from '../AppNavbar';
 import '../App.css';
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,6 +40,7 @@ function Login() {
 
   return (
     <div className="screen-container">
+      <AppNavbar />
       <header className="screen-header">
         <h1>Registrarse</h1>
         <form onSubmit={handleSubmit}>
@@ -93,4 +95,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
