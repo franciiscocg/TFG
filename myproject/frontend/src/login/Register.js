@@ -4,15 +4,17 @@ import '../App.css';
 
 function Login() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { username, password };
+    const data = { username, email, password, password2 };
 
     try {
-      const response = await fetch('http://localhost:8000/api/token/', {
+      const response = await fetch('http://localhost:8000/api/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,14 +24,13 @@ function Login() {
 
       const result = await response.json();
       if (response.ok) {
-        setMessage('Inicio de sesión exitoso');
-        localStorage.setItem('accessToken', result.access); 
-        localStorage.setItem('refreshToken', result.refresh);
+        setMessage('Registro exitoso. Ahora puedes iniciar sesión.');
         setUsername('');
+        setEmail('');
         setPassword('');
-        // Aquí podrías redirigir a otra pantalla, como Home
+        setPassword2('');
       } else {
-        setMessage('Error: ' + (result.detail || 'Credenciales inválidas'));
+        setMessage('Error: ' + JSON.stringify(result));
       }
     } catch (error) {
       setMessage('Error al conectar con el servidor: ' + error.message);
@@ -39,7 +40,7 @@ function Login() {
   return (
     <div className="screen-container">
       <header className="screen-header">
-        <h1>Iniciar Sesión</h1>
+        <h1>Registrarse</h1>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Usuario:</label>
@@ -48,6 +49,16 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Ingresa tu usuario"
+              required
+            />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Ingresa tu email"
               required
             />
           </div>
@@ -61,10 +72,17 @@ function Login() {
               required
             />
           </div>
-          <button type="submit">Iniciar Sesión</button>
-          <Link to="/register">
-            <button type="button">Registrarse</button>
-          </Link>
+          <div>
+            <label>Confirmar Contraseña:</label>
+            <input
+              type="password"
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
+              placeholder="Confirma tu contraseña"
+              required
+            />
+          </div>
+          <button type="submit">Registrarse</button>
           <Link to="/">
             <button type="button">Volver al Inicio</button>
           </Link>

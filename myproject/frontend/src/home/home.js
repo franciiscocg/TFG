@@ -4,8 +4,8 @@ import '../App.css';
 
 function Home() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="screen-container">
+      <header className="screen-header">
         <h1>Bienvenido a Mi Aplicación</h1>
         <p>Explora y disfruta de una experiencia increíble.</p>
         <Link to="/login">
