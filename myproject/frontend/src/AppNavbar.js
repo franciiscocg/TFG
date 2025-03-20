@@ -20,11 +20,16 @@ const AppNavbar = () => {
           <NavLink tag={Link} to="/">Home</NavLink>
         </NavItem>
         {isAuthenticated ? (
-          <NavItem>
-            <NavLink onClick={handleLogout} style={{ cursor: 'pointer' }}>
-              Logout
-            </NavLink>
-          </NavItem>
+          <>
+            <NavItem>
+              <NavLink tag={Link} to="/upload">Upload</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                Logout
+              </NavLink>
+            </NavItem>
+          </>
         ) : (
           <>
             <NavItem>

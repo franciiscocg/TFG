@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
 import AppNavbar from '../AppNavbar';
 import '../App.css';
 
@@ -30,6 +30,9 @@ function Register() {
         setEmail('');
         setPassword('');
         setPassword2('');
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1000);
       } else {
         setMessage('Error: ' + JSON.stringify(result));
       }

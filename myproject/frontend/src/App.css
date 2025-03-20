@@ -88,3 +88,25 @@ form {
   gap: 20px; /* Más espacio entre campos */
   width: 350px; /* Un poco más ancho para los nuevos campos */
 }
+
+.screen-header p {
+  margin-top: 15px;
+  font-size: 1.1em;
+  color: #ffffff; /* Blanco por defecto */
+}
+
+.screen-header p:empty {
+  display: none; /* Oculta el párrafo si está vacío */
+}
+
+.screen-header p::before {
+  content: attr(data-message);
+}
+
+.screen-header p[data-message^="Error"] {
+  color: #ff4444; /* Rojo para errores */
+}
+
+.screen-header p[data-message^="Archivo subido"] {
+  color: #44ff44; /* Verde para éxito */
+}
