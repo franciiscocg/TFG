@@ -60,10 +60,34 @@ function FileList() {
 
       if (response.ok) {
         setMessage('Archivo eliminado con éxito');
-        fetchFiles(page); // Recarga la página actual
+        fetchFiles(page);
       } else {
         const result = await response.json();
         setMessage('Error al eliminar el archivo: ' + JSON.stringify(result));
+      }
+    } catch (error) {
+      setMessage('Error al conectar con el servidor: ' + error.message);
+    }
+  };
+
+  const handleExtractText = async (fileId) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch(`http://localhost:8000/api/upload/${fileId}/extract/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        setMessage('Texto extraído con éxito');
+        setFiles(files.map((file) =>
+          file.id === fileId ? result.file : file
+        ));
+      } else {
+        setMessage('Error al extraer el texto: ' + JSON.stringify(result));
       }
     } catch (error) {
       setMessage('Error al conectar con el servidor: ' + error.message);
@@ -90,6 +114,18 @@ function FileList() {
                     {file.file.split('/').pop()}
                   </a>
                   <span> (Subido el: {new Date(file.uploaded_at).toLocaleString()})</span>
+                  {file.text_file_url ? (
+                    <Link to={`/text/${file.id}`} className="text-link">
+                      Ver Texto
+                    </Link>
+                  ) : (
+                    <button className="extract-btn" onClick={() => handleExtractText(file.id)}>
+                      Extraer Texto
+                    </button>
+                  )}
+                  {file.extracted_data && Object.keys(file.extracted_data).length > 0 && (
+                    <span className="extracted-indicator"> (Datos extraídos)</span>
+                  )}
                   <button className="delete-btn" onClick={() => handleDelete(file.id)}>
                     Eliminar
                   </button>
@@ -97,17 +133,11 @@ function FileList() {
               ))}
             </ul>
             <div className="pagination">
-              <button
-                disabled={!prevPage}
-                onClick={() => handlePageChange(-1)}
-              >
+              <button disabled={!prevPage} onClick={() => handlePageChange(-1)}>
                 Anterior
               </button>
               <span>Página {page} de {Math.ceil(totalCount / 5)}</span>
-              <button
-                disabled={!nextPage}
-                onClick={() => handlePageChange(1)}
-              >
+              <button disabled={!nextPage} onClick={() => handlePageChange(1)}>
                 Siguiente
               </button>
             </div>

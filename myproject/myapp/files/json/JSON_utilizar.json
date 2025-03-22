@@ -9,7 +9,7 @@
     "fechas": [
       {
         "titulo": "(título o propósito de la fecha)",
-        "fecha": "(fecha en formato \"YYYY-MM-DD\")",
+        "fecha": "(fecha en formato \"YYYY-MM-DD\")"
       }
     ],
     "horarios": [

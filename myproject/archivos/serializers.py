@@ -4,12 +4,11 @@ from .models import UploadedFile
 
 
 class FileUploadSerializer(serializers.ModelSerializer):
-    MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB en bytes
-    url = serializers.SerializerMethodField()  # Añade la URL del archivo
+    MAX_FILE_SIZE = 5 * 1024 * 1024
 
     class Meta:
         model = UploadedFile
-        fields = ['id', 'file', 'uploaded_at', 'url']  # Campos que queremos devolver
+        fields = ['file']
 
     def validate_file(self, value):
         if value.size > self.MAX_FILE_SIZE:
@@ -18,9 +17,20 @@ class FileUploadSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Solo se permiten archivos PDF.")
         return value
 
-    def get_url(self, obj):
-        # Devuelve la URL completa del archivo
+class UploadedFileSerializer(serializers.ModelSerializer):
+    file_url = serializers.SerializerMethodField()
+    text_file_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UploadedFile
+        fields = ['id', 'file', 'uploaded_at', 'file_url', 'text_file', 'text_file_url', 'extracted_data']  
+
+    def get_file_url(self, obj):
         request = self.context.get('request')
-        if request is not None and obj.file:
-            return request.build_absolute_uri(obj.file.url)
+        return request.build_absolute_uri(obj.file.url) if request else obj.file.url
+
+    def get_text_file_url(self, obj):
+        if obj.text_file:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.text_file.url) if request else obj.text_file.url
         return None
