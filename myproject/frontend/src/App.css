@@ -110,3 +110,83 @@ form {
 .screen-header p[data-message^="Archivo subido"] {
   color: #44ff44; /* Verde para éxito */
 }
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+}
+
+
+.file-list li a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.file-list li a:hover {
+  text-decoration: underline;
+}
+
+.file-list li span {
+  font-size: 0.9em;
+  color: #cccccc;
+}
+
+
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.file-list li .delete-btn {
+  padding: 5px 10px;
+  font-size: 0.9em;
+  background-color: #ff4444;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.file-list li .delete-btn:hover {
+  background-color: #cc0000;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #21a1f1;
+}
+
+.pagination span {
+  font-size: 1.1em;
+}

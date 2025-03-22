@@ -24,10 +24,11 @@ const AppNavbar = () => {
             <NavItem>
               <NavLink tag={Link} to="/upload">Upload</NavLink>
             </NavItem>
-            <NavItem>
               <NavLink onClick={handleLogout} style={{ cursor: 'pointer' }}>
                 Logout
-              </NavLink>
+            </NavLink>
+            <NavItem>
+              <NavLink tag={Link} to="/files">My Files</NavLink>
             </NavItem>
           </>
         ) : (
