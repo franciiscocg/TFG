@@ -11,6 +11,7 @@ import LoadingScreen from './loading/LoadingScreen';
 import DatesResult from './files/DatesResult'; 
 import './App.css';
 import AppNavbar from './AppNavbar';
+import CalendarViewer from './calendar/CalendarViewer';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/text/:fileId" element={<TextViewer />} />
           <Route path="/loading/:fileId" element={<LoadingScreen />} />
           <Route path="/dates/:fileId" element={<DatesResult />} /> 
+          <Route path="/calendar" element={<CalendarViewer />} />
         </Routes>
       </div>
     </Router>

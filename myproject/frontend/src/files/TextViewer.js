@@ -6,6 +6,7 @@ import '../App.css';
 
 function TextViewer() {
   const [text, setText] = useState('');
+  const [extractedData, setExtractedData] = useState({});
   const [message, setMessage] = useState('');
   const { fileId } = useParams();
   const { isAuthenticated } = useAuth();
@@ -32,6 +33,7 @@ function TextViewer() {
       const result = await response.json();
       if (response.ok) {
         setText(result.text);
+        setExtractedData(result.extracted_data || {});
       } else {
         setMessage('Error al cargar el texto: ' + JSON.stringify(result));
       }
@@ -41,14 +43,13 @@ function TextViewer() {
   };
 
   const handleExtractDates = () => {
-    navigate(`/loading/${fileId}`); // Redirige a la pantalla de carga
+    navigate(`/loading/${fileId}`);
   };
 
   if (!isAuthenticated) return null;
 
   return (
     <div className="screen-container">
-      <AppNavbar />
       <header className="screen-header">
         <h1>Texto Extraído</h1>
         {text ? (
@@ -57,6 +58,11 @@ function TextViewer() {
             <button className="extract-dates-btn" onClick={handleExtractDates}>
               Extraer Fechas
             </button>
+            {Object.keys(extractedData).length > 0 && (
+              <Link to={`/calendar/${fileId}`}>
+                <button className="calendar-btn">Ver Calendario</button>
+              </Link>
+            )}
           </>
         ) : (
           <p>No hay texto disponible aún.</p>

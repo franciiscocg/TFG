@@ -84,10 +84,12 @@ class ReadTextView(APIView):
         file_obj = get_object_or_404(UploadedFile, id=file_id, user=request.user)
         if not file_obj.text_file:
             return Response({"message": "No hay texto extraído para este archivo"}, status=status.HTTP_400_BAD_REQUEST)
-        
         try:
             with open(file_obj.text_file.path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
-            return Response({"text": text_content}, status=status.HTTP_200_OK)
+            return Response({
+                "text": text_content,
+                "extracted_data": file_obj.extracted_data if file_obj.extracted_data else {}
+            }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"message": f"Error al leer el archivo de texto: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
