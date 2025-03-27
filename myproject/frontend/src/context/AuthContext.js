@@ -5,15 +5,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('accessToken'));
 
-  const login = (accessToken, refreshToken) => {
+  // Función para iniciar sesión
+  const login = (accessToken) => {
     localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
     setIsAuthenticated(true);
   };
 
+  // Función para cerrar sesión
   const logout = () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     setIsAuthenticated(false);
   };
 

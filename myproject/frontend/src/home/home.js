@@ -9,25 +9,24 @@ function Home() {
     return (
 <div className="home-screen">
   <header className="screen-header">
-    <h1>Bienvenido a Mi Aplicación</h1>
-    {isAuthenticated ? (
+    <h1>Bienvenido StudySift</h1>
+  </header>
+  <div className="screen-body">
+  {isAuthenticated ? (
       <>
-        <p>Bienvenido de nuevo. ¿Qué quieres hacer hoy?</p>
+        <p>¿Quieres sacar las fechas importantes?</p>
         <Link to="/upload">
           <button>Subir PDF</button>
         </Link>
       </>
     ) : (
       <>
-        <p>Explora y disfruta de una experiencia increíble.</p>
+        <p>Necesitas una cuenta para utilizar la web</p>
         <Link to="/login">
           <button>Comenzar</button>
         </Link>
       </>
     )}
-  </header>
-  <div className="screen-body">
-    <p>Contenido adicional aquí (opcional).</p>
   </div>
 </div>
     );
