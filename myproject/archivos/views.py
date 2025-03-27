@@ -129,4 +129,12 @@ class UserExtractedDataView(APIView):
             "data": extracted_data_list
         }, status=status.HTTP_200_OK)
         
-        
+class UpdateExtractedDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, file_id):
+        file = get_object_or_404(UploadedFile, id=file_id, user=request.user)
+        extracted_data = request.data.get('extracted_data', {})
+        file.extracted_data = extracted_data
+        file.save()
+        return Response({'message': 'Datos actualizados con éxito'}, status=status.HTTP_200_OK)

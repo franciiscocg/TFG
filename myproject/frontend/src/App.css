@@ -1134,22 +1134,22 @@
 .dates-result-screen .screen-header {
   background-color: #282c34;
   width: 100%;
-  max-width: 800px; /* Ancho máximo consistente con text-viewer */
+  max-width: 800px;
   padding: 20px;
-  border-radius: 10px; /* Bordes redondeados completos */
+  border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Espacio entre header y body */
+  margin-bottom: 20px;
 }
 
 /* Título */
 .dates-result-screen .screen-header h1 {
   font-size: 2em;
-  margin: 0; /* Sin margen inferior para header compacto */
-  color: #61dafb; /* Color destacado para el título */
+  margin: 0;
+  color: #61dafb;
   text-align: center;
 }
 
@@ -1157,46 +1157,107 @@
 .dates-result-screen .screen-body {
   background-color: #282c34;
   width: 100%;
-  max-width: 800px; /* Consistente con el header */
+  max-width: 800px;
   padding: 20px;
-  border-radius: 10px; /* Bordes redondeados completos */
+  border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 0; /* Permite que se ajuste al contenido */
-  overflow-y: auto; /* Scroll si el contenido excede la altura */
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* Contenedor de datos extraídos */
 .dates-result-screen .dates-content {
-  width: 99%;
-  background-color: #2e333d; /* Fondo oscuro para el contenido */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Editor de texto para el JSON */
+.dates-result-screen .dates-editor {
+  width: 100%;
+  background-color: #2e333d;
+  padding: 15px;
   border-radius: 5px;
-  max-height: 60vh; /* Limita la altura para scroll */
-  overflow-y: auto; /* Scroll vertical si los datos son largos */
-  border: 1px solid #61dafb; /* Borde sutil para destacar */
-}
-
-/* Texto preformateado */
-.dates-result-screen .dates-content pre {
-  white-space: pre-wrap; /* Preserva formato JSON */
+  border: 1px solid #61dafb;
   color: #ffffff;
-  font-family: monospace; /* Fuente monoespaciada para legibilidad */
+  font-family: monospace;
   font-size: 1.1em;
-  margin: 0; /* Sin márgenes adicionales */
+  resize: vertical; /* Permitir redimensionar verticalmente */
+  min-height: 200px; /* Altura mínima */
+  max-height: 60vh; /* Altura máxima con scroll */
+  overflow-y: auto; /* Scroll si el contenido es largo */
 }
 
-/* Mensaje de error o estado */
+/* Botón Guardar Cambios */
+.dates-result-screen .save-btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #44aa44; /* Verde para acción de guardar */
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.dates-result-screen .save-btn:hover {
+  background-color: #338833;
+  transform: scale(1.02);
+}
+
+.dates-result-screen .save-btn:active {
+  transform: scale(0.98);
+}
+
+/* Botón Volver a Mis Archivos */
+.dates-result-screen .screen-body button:not(.save-btn) {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.dates-result-screen .screen-body button:not(.save-btn):hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.dates-result-screen .screen-body button:not(.save-btn):active {
+  transform: scale(0.98);
+}
+
+/* Mensaje de éxito o error */
 .dates-result-screen .screen-body p {
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 1.1em;
   text-align: center;
   padding: 10px;
   border-radius: 5px;
   width: 100%;
   max-width: 600px;
-  background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo tenue para mensajes de error */
+}
+
+.dates-result-screen .screen-body p.success {
+  background-color: rgba(68, 255, 68, 0.1); /* Verde tenue para éxito */
+  color: #44ff44;
+}
+
+.dates-result-screen .screen-body p.error {
+  background-color: rgba(255, 68, 68, 0.1); /* Rojo tenue para error */
   color: #ff4444;
 }
 
@@ -1204,36 +1265,12 @@
   display: none;
 }
 
-/* Botón de Volver a Mis Archivos */
-.dates-result-screen .screen-body button {
-  width: 100%;
-  max-width: 200px; /* Limita el ancho máximo, consistente con otros botones */
-  padding: 12px;
-  font-size: 1.1em;
-  background-color: #61dafb; /* Color principal consistente */
-  border: none;
-  border-radius: 5px;
-  color: #282c34;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-}
-
-.dates-result-screen .screen-body button:hover {
-  background-color: #21a1f1;
-  transform: scale(1.02); /* Efecto sutil al pasar el mouse */
-}
-
-.dates-result-screen .screen-body button:active {
-  transform: scale(0.98); /* Efecto al hacer clic */
-}
-
 /* Responsividad */
 
 /* Pantallas pequeñas (móviles, <= 600px) */
 @media (max-width: 600px) {
   .dates-result-screen {
-    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+    padding-top: 70px;
   }
 
   .dates-result-screen .screen-header,
@@ -1243,32 +1280,30 @@
   }
 
   .dates-result-screen .screen-header {
-    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+    margin-bottom: 15px;
   }
 
   .dates-result-screen .screen-header h1 {
     font-size: 1.5em;
   }
 
-  .dates-result-screen .dates-content {
-    padding: 15px;
-    max-height: 50vh; /* Ajuste de altura para móviles */
+  .dates-result-screen .dates-editor {
+    padding: 10px;
+    font-size: 0.9em;
+    min-height: 150px;
   }
 
-  .dates-result-screen .dates-content pre {
-    font-size: 0.9em;
+  .dates-result-screen .save-btn,
+  .dates-result-screen .screen-body button:not(.save-btn) {
+    padding: 10px 16px;
+    font-size: 1em;
+    max-width: 180px;
+    margin-top: 10px;
   }
 
   .dates-result-screen .screen-body p {
     font-size: 0.9em;
-    margin-top: 15px;
     max-width: 100%;
-  }
-
-  .dates-result-screen .screen-body button {
-    padding: 10px 16px;
-    font-size: 1em;
-    max-width: 180px;
   }
 }
 
@@ -1288,15 +1323,16 @@
     font-size: 1.8em;
   }
 
-  .dates-result-screen .dates-content pre {
+  .dates-result-screen .dates-editor {
     font-size: 1em;
   }
 
-  .dates-result-screen .screen-body button {
+  .dates-result-screen .save-btn,
+  .dates-result-screen .screen-body button:not(.save-btn) {
     padding: 11px 18px;
     max-width: 190px;
   }
-} 
+}
 /* Contenedor principal de la pantalla de Upload */
 .upload-screen {
   min-height: 100vh;

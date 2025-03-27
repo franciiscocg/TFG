@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FileUploadView, FileListView, FileDeleteView, ExtractTextView, ReadTextView, UserExtractedDataView
+from .views import FileUploadView, FileListView, FileDeleteView, ExtractTextView, ReadTextView, UserExtractedDataView, UpdateExtractedDataView
 
 urlpatterns = [
     path('', FileUploadView.as_view(), name='api_upload'),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('<int:file_id>/extract/', ExtractTextView.as_view(), name='api_extract_text'),  
     path('<int:file_id>/text/', ReadTextView.as_view(), name='api_read_text'),
     path('extracted/', UserExtractedDataView.as_view(), name='api_extracted_data'),
+    path('<int:file_id>/update-extracted/', UpdateExtractedDataView.as_view(), name='update-extracted'),
     
 ]
