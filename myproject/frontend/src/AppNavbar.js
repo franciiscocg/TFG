@@ -30,6 +30,9 @@ const AppNavbar = () => {
             <NavItem>
               <NavLink tag={Link} to="/files">My Files</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/calendar">Calendar</NavLink>
+            </NavItem>
           </>
         ) : (
           <>

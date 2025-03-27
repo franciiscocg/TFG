@@ -17,9 +17,11 @@ function DatesResult() {
   const datesData = state?.datesData;
 
   return (
-    <div className="screen-container">
+<div className="dates-result-screen screen-container">
       <header className="screen-header">
         <h1>Fechas e Información Extraída</h1>
+      </header>
+      <div className="screen-body">
         {datesData ? (
           <div className="dates-content">
             <pre>{JSON.stringify(datesData, null, 2)}</pre>
@@ -30,7 +32,7 @@ function DatesResult() {
         <Link to="/files">
           <button>Volver a Mis Archivos</button>
         </Link>
-      </header>
+      </div>
     </div>
   );
 }

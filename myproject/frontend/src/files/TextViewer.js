@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import AppNavbar from '../AppNavbar';
 import '../App.css';
 
 function TextViewer() {
@@ -18,7 +17,7 @@ function TextViewer() {
       return;
     }
     fetchText();
-  }, [isAuthenticated, fileId]);
+  }, [isAuthenticated, fileId, navigate]);
 
   const fetchText = async () => {
     try {
@@ -42,6 +41,9 @@ function TextViewer() {
     }
   };
 
+  const handleViewDates = () => {
+    navigate(`/dates/${fileId}`, { state: { datesData: extractedData } });
+  };
   const handleExtractDates = () => {
     navigate(`/loading/${fileId}`);
   };
@@ -57,9 +59,15 @@ function TextViewer() {
         {text ? (
           <>
             <pre className="text-content">{text}</pre>
-            <button className="extract-dates-btn" onClick={handleExtractDates}>
+            {Object.keys(extractedData).length > 0 ? (
+              <button className="view-dates-btn" onClick={handleViewDates}>
+                Ver Fechas Extraídas
+              </button>
+            ) : (
+              <button className="extract-dates-btn" onClick={handleExtractDates}>
               Extraer Fechas
             </button>
+            )}
           </>
         ) : (
           <p>No hay texto disponible aún.</p>

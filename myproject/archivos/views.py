@@ -93,3 +93,40 @@ class ReadTextView(APIView):
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"message": f"Error al leer el archivo de texto: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class UserExtractedDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Obtener todos los archivos del usuario autenticado
+        files = UploadedFile.objects.filter(user=request.user)
+        
+        # Filtrar solo los archivos que tienen extracted_data
+        files_with_data = files.exclude(extracted_data__isnull=True).exclude(extracted_data={})
+        
+        if not files_with_data.exists():
+            return Response({
+                "message": "No se encontraron datos extraídos para este usuario",
+                "data": []
+            }, status=status.HTTP_200_OK)
+
+        # Serializar los datos
+        serializer = UploadedFileSerializer(files_with_data, many=True, context={'request': request})
+        
+        # Preparar la respuesta con solo los extracted_data
+        extracted_data_list = [
+            {
+                "file_id": file["id"],
+                "filename": file["file"].split('/')[-1],
+                "extracted_data": file["extracted_data"]
+            }
+            for file in serializer.data if file["extracted_data"]
+        ]
+
+        return Response({
+            "message": "Datos extraídos encontrados",
+            "count": len(extracted_data_list),
+            "data": extracted_data_list
+        }, status=status.HTTP_200_OK)
+        
+        

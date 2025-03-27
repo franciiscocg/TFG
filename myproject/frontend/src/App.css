@@ -1125,39 +1125,53 @@
   align-items: center;
   background-color: #1a1d23; /* Fondo oscuro consistente */
   color: #ffffff;
-  padding: 0; /* Sin padding adicional aquí, se manejará en el header */
   box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo */
+  padding-bottom: 20px;
 }
 
 /* Encabezado de la pantalla de DatesResult */
 .dates-result-screen .screen-header {
   background-color: #282c34;
   width: 100%;
-  max-width: 800px; /* Ancho máximo para mostrar datos cómodamente */
-  margin-top: 20px; /* Espacio debajo de la navbar */
-  padding: 30px 20px;
-  border-radius: 10px;
+  max-width: 800px; /* Ancho máximo consistente con text-viewer */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-grow: 1; /* Permite que ocupe el espacio disponible */
+  margin-bottom: 20px; /* Espacio entre header y body */
 }
 
 /* Título */
 .dates-result-screen .screen-header h1 {
   font-size: 2em;
-  margin-bottom: 1em;
+  margin: 0; /* Sin margen inferior para header compacto */
   color: #61dafb; /* Color destacado para el título */
   text-align: center;
 }
 
+/* Cuerpo de la pantalla de DatesResult */
+.dates-result-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 800px; /* Consistente con el header */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0; /* Permite que se ajuste al contenido */
+  overflow-y: auto; /* Scroll si el contenido excede la altura */
+}
+
 /* Contenedor de datos extraídos */
 .dates-result-screen .dates-content {
-  width: 100%;
+  width: 99%;
   background-color: #2e333d; /* Fondo oscuro para el contenido */
-  padding: 20px;
   border-radius: 5px;
   max-height: 60vh; /* Limita la altura para scroll */
   overflow-y: auto; /* Scroll vertical si los datos son largos */
@@ -1174,7 +1188,7 @@
 }
 
 /* Mensaje de error o estado */
-.dates-result-screen .screen-header p {
+.dates-result-screen .screen-body p {
   margin-top: 20px;
   font-size: 1.1em;
   text-align: center;
@@ -1182,19 +1196,21 @@
   border-radius: 5px;
   width: 100%;
   max-width: 600px;
-  background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo tenue para errores */
+  background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo tenue para mensajes de error */
   color: #ff4444;
 }
 
-.dates-result-screen .screen-header p:empty {
+.dates-result-screen .screen-body p:empty {
   display: none;
 }
 
 /* Botón de Volver a Mis Archivos */
-.dates-result-screen button {
-  padding: 12px 20px;
+.dates-result-screen .screen-body button {
+  width: 100%;
+  max-width: 200px; /* Limita el ancho máximo, consistente con otros botones */
+  padding: 12px;
   font-size: 1.1em;
-  background-color: #61dafb;
+  background-color: #61dafb; /* Color principal consistente */
   border: none;
   border-radius: 5px;
   color: #282c34;
@@ -1203,12 +1219,12 @@
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-.dates-result-screen button:hover {
+.dates-result-screen .screen-body button:hover {
   background-color: #21a1f1;
   transform: scale(1.02); /* Efecto sutil al pasar el mouse */
 }
 
-.dates-result-screen button:active {
+.dates-result-screen .screen-body button:active {
   transform: scale(0.98); /* Efecto al hacer clic */
 }
 
@@ -1216,10 +1232,18 @@
 
 /* Pantallas pequeñas (móviles, <= 600px) */
 @media (max-width: 600px) {
-  .dates-result-screen .screen-header {
-    margin-top: 10px;
-    padding: 20px 15px;
+  .dates-result-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+  }
+
+  .dates-result-screen .screen-header,
+  .dates-result-screen .screen-body {
     max-width: 90%;
+    padding: 15px;
+  }
+
+  .dates-result-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
   }
 
   .dates-result-screen .screen-header h1 {
@@ -1235,24 +1259,29 @@
     font-size: 0.9em;
   }
 
-  .dates-result-screen .screen-header p {
+  .dates-result-screen .screen-body p {
     font-size: 0.9em;
     margin-top: 15px;
     max-width: 100%;
   }
 
-  .dates-result-screen button {
+  .dates-result-screen .screen-body button {
     padding: 10px 16px;
     font-size: 1em;
-    margin-top: 15px;
+    max-width: 180px;
   }
 }
 
 /* Pantallas medianas (tabletas, 601px - 900px) */
 @media (min-width: 601px) and (max-width: 900px) {
-  .dates-result-screen .screen-header {
+  .dates-result-screen .screen-header,
+  .dates-result-screen .screen-body {
     max-width: 700px;
-    padding: 25px 20px;
+    padding: 20px;
+  }
+
+  .dates-result-screen .screen-header {
+    margin-bottom: 20px;
   }
 
   .dates-result-screen .screen-header h1 {
@@ -1263,10 +1292,11 @@
     font-size: 1em;
   }
 
-  .dates-result-screen button {
+  .dates-result-screen .screen-body button {
     padding: 11px 18px;
+    max-width: 190px;
   }
-}
+} 
 /* Contenedor principal de la pantalla de Upload */
 .upload-screen {
   min-height: 100vh;
@@ -1833,5 +1863,136 @@
   .calendar-screen .screen-body .export-btn {
     padding: 11px;
     max-width: 190px;
+  }
+}
+
+/* Overlay del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #282c34; /* Fondo consistente con screen-header y screen-body */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  width: 100%;
+  max-width: 500px; /* Ancho máximo consistente con otros componentes */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra consistente */
+  color: #ffffff; /* Texto blanco para contraste */
+  font-family: Arial, sans-serif;
+}
+
+/* Título del modal */
+.modal-content h2 {
+  font-size: 2em;
+  margin: 0 0 15px 0;
+  color: #61dafb; /* Color destacado consistente */
+  text-align: center;
+}
+
+/* Detalles del evento */
+.modal-content .modal-details {
+  background-color: #2e333d; /* Fondo oscuro para los detalles */
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #61dafb; /* Borde sutil para destacar */
+}
+
+/* Párrafos dentro de los detalles */
+.modal-content .modal-details p {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #ffffff;
+}
+
+/* Resaltar etiquetas en negrita */
+.modal-content .modal-details p strong {
+  color: #61dafb; /* Color destacado para las etiquetas */
+  margin-right: 5px;
+}
+
+/* Botones del modal */
+.modal-content .modal-buttons {
+  display: flex;
+  justify-content: center; /* Centrado para un solo botón */
+  margin-top: 20px;
+}
+
+/* Estilo del botón Cerrar */
+.modal-content .modal-buttons button {
+  padding: 12px 20px;
+  font-size: 1.1em;
+  background-color: #61dafb; /* Color principal de botones */
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.modal-content .modal-buttons button:hover {
+  background-color: #21a1f1; /* Hover consistente */
+  transform: scale(1.02);
+}
+
+.modal-content .modal-buttons button:active {
+  transform: scale(0.98);
+}
+
+/* Responsividad para el modal */
+
+/* Pantallas pequeñas (móviles, <= 600px) */
+@media (max-width: 600px) {
+  .modal-content {
+      max-width: 90%;
+      padding: 15px;
+  }
+
+  .modal-content h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+  }
+
+  .modal-content .modal-details {
+      padding: 10px;
+  }
+
+  .modal-content .modal-details p {
+      font-size: 0.9em;
+  }
+
+  .modal-content .modal-buttons button {
+      padding: 10px 16px;
+      font-size: 1em;
+  }
+}
+
+/* Pantallas medianas (tabletas, 601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .modal-content {
+      max-width: 450px;
+      padding: 20px;
+  }
+
+  .modal-content h2 {
+      font-size: 1.8em;
+  }
+
+  .modal-content .modal-details p {
+      font-size: 1em;
+  }
+
+  .modal-content .modal-buttons button {
+      padding: 11px 18px;
   }
 }
