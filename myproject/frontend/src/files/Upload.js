@@ -69,10 +69,11 @@ function Upload() {
   }
 
   return (
-    <div className="screen-container">
-      <AppNavbar />
+    <div className="upload-screen screen-container">
       <header className="screen-header">
         <h1>Subir un PDF</h1>
+      </header>
+      <div className="screen-body">
         <form onSubmit={handleSubmit}>
           <div>
             <label>Selecciona un archivo PDF (máx. 5MB):</label>
@@ -88,8 +89,8 @@ function Upload() {
           </Link>
         </form>
         {message && <p>{message}</p>}
-      </header>
-    </div>
+      </div>
+  </div>
   );
 }
 

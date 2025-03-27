@@ -18,7 +18,7 @@ function TextViewer() {
       return;
     }
     fetchText();
-  }, [isAuthenticated, navigate, fileId]);
+  }, [isAuthenticated, fileId]);
 
   const fetchText = async () => {
     try {
@@ -49,20 +49,17 @@ function TextViewer() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="screen-container">
+    <div className="text-viewer-screen screen-container">
       <header className="screen-header">
         <h1>Texto Extraído</h1>
+      </header>
+      <div className="screen-body">
         {text ? (
           <>
             <pre className="text-content">{text}</pre>
             <button className="extract-dates-btn" onClick={handleExtractDates}>
               Extraer Fechas
             </button>
-            {Object.keys(extractedData).length > 0 && (
-              <Link to={`/calendar/${fileId}`}>
-                <button className="calendar-btn">Ver Calendario</button>
-              </Link>
-            )}
           </>
         ) : (
           <p>No hay texto disponible aún.</p>
@@ -71,7 +68,7 @@ function TextViewer() {
           <button>Volver a Mis Archivos</button>
         </Link>
         {message && <p>{message}</p>}
-      </header>
+      </div>
     </div>
   );
 }

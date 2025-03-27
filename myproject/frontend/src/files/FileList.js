@@ -101,10 +101,11 @@ function FileList() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="screen-container">
-      <AppNavbar />
+    <div className="file-list-screen screen-container">
       <header className="screen-header">
         <h1>Mis Archivos Subidos</h1>
+      </header>
+      <div className="screen-body">
         {files.length > 0 ? (
           <>
             <ul className="file-list">
@@ -152,7 +153,7 @@ function FileList() {
           <button>Volver al Inicio</button>
         </Link>
         {message && <p>{message}</p>}
-      </header>
+      </div>
     </div>
   );
 }

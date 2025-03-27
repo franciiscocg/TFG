@@ -18,7 +18,6 @@ function DatesResult() {
 
   return (
     <div className="screen-container">
-      <AppNavbar />
       <header className="screen-header">
         <h1>Fechas e Información Extraída</h1>
         {datesData ? (

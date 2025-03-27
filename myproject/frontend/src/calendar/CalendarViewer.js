@@ -44,10 +44,11 @@ function CalendarScreen() {
 
   return (
     <div className="screen-container calendar-screen">
-      <div className="screen-header">
+      <header className="screen-header">
         <h1>Calendario</h1>
         <p>Selecciona una fecha para agregar un evento</p>
-      </div>
+      </header>
+      <div className="screen-body">
       <div className="calendar-container">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, iCalendarPlugin]}
@@ -66,6 +67,7 @@ function CalendarScreen() {
         <button onClick={exportToICal} className="export-btn">
           Exportar a iCal
         </button>
+      </div>
       </div>
     </div>
   );

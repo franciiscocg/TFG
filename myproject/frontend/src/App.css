@@ -16,33 +16,50 @@
   font-family: Arial, sans-serif;
 }
 
-/* Encabezado de cada pantalla */
-.screen-header {
-  background-color: #282c34;
-  height: 100% ; 
+/* Contenedor de la pantalla Home */
+.home-screen {
+  min-height: 100vh; /* Cambiado de height: 100% a min-height para mayor flexibilidad */
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente los hijos */
+  background-color: #1a1d23; /* Fondo consistente con login-screen */
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo, consistente con login-screen */
+  padding-bottom: 20px;
+}
+
+/* Encabezado de la pantalla Home */
+.home-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 500px; /* Ancho máximo consistente con login-screen */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
-
   padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra consistente */
+  margin-bottom: 20px; /* Espacio debajo para el body o contenido futuro */
   box-sizing: border-box;
 }
 
-
-h1 {
+.home-screen h1 {
   font-size: 2.5em;
   margin-bottom: 0.5em;
+  color: #61dafb; /* Color consistente con login-screen */
 }
 
-p {
+.home-screen p {
   font-size: 1.2em;
   margin-bottom: 1.5em;
+  color: #ffffff;
 }
 
-button {
+.home-screen button {
   padding: 10px 20px;
   font-size: 1em;
   background-color: #61dafb;
@@ -51,584 +68,1770 @@ button {
   color: #282c34;
   cursor: pointer;
   margin: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transición más suave */
 }
 
-button:hover {
+.home-screen button:hover {
   background-color: #21a1f1;
+  transform: scale(1.02); /* Efecto hover consistente con login-screen */
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 300px;
-}
-
-label {
-  font-size: 1.1em;
-  margin-right: 10px;
-}
-
-input {
-  padding: 8px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Screen Body (opcional, para futura implementación) */
+.home-screen .screen-body {
+  background-color: #282c34;
   width: 100%;
-}
-
-div {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Más espacio entre campos */
-  width: 350px; /* Un poco más ancho para los nuevos campos */
-}
-
-.screen-header p {
-  margin-top: 15px;
-  font-size: 1.1em;
-  color: #ffffff; /* Blanco por defecto */
-}
-
-.screen-header p:empty {
-  display: none; /* Oculta el párrafo si está vacío */
-}
-
-.screen-header p::before {
-  content: attr(data-message);
-}
-
-.screen-header p[data-message^="Error"] {
-  color: #ff4444; /* Rojo para errores */
-}
-
-.screen-header p[data-message^="Archivo subido"] {
-  color: #44ff44; /* Verde para éxito */
-}
-
-.file-list {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-  max-width: 600px;
-  margin: 20px 0;
-}
-
-
-.file-list li a {
-  color: #61dafb;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.file-list li a:hover {
-  text-decoration: underline;
-}
-
-.file-list li span {
-  font-size: 0.9em;
-  color: #cccccc;
-}
-
-
-.file-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.file-list li .delete-btn {
-  padding: 5px 10px;
-  font-size: 0.9em;
-  background-color: #ff4444;
-  border: none;
-  border-radius: 3px;
-  color: white;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.file-list li .delete-btn:hover {
-  background-color: #cc0000;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.pagination button {
-  padding: 8px 16px;
-  background-color: #61dafb;
-  border: none;
-  border-radius: 5px;
-  color: #282c34;
-  cursor: pointer;
-}
-
-.pagination button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: #21a1f1;
-}
-
-.pagination span {
-  font-size: 1.1em;
-}
-/* ... Otros estilos existentes ... */
-
-.file-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
-  border-radius: 5px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.file-list li .extract-btn {
-  padding: 5px 10px;
-  font-size: 0.9em;
-  background-color: #44aa44;
-  border: none;
-  border-radius: 3px;
-  color: white;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.file-list li .extract-btn:hover {
-  background-color: #338833;
-}
-
-.file-list li .text-link {
-  margin-left: 10px;
-  color: #44ff44;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.file-list li .text-link:hover {
-  text-decoration: underline;
-}
-
-
-.text-content {
-  white-space: pre-wrap; /* Preserva saltos de línea y espacios, pero ajusta al ancho */
-  background-color: rgba(255, 255, 255, 0.1);
+  max-width: 500px;
   padding: 20px;
-  border-radius: 5px;
-  max-height: 60vh; /* Limita la altura para que sea desplazable si es largo */
-  overflow-y: auto; /* Añade scroll vertical si el texto es largo */
-  color: #ffffff;
-  font-family: monospace; /* Fuente monoespaciada para mejor legibilidad */
-  font-size: 1.1em;
-}
-
-
-.extract-dates-btn {
-  padding: 8px 16px;
-  background-color: #ffaa00;
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.extract-dates-btn:hover {
-  background-color: #cc8800;
-}
-
-.dates-content {
-  margin-top: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.dates-content h2 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-}
-
-.dates-content pre {
-  white-space: pre-wrap;
-  color: #ffffff;
-  font-family: monospace;
-  font-size: 1.1em;
-  max-height: 40vh;
-  overflow-y: auto;
-}
-
-.loading-container {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid #61dafb;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.error-message {
-  color: #ff4444;
-}
-
-
-.extracted-indicator {
-  color: #44ff44;
-  margin-left: 10px;
-  font-style: italic;
-}
-/* Estilos para la pantalla del calendario */
-.calendar-screen {
-  min-height: 100vh; /* Asegura que ocupe toda la altura */
-  width: 100%;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #1a1d23; /* Fondo oscuro */
   color: #ffffff;
-  padding: 20px 10px; /* Padding adaptable */
   box-sizing: border-box;
 }
 
-/* Encabezado del calendario */
-.screen-header {
-  background-color: #282c34;
-  padding: 15px;
+/* Media Queries para responsividad en la pantalla Home */
+@media (max-width: 600px) {
+  .home-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+  }
+
+  .home-screen .screen-header,
+  .home-screen .screen-body {
+    max-width: 90%; /* Ancho ajustado como en login-screen */
+    padding: 15px;
+  }
+
+  .home-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+  }
+
+  .home-screen h1 {
+    font-size: 1.8em;
+  }
+
+  .home-screen p {
+    font-size: 1em;
+  }
+
+  .home-screen button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .home-screen .screen-header,
+  .home-screen .screen-body {
+    max-width: 450px; /* Ancho intermedio consistente */
+    padding: 20px;
+  }
+
+  .home-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .home-screen h1 {
+    font-size: 2.2em;
+  }
+
+  .home-screen p {
+    font-size: 1.1em;
+  }
+
+  .home-screen button {
+    padding: 9px 18px;
+  }
+}
+/* Login Screen */
+.login-screen {
+  min-height: 100vh;
   width: 100%;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.screen-header h1 {
-  font-size: 2em;
-  margin-bottom: 0.5em;
-}
-
-.screen-header p {
-  font-size: 1em;
-  margin-bottom: 0;
-}
-
-/* Contenedor del calendario */
-.calendar-container {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 900px; /* Ancho máximo para pantallas grandes */
-  padding: 15px;
+  background-color: #1a1d23;
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px; /* Para el navbar fijo */
+  padding-bottom: 20px;
+}
+
+.login-screen .screen-header {
   background-color: #282c34;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilos para FullCalendar */
-.fc {
-  background-color: #2e333d;
-  border: none;
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: 'Roboto', Arial, sans-serif;
   width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  flex-shrink: 0;
+  margin-bottom: 20px; /* Espacio entre header y body */
 }
 
-/* Encabezado del calendario (mes, botones de navegación) */
-.fc .fc-toolbar {
-  background-color: #1a1d23;
-  padding: 10px;
-  border-radius: 8px 8px 0 0;
-  margin-bottom: 0;
+.login-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0;
+  color: #61dafb;
+}
+
+.login-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  flex-grow: 1;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  
 }
 
-.fc .fc-toolbar-title {
-  font-size: 1.5em;
-  font-weight: 600;
-  color: #61dafb;
+/* Resto de los estilos del login-screen sin cambios */
+.login-screen form {
+  width: 100%;
+  max-width: 400px;
+  gap: 20px;
 }
 
-/* Botones de navegación */
-.fc .fc-button {
-  background-color: #61dafb;
-  color: #282c34;
-  border: none;
-  border-radius: 5px;
-  padding: 6px 10px;
-  font-size: 0.85em;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-}
-
-.fc .fc-button:hover {
-  background-color: #21a1f1;
-}
-
-.fc .fc-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(97, 218, 251, 0.5);
-}
-
-/* Días de la semana */
-.fc .fc-col-header-cell {
-  background-color: #1a1d23;
-  color: #61dafb;
-  font-weight: 500;
-  padding: 8px;
-  border-bottom: 1px solid #61dafb;
-}
-
-/* Días del mes */
-.fc .fc-daygrid-day {
-  background-color: #2e333d;
-  border: 1px solid #3a404b;
-  transition: background-color 0.3s ease;
-}
-
-.fc .fc-daygrid-day:hover {
-  background-color: #3a404b;
-}
-
-.fc .fc-daygrid-day-number {
+.login-screen label {
+  font-size: 1.2em;
   color: #ffffff;
-  font-size: 0.9em;
-  padding: 6px;
+  margin-bottom: 5px;
 }
 
-.fc .fc-daygrid-day.fc-day-today {
-  background-color: #ffaa00;
-  color: #282c34;
-  font-weight: bold;
-}
-
-.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-  color: #282c34;
-}
-
-/* Días fuera del mes actual */
-.fc .fc-daygrid-day.fc-day-other {
-  background-color: #252931;
-  opacity: 0.5;
-}
-
-/* Eventos */
-.fc .fc-event {
-  background-color: #61dafb;
-  color: #282c34;
-  border: none;
-  border-radius: 3px;
-  padding: 2px 4px;
-  font-size: 0.85em;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.fc .fc-event:hover {
-  background-color: #21a1f1;
-}
-
-/* Botón de exportación */
-.export-btn {
-  margin-top: 15px;
-  padding: 8px 16px;
-  background-color: #ffaa00;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
+.login-screen input {
+  width: 100%;
+  padding: 10px;
   font-size: 1em;
-  font-weight: 500;
+  border: 1px solid #61dafb;
+  border-radius: 5px;
+  background-color: #2e333d;
+  color: #ffffff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-screen input:focus {
+  border-color: #21a1f1;
+  box-shadow: 0 0 5px rgba(33, 161, 241, 0.5);
+  outline: none;
+}
+
+.login-screen input::placeholder {
+  color: #cccccc;
+  opacity: 0.8;
+}
+
+.login-screen button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.login-screen button:hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.login-screen button:active {
+  transform: scale(0.98);
+}
+
+.login-screen button:nth-child(2),
+.login-screen button:nth-child(3) {
+  background-color: #ffaa00;
+}
+
+.login-screen button:nth-child(2):hover,
+.login-screen button:nth-child(3):hover {
+  background-color: #cc8800;
+}
+
+.login-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-screen .screen-body p:empty {
+  display: none;
+}
+
+.login-screen .screen-body p[data-message^="Error"] {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.login-screen .screen-body p[data-message^="Inicio"] {
+  background-color: rgba(68, 255, 68, 0.1);
+  color: #44ff44;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .login-screen {
+    padding-top: 70px; /* Ajuste para pantallas pequeñas */
+  }
+
+  .login-screen .screen-header,
+  .login-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .login-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+  }
+
+  .login-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .login-screen label {
+    font-size: 1em;
+  }
+
+  .login-screen input {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .login-screen button {
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  .login-screen .screen-body p {
+    font-size: 0.9em;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .login-screen .screen-header,
+  .login-screen .screen-body {
+    max-width: 450px;
+    padding: 20px;
+  }
+
+  .login-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .login-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+}
+/* Contenedor principal de la pantalla de Register */
+.register-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23; /* Fondo oscuro consistente */
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo */
+  padding-bottom: 20px;
+}
+
+/* Encabezado de la pantalla de Register */
+.register-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Espacio entre header y body */
+}
+
+/* Título */
+.register-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0; /* Sin margen inferior para header compacto */
+  color: #61dafb; /* Color destacado para el título */
+  text-align: center;
+}
+
+/* Cuerpo de la pantalla de Register */
+.register-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0; /* Permite que se ajuste al contenido sin forzar altura */
+  overflow-y: auto; /* Scroll si el contenido excede la altura disponible */
+}
+
+/* Formulario de Registro */
+.register-screen form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre elementos del formulario */
+}
+
+/* Estilos para etiquetas */
+.register-screen label {
+  font-size: 1.2em;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+/* Estilos para inputs */
+.register-screen input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #61dafb;
+  border-radius: 5px;
+  background-color: #2e333d;
+  color: #ffffff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.register-screen input:focus {
+  border-color: #21a1f1;
+  box-shadow: 0 0 5px rgba(33, 161, 241, 0.5);
+  outline: none;
+}
+
+/* Placeholder */
+.register-screen input::placeholder {
+  color: #cccccc;
+  opacity: 0.8;
+}
+
+/* Botones */
+.register-screen button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-.export-btn:hover {
+.register-screen button:hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.register-screen button:active {
+  transform: scale(0.98);
+}
+
+/* Botón de Volver al Inicio con estilo diferente */
+.register-screen .screen-body button:nth-child(2) {
+  background-color: #ffaa00;
+}
+
+.register-screen .screen-body button:nth-child(2):hover {
   background-color: #cc8800;
-  transform: scale(1.05);
 }
 
-.export-btn:active {
-  transform: scale(0.95);
+/* Mensaje de éxito o error */
+.register-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
 }
 
-/* Media Queries para responsividad */
+.register-screen .screen-body p:empty {
+  display: none;
+}
+
+/* Estilos condicionales para mensajes */
+.register-screen .screen-body p[data-message^="Error"] {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.register-screen .screen-body p[data-message^="Registro"] {
+  background-color: rgba(68, 255, 68, 0.1);
+  color: #44ff44;
+}
+
+/* Responsividad */
 
 /* Pantallas pequeñas (móviles, <= 600px) */
 @media (max-width: 600px) {
-  .calendar-screen {
-    padding: 10px 5px;
+  .register-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
   }
 
-  .screen-header {
-    padding: 10px;
+  .register-screen .screen-header,
+  .register-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
   }
 
-  .screen-header h1 {
+  .register-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+  }
+
+  .register-screen .screen-header h1 {
     font-size: 1.5em;
   }
 
-  .screen-header p {
-    font-size: 0.9em;
-  }
-
-  .calendar-container {
-    margin-top: 15px;
-    padding: 10px;
+  .register-screen form {
     max-width: 100%;
+    gap: 10px; /* Espacio reducido en mobile */
   }
 
-  .fc .fc-toolbar {
-    flex-direction: column;
-    gap: 10px;
+  .register-screen label {
+    font-size: 1em;
   }
 
-  .fc .fc-toolbar-title {
-    font-size: 1.2em;
-    margin-bottom: 5px;
-  }
-
-  .fc .fc-button {
-    padding: 5px 8px;
-    font-size: 0.75em;
-  }
-
-  .fc .fc-col-header-cell {
-    padding: 5px;
-    font-size: 0.8em;
-  }
-
-  .fc .fc-daygrid-day-number {
-    font-size: 0.75em;
-    padding: 4px;
-  }
-
-  .fc .fc-event {
-    font-size: 0.7em;
-    padding: 1px 3px;
-  }
-
-  .export-btn {
-    padding: 6px 12px;
+  .register-screen input {
+    padding: 8px;
     font-size: 0.9em;
+  }
+
+  .register-screen button {
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  .register-screen .screen-body p {
+    font-size: 0.9em;
+    margin-top: 15px;
   }
 }
 
 /* Pantallas medianas (tabletas, 601px - 900px) */
 @media (min-width: 601px) and (max-width: 900px) {
-  .calendar-screen {
-    padding: 15px 10px;
+  .register-screen .screen-header,
+  .register-screen .screen-body {
+    max-width: 450px;
+    padding: 20px;
   }
 
-  .screen-header h1 {
+  .register-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .register-screen .screen-header h1 {
     font-size: 1.8em;
   }
 
-  .screen-header p {
-    font-size: 0.95em;
+  .register-screen label {
+    font-size: 1.1em;
   }
 
-  .calendar-container {
-    max-width: 700px;
+  .register-screen input {
+    padding: 9px;
+  }
+
+  .register-screen button {
+    padding: 11px;
+  }
+}
+/* Contenedor principal de la pantalla de TextViewer */
+.text-viewer-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23; /* Fondo oscuro consistente */
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo, alineado con el ejemplo */
+  padding-bottom: 20px;
+}
+
+/* Encabezado de la pantalla de TextViewer */
+.text-viewer-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 800px; /* Ancho máximo más grande para mostrar texto */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Espacio entre header y body, alineado con el ejemplo */
+}
+
+/* Título */
+.text-viewer-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0; /* Sin margen inferior para header compacto */
+  color: #61dafb; /* Color destacado para el título */
+  text-align: center;
+}
+
+/* Cuerpo de la pantalla de TextViewer */
+.text-viewer-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0; /* Permite que se ajuste al contenido */
+  overflow-y: auto; /* Scroll si el contenido excede la altura */
+}
+
+/* Contenido del texto extraído */
+.text-viewer-screen .screen-body .text-content {
+  white-space: pre-wrap; /* Preserva saltos de línea y espacios */
+  background-color: #2e333d; /* Fondo oscuro para el texto */
+  padding: 20px;
+  border-radius: 5px;
+  max-height: 60vh; /* Limita la altura para scroll */
+  overflow-y: auto; /* Scroll vertical si el texto es largo */
+  color: #ffffff;
+  font-family: monospace; /* Fuente monoespaciada para legibilidad */
+  font-size: 1.1em;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #61dafb; /* Borde sutil para destacar */
+}
+
+/* Botones */
+.text-viewer-screen .screen-body button {
+  width: 100%;
+  max-width: 200px; /* Limita el ancho máximo de los botones, alineado con el ejemplo */
+  padding: 12px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* Botón para extraer fechas */
+.text-viewer-screen .screen-body .extract-dates-btn {
+  background-color: #ffaa00; /* Color distintivo para la acción */
+  color: #ffffff;
+}
+
+.text-viewer-screen .screen-body .extract-dates-btn:hover {
+  background-color: #cc8800;
+  transform: scale(1.02);
+}
+
+.text-viewer-screen .screen-body .extract-dates-btn:active {
+  transform: scale(0.98);
+}
+
+/* Botón de Volver a Mis Archivos */
+.text-viewer-screen .screen-body button:not(.extract-dates-btn) {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+.text-viewer-screen .screen-body button:not(.extract-dates-btn):hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.text-viewer-screen .screen-body button:not(.extract-dates-btn):active {
+  transform: scale(0.98);
+}
+
+/* Mensaje de error o estado */
+.text-viewer-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.text-viewer-screen .screen-body p:empty {
+  display: none;
+}
+
+/* Estilos condicionales para mensajes */
+.text-viewer-screen .screen-body p[data-message^="Error"] {
+  background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo tenue */
+  color: #ff4444;
+}
+
+.text-viewer-screen .screen-body p[data-message^="No hay"] {
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo neutro */
+  color: #cccccc;
+}
+
+/* Responsividad */
+
+/* Pantallas pequeñas (móviles, <= 600px) */
+@media (max-width: 600px) {
+  .text-viewer-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+  }
+
+  .text-viewer-screen .screen-header,
+  .text-viewer-screen .screen-body {
+    max-width: 90%;
     padding: 15px;
   }
 
-  .fc .fc-toolbar-title {
-    font-size: 1.4em;
+  .text-viewer-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
   }
 
-  .fc .fc-button {
-    padding: 6px 10px;
-    font-size: 0.8em;
-  }
-
-  .fc .fc-col-header-cell {
-    padding: 6px;
-    font-size: 0.9em;
-  }
-
-  .fc .fc-daygrid-day-number {
-    font-size: 0.85em;
-    padding: 5px;
-  }
-
-  .fc .fc-event {
-    font-size: 0.8em;
-  }
-}
-
-/* Pantallas grandes (escritorios, > 900px) */
-@media (min-width: 901px) {
-  .calendar-screen {
-    padding: 20px;
-  }
-
-  .screen-header h1 {
-    font-size: 2em;
-  }
-
-  .screen-header p {
-    font-size: 1em;
-  }
-
-  .calendar-container {
-    max-width: 900px;
-    padding: 20px;
-  }
-
-  .fc .fc-toolbar-title {
+  .text-viewer-screen .screen-header h1 {
     font-size: 1.5em;
   }
 
-  .fc .fc-button {
-    padding: 6px 12px;
-    font-size: 0.85em;
+  .text-viewer-screen .screen-body .text-content {
+    padding: 15px;
+    font-size: 0.9em;
+    max-height: 50vh; /* Ajuste de altura para móviles */
   }
 
-  .fc .fc-col-header-cell {
-    padding: 8px;
+  .text-viewer-screen .screen-body button {
+    padding: 10px;
+    font-size: 1em;
+    max-width: 180px;
+  }
+
+  .text-viewer-screen .screen-body p {
+    font-size: 0.9em;
+    margin-top: 15px;
+    max-width: 100%;
+  }
+}
+
+/* Pantallas medianas (tabletas, 601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .text-viewer-screen .screen-header,
+  .text-viewer-screen .screen-body {
+    max-width: 700px;
+    padding: 20px;
+  }
+
+  .text-viewer-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .text-viewer-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+
+  .text-viewer-screen .screen-body .text-content {
+    padding: 18px;
     font-size: 1em;
   }
 
-  .fc .fc-daygrid-day-number {
-    font-size: 0.9em;
-    padding: 6px;
+  .text-viewer-screen .screen-body button {
+    padding: 11px;
+    max-width: 190px;
+  }
+}
+/* Contenedor principal de la pantalla de FileList */
+.file-list-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23; /* Fondo oscuro consistente */
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo */
+  padding-bottom: 20px;
+}
+
+/* Encabezado de la pantalla de FileList */
+.file-list-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px; /* Ancho máximo más grande para la lista */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Espacio entre header y body */
+}
+
+/* Título */
+.file-list-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0; /* Sin margen inferior para header compacto */
+  color: #61dafb; /* Color destacado para el título */
+  text-align: center;
+}
+
+/* Cuerpo de la pantalla de FileList */
+.file-list-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px; /* Consistente con el header */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0; /* Permite que se ajuste al contenido */
+  overflow-y: auto; /* Scroll si el contenido excede la altura */
+}
+
+/* Lista de archivos */
+.file-list-screen .file-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 800px; /* Limita el ancho de la lista */
+  margin: 0 0 20px 0; /* Espacio inferior para separar de la paginación */
+}
+
+/* Elementos de la lista */
+.file-list-screen .file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #2e333d; /* Fondo oscuro para cada item */
+  margin-bottom: 10px;
+  border-radius: 5px;
+  flex-wrap: wrap; /* Permite ajuste en pantallas pequeñas */
+  gap: 10px; /* Espacio entre elementos */
+  transition: background-color 0.3s ease;
+}
+
+.file-list-screen .file-list li:hover {
+  background-color: #3a404b; /* Efecto hover sutil */
+}
+
+/* Enlace al archivo */
+.file-list-screen .file-list li a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.file-list-screen .file-list li a:hover {
+  text-decoration: underline;
+}
+
+/* Fecha de subida */
+.file-list-screen .file-list li span {
+  font-size: 0.9em;
+  color: #cccccc;
+  flex-grow: 1; /* Permite que ocupe espacio disponible */
+}
+
+/* Enlace a texto extraído */
+.file-list-screen .file-list li .text-link {
+  margin-left: 10px;
+  color: #44ff44;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.file-list-screen .file-list li .text-link:hover {
+  text-decoration: underline;
+}
+
+/* Indicador de datos extraídos */
+.file-list-screen .file-list li .extracted-indicator {
+  color: #44ff44;
+  margin-left: 10px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* Botón de extraer texto */
+.file-list-screen .file-list li .extract-btn {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  background-color: #44aa44; /* Verde para acción de extracción */
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.file-list-screen .file-list li .extract-btn:hover {
+  background-color: #338833;
+}
+
+/* Botón de eliminar */
+.file-list-screen .file-list li .delete-btn {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  background-color: #ff4444; /* Rojo para acción de eliminación */
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.file-list-screen .file-list li .delete-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Paginación */
+.file-list-screen .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.file-list-screen .pagination button {
+  padding: 8px 16px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.file-list-screen .pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.file-list-screen .pagination button:hover:not(:disabled) {
+  background-color: #21a1f1;
+}
+
+.file-list-screen .pagination span {
+  font-size: 1.1em;
+  color: #ffffff;
+}
+
+/* Botones de navegación (Subir archivo, Volver al Inicio) */
+.file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button) {
+  padding: 12px 20px;
+  font-size: 1.1em;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  margin: 10px 0; /* Espaciado vertical entre botones */
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button):hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button):active {
+  transform: scale(0.98);
+}
+
+/* Segundo botón (Volver al Inicio) con estilo diferente */
+.file-list-screen .screen-body button:nth-child(2):not(.extract-btn):not(.delete-btn):not(.pagination button) {
+  background-color: #ffaa00;
+}
+
+.file-list-screen .screen-body button:nth-child(2):not(.extract-btn):not(.delete-btn):not(.pagination button):hover {
+  background-color: #cc8800;
+}
+
+/* Mensaje de estado */
+.file-list-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.file-list-screen .screen-body p:empty {
+  display: none;
+}
+
+/* Estilos condicionales para mensajes */
+.file-list-screen .screen-body p[data-message^="Error"] {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.file-list-screen .screen-body p[data-message^="Archivo"] {
+  background-color: rgba(68, 255, 68, 0.1);
+  color: #44ff44;
+}
+
+.file-list-screen .screen-body p[data-message^="No has"] {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #cccccc;
+}
+
+/* Responsividad */
+
+/* Pantallas pequeñas (móviles, <= 600px) */
+@media (max-width: 600px) {
+  .file-list-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
   }
 
-  .fc .fc-event {
+  .file-list-screen .screen-header,
+  .file-list-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .file-list-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+  }
+
+  .file-list-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .file-list-screen .file-list {
+    max-width: 100%;
+  }
+
+  .file-list-screen .file-list li {
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .file-list-screen .file-list li a {
+    font-size: 1em;
+  }
+
+  .file-list-screen .file-list li span {
+    font-size: 0.8em;
+  }
+
+  .file-list-screen .file-list li .text-link,
+  .file-list-screen .file-list li .extract-btn,
+  .file-list-screen .file-list li .delete-btn {
+    margin-left: 0;
     font-size: 0.85em;
+    padding: 5px 10px;
+  }
+
+  .file-list-screen .pagination {
+    gap: 10px;
+  }
+
+  .file-list-screen .pagination button {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .file-list-screen .pagination span {
+    font-size: 0.9em;
+  }
+
+  .file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button) {
+    padding: 10px 16px;
+    font-size: 1em;
+    margin: 8px 0;
+  }
+
+  .file-list-screen .screen-body p {
+    font-size: 0.9em;
+    margin-top: 15px;
+    max-width: 100%;
+  }
+}
+
+/* Pantallas medianas (tabletas, 601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .file-list-screen .screen-header,
+  .file-list-screen .screen-body {
+    max-width: 700px;
+    padding: 20px;
+  }
+
+  .file-list-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .file-list-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+
+  .file-list-screen .file-list li {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .file-list-screen .file-list li a {
+    font-size: 1.05em;
+  }
+
+  .file-list-screen .file-list li span {
+    font-size: 0.85em;
+  }
+}
+/* Contenedor principal de la pantalla de DatesResult */
+.dates-result-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23; /* Fondo oscuro consistente */
+  color: #ffffff;
+  padding: 0; /* Sin padding adicional aquí, se manejará en el header */
+  box-sizing: border-box;
+}
+
+/* Encabezado de la pantalla de DatesResult */
+.dates-result-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 800px; /* Ancho máximo para mostrar datos cómodamente */
+  margin-top: 20px; /* Espacio debajo de la navbar */
+  padding: 30px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Permite que ocupe el espacio disponible */
+}
+
+/* Título */
+.dates-result-screen .screen-header h1 {
+  font-size: 2em;
+  margin-bottom: 1em;
+  color: #61dafb; /* Color destacado para el título */
+  text-align: center;
+}
+
+/* Contenedor de datos extraídos */
+.dates-result-screen .dates-content {
+  width: 100%;
+  background-color: #2e333d; /* Fondo oscuro para el contenido */
+  padding: 20px;
+  border-radius: 5px;
+  max-height: 60vh; /* Limita la altura para scroll */
+  overflow-y: auto; /* Scroll vertical si los datos son largos */
+  border: 1px solid #61dafb; /* Borde sutil para destacar */
+}
+
+/* Texto preformateado */
+.dates-result-screen .dates-content pre {
+  white-space: pre-wrap; /* Preserva formato JSON */
+  color: #ffffff;
+  font-family: monospace; /* Fuente monoespaciada para legibilidad */
+  font-size: 1.1em;
+  margin: 0; /* Sin márgenes adicionales */
+}
+
+/* Mensaje de error o estado */
+.dates-result-screen .screen-header p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 600px;
+  background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo tenue para errores */
+  color: #ff4444;
+}
+
+.dates-result-screen .screen-header p:empty {
+  display: none;
+}
+
+/* Botón de Volver a Mis Archivos */
+.dates-result-screen button {
+  padding: 12px 20px;
+  font-size: 1.1em;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.dates-result-screen button:hover {
+  background-color: #21a1f1;
+  transform: scale(1.02); /* Efecto sutil al pasar el mouse */
+}
+
+.dates-result-screen button:active {
+  transform: scale(0.98); /* Efecto al hacer clic */
+}
+
+/* Responsividad */
+
+/* Pantallas pequeñas (móviles, <= 600px) */
+@media (max-width: 600px) {
+  .dates-result-screen .screen-header {
+    margin-top: 10px;
+    padding: 20px 15px;
+    max-width: 90%;
+  }
+
+  .dates-result-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .dates-result-screen .dates-content {
+    padding: 15px;
+    max-height: 50vh; /* Ajuste de altura para móviles */
+  }
+
+  .dates-result-screen .dates-content pre {
+    font-size: 0.9em;
+  }
+
+  .dates-result-screen .screen-header p {
+    font-size: 0.9em;
+    margin-top: 15px;
+    max-width: 100%;
+  }
+
+  .dates-result-screen button {
+    padding: 10px 16px;
+    font-size: 1em;
+    margin-top: 15px;
+  }
+}
+
+/* Pantallas medianas (tabletas, 601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .dates-result-screen .screen-header {
+    max-width: 700px;
+    padding: 25px 20px;
+  }
+
+  .dates-result-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+
+  .dates-result-screen .dates-content pre {
+    font-size: 1em;
+  }
+
+  .dates-result-screen button {
+    padding: 11px 18px;
+  }
+}
+/* Contenedor principal de la pantalla de Upload */
+.upload-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23; /* Fondo oscuro consistente */
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo */
+  padding-bottom: 20px;
+}
+
+/* Encabezado de la pantalla de Upload */
+.upload-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Espacio entre header y body */
+}
+
+/* Título */
+.upload-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0; /* Sin margen inferior para header compacto */
+  color: #61dafb; /* Color destacado para el título */
+  text-align: center;
+}
+
+/* Cuerpo de la pantalla de Upload */
+.upload-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0; /* Permite que se ajuste al contenido */
+  overflow-y: auto; /* Scroll si el contenido excede la altura */
+}
+
+/* Formulario de subida */
+.upload-screen form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre elementos del formulario */
+  align-items: center;
+}
+
+/* Estilos para etiquetas */
+.upload-screen label {
+  font-size: 1.2em;
+  color: #ffffff;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+/* Estilos para input de archivo */
+.upload-screen input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #61dafb;
+  border-radius: 5px;
+  background-color: #2e333d;
+  color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.upload-screen input[type="file"]:hover {
+  border-color: #21a1f1;
+}
+
+.upload-screen input[type="file"]:focus {
+  border-color: #21a1f1;
+  box-shadow: 0 0 5px rgba(33, 161, 241, 0.5);
+  outline: none;
+}
+
+/* Personalización del texto del input file */
+.upload-screen input[type="file"]::-webkit-file-upload-button {
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-screen input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #21a1f1;
+}
+
+/* Botones */
+.upload-screen button {
+  width: 100%;
+  max-width: 200px; /* Limita el ancho máximo de los botones */
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: #282c34;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.upload-screen button:hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.upload-screen button:active {
+  transform: scale(0.98);
+}
+
+/* Botón de Volver al Inicio con estilo diferente */
+.upload-screen .screen-body button:nth-child(2) {
+  background-color: #ffaa00;
+}
+
+.upload-screen .screen-body button:nth-child(2):hover {
+  background-color: #cc8800;
+}
+
+/* Mensaje de éxito o error */
+.upload-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.upload-screen .screen-body p:empty {
+  display: none;
+}
+
+/* Estilos condicionales para mensajes */
+.upload-screen .screen-body p[data-message^="Error"] {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.upload-screen .screen-body p[data-message^="Archivo"] {
+  background-color: rgba(68, 255, 68, 0.1);
+  color: #44ff44;
+}
+
+.upload-screen .screen-body p[data-message^="Por favor"] {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #cccccc;
+}
+
+/* Responsividad */
+
+/* Pantallas pequeñas (móviles, <= 600px) */
+@media (max-width: 600px) {
+  .upload-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+  }
+
+  .upload-screen .screen-header,
+  .upload-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .upload-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+  }
+
+  .upload-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .upload-screen form {
+    max-width: 100%;
+    gap: 10px; /* Espacio reducido en mobile */
+  }
+
+  .upload-screen label {
+    font-size: 1em;
+  }
+
+  .upload-screen input[type="file"] {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .upload-screen input[type="file"]::-webkit-file-upload-button {
+    padding: 6px 10px;
+    font-size: 0.85em;
+  }
+
+  .upload-screen button {
+    padding: 10px;
+    font-size: 1em;
+    max-width: 180px;
+  }
+
+  .upload-screen .screen-body p {
+    font-size: 0.9em;
+    margin-top: 15px;
+    max-width: 100%;
+  }
+}
+
+/* Pantallas medianas (tabletas, 601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .upload-screen .screen-header,
+  .upload-screen .screen-body {
+    max-width: 450px;
+    padding: 20px;
+  }
+
+  .upload-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .upload-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+
+  .upload-screen label {
+    font-size: 1.1em;
+  }
+
+  .upload-screen input[type="file"] {
+    padding: 9px;
+  }
+
+  .upload-screen button {
+    padding: 11px;
+    max-width: 190px;
+  }
+}
+/* Contenedor principal de la pantalla de CalendarScreen */
+.calendar-screen {
+  min-height: 100vh; /* Ajustado a min-height para consistencia con el ejemplo */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23; /* Fondo oscuro consistente */
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para el navbar fijo, alineado con el ejemplo */
+  padding-bottom: 20px;
+}
+
+/* Encabezado de la pantalla de CalendarScreen */
+.calendar-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px; /* Ancho máximo fijo */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Espacio entre header y body, alineado con el ejemplo */
+}
+
+/* Título */
+.calendar-screen .screen-header h1 {
+  font-size: 2em; /* Tamaño consistente con el ejemplo */
+  margin: 0; /* Sin margen inferior para header compacto */
+  color: #61dafb; /* Color destacado para el título */
+  text-align: center;
+}
+
+/* Texto de instrucción */
+.calendar-screen .screen-header p {
+  font-size: 1.1em; /* Ajustado para consistencia */
+  margin-top: 10px;
+  color: #cccccc;
+  text-align: center;
+}
+
+/* Cuerpo de la pantalla de CalendarScreen */
+.calendar-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px; /* Ancho máximo fijo, igual al header */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados completos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0; /* Permite que se ajuste al contenido */
+  overflow-y: auto; /* Scroll si el contenido excede la altura */
+}
+
+/* Contenedor del calendario */
+.calendar-screen .screen-body .calendar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+/* Estilos para FullCalendar */
+.calendar-screen .fc {
+  background-color: #2e333d;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: 'Roboto', Arial, sans-serif;
+  width: 100%;
+  height: 100%; /* Ocupa toda la altura disponible */
+}
+
+/* Encabezado del calendario (mes, botones de navegación) */
+.calendar-screen .fc .fc-toolbar {
+  background-color: #1a1d23;
+  padding: 8px;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.calendar-screen .fc .fc-toolbar-title {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #61dafb;
+}
+
+/* Botones de navegación */
+.calendar-screen .fc .fc-button {
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-screen .fc .fc-button:hover {
+  background-color: #21a1f1;
+}
+
+.calendar-screen .fc .fc-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(33, 161, 241, 0.5); /* Alineado con el ejemplo */
+}
+
+/* Días de la semana */
+.calendar-screen .fc .fc-col-header-cell {
+  background-color: #1a1d23;
+  color: #61dafb;
+  font-weight: 500;
+  padding: 6px;
+  border-bottom: 1px solid #61dafb;
+  font-size: 0.85em;
+}
+
+/* Días del mes */
+.calendar-screen .fc .fc-daygrid-day {
+  background-color: #2e333d;
+  border: 1px solid #3a404b;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-screen .fc .fc-daygrid-day:hover {
+  background-color: #3a404b;
+}
+
+.calendar-screen .fc .fc-daygrid-day-number {
+  color: #ffffff;
+  font-size: 0.85em;
+  padding: 4px;
+}
+
+.calendar-screen .fc .fc-daygrid-day.fc-day-today {
+  background-color: #ffaa00;
+  color: #282c34;
+  font-weight: bold;
+}
+
+.calendar-screen .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  color: #282c34;
+}
+
+/* Días fuera del mes actual */
+.calendar-screen .fc .fc-daygrid-day.fc-day-other {
+  background-color: #252931;
+  opacity: 0.5;
+}
+
+/* Eventos */
+.calendar-screen .fc .fc-event {
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.8em;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-screen .fc .fc-event:hover {
+  background-color: #21a1f1;
+}
+
+/* Botón de exportación */
+.calendar-screen .screen-body .export-btn {
+  width: 100%;
+  max-width: 200px; /* Limita el ancho máximo, alineado con el ejemplo */
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #ffaa00;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: 20px;
+}
+
+.calendar-screen .screen-body .export-btn:hover {
+  background-color: #cc8800;
+  transform: scale(1.02); /* Alineado con el ejemplo */
+}
+
+.calendar-screen .screen-body .export-btn:active {
+  transform: scale(0.98); /* Alineado con el ejemplo */
+}
+
+/* Responsividad */
+
+/* Pantallas pequeñas (móviles, <= 600px) */
+@media (max-width: 600px) {
+  .calendar-screen {
+    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+  }
+
+  .calendar-screen .screen-header,
+  .calendar-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .calendar-screen .screen-header {
+    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
+  }
+
+  .calendar-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .calendar-screen .screen-header p {
+    font-size: 0.9em;
+  }
+
+  .calendar-screen .fc .fc-toolbar {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .calendar-screen .fc .fc-toolbar-title {
+    font-size: 1.1em;
+  }
+
+  .calendar-screen .fc .fc-button {
+    padding: 4px 6px;
+    font-size: 0.7em;
+  }
+
+  .calendar-screen .fc .fc-col-header-cell {
+    padding: 4px;
+    font-size: 0.7em;
+  }
+
+  .calendar-screen .fc .fc-daygrid-day-number {
+    font-size: 0.7em;
+    padding: 3px;
+  }
+
+  .calendar-screen .fc .fc-event {
+    font-size: 0.65em;
+    padding: 1px 2px;
+  }
+
+  .calendar-screen .screen-body .export-btn {
+    padding: 10px;
+    font-size: 1em;
+    max-width: 180px;
+  }
+}
+
+/* Pantallas medianas (tabletas, 601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .calendar-screen .screen-header,
+  .calendar-screen .screen-body {
+    max-width: 700px; /* Ajustado para tabletas */
+    padding: 20px;
+  }
+
+  .calendar-screen .screen-header {
+    margin-bottom: 20px;
+  }
+
+  .calendar-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+
+  .calendar-screen .screen-header p {
+    font-size: 1em;
+  }
+
+  .calendar-screen .fc .fc-toolbar-title {
+    font-size: 1.2em;
+  }
+
+  .calendar-screen .fc .fc-button {
+    padding: 5px 8px;
+    font-size: 0.75em;
+  }
+
+  .calendar-screen .fc .fc-col-header-cell {
+    padding: 5px;
+    font-size: 0.8em;
+  }
+
+  .calendar-screen .fc .fc-daygrid-day-number {
+    font-size: 0.8em;
+  }
+
+  .calendar-screen .fc .fc-event {
+    font-size: 0.75em;
+  }
+
+  .calendar-screen .screen-body .export-btn {
+    padding: 11px;
+    max-width: 190px;
   }
 }

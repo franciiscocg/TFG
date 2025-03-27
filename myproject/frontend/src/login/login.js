@@ -40,42 +40,31 @@ function Login() {
   };
 
   return (
-    <div className="screen-container">
-      <AppNavbar />
-      <header className="screen-header">
-        <h1>Iniciar Sesión</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Usuario:</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Ingresa tu usuario"
-              required
-            />
-          </div>
-          <div>
-            <label>Contraseña:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Ingresa tu contraseña"
-              required
-            />
-          </div>
-          <button type="submit">Iniciar Sesión</button>
-          <Link to="/register">
-            <button type="button">Registrarse</button>
-          </Link>
-          <Link to="/">
-            <button type="button">Volver al Inicio</button>
-          </Link>
-        </form>
-        {message && <p>{message}</p>}
-      </header>
-    </div>
+<div className="login-screen screen-container">
+  <header className="screen-header">
+    <h1>Iniciar Sesión</h1>
+  </header>
+  <div className="screen-body">
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Usuario:</label>
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Ingresa tu usuario" required />
+      </div>
+      <div>
+        <label>Contraseña:</label>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Ingresa tu contraseña" required />
+      </div>
+      <button type="submit">Iniciar Sesión</button>
+      <Link to="/register">
+        <button type="button">Registrarse</button>
+      </Link>
+      <Link to="/">
+        <button type="button">Volver al Inicio</button>
+      </Link>
+    </form>
+    {message && <p>{message}</p>}
+  </div>
+</div>
   );
 }
 

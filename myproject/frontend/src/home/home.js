@@ -6,28 +6,31 @@ import { useAuth } from '../context/AuthContext';
 function Home() {
     const { isAuthenticated } = useAuth();
 
-  return (
-    <div className="screen-container">
-    <header className="screen-header">
-        <h1>Bienvenido a Mi Aplicación</h1>
-        {isAuthenticated ? (
-          <>
-            <p>Bienvenido de nuevo. ¿Qué quieres hacer hoy?</p>
-            <Link to="/upload">
-              <button>Subir PDF</button>
-            </Link>
-          </>
-        ) : (
-          <>
-            <p>Explora y disfruta de una experiencia increíble.</p>
-            <Link to="/login">
-              <button>Comenzar</button>
-            </Link>
-          </>
-        )}
-      </header>
-    </div>
-  );
+    return (
+<div className="home-screen">
+  <header className="screen-header">
+    <h1>Bienvenido a Mi Aplicación</h1>
+    {isAuthenticated ? (
+      <>
+        <p>Bienvenido de nuevo. ¿Qué quieres hacer hoy?</p>
+        <Link to="/upload">
+          <button>Subir PDF</button>
+        </Link>
+      </>
+    ) : (
+      <>
+        <p>Explora y disfruta de una experiencia increíble.</p>
+        <Link to="/login">
+          <button>Comenzar</button>
+        </Link>
+      </>
+    )}
+  </header>
+  <div className="screen-body">
+    <p>Contenido adicional aquí (opcional).</p>
+  </div>
+</div>
+    );
 }
 
 export default Home;
