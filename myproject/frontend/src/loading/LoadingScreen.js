@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import AppNavbar from '../AppNavbar';
 import '../App.css';
 
 function LoadingScreen() {
@@ -55,8 +54,7 @@ function LoadingScreen() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="screen-container">
-      <AppNavbar />
+    <div className="loading-screen screen-container">
       <header className="screen-header">
         <h1>Extrayendo Fechas</h1>
         <div className="loading-container">
