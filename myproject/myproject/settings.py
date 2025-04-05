@@ -150,3 +150,13 @@ CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo; ajusta en producción
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+ANYMAIL = {
+    "MAILERSEND_API_TOKEN": "mlsn.09acea69f980d687e8e369146302a62217755b8063933e158f9050ccf84abd92",  # Tu clave API de MailerSend
+    "MAILERSEND_SENDER_DOMAIN": "test-65qngkd9zdjlwr12.mlsender.net",  # Dominio predeterminado de MailerSend
+}
+
+# Configura el backend de correo
+EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@test-65qngkd9zdjlwr12.mlsender.net"  # Usa el dominio predeterminado
+SERVER_EMAIL = "noreply@test-65qngkd9zdjlwr12.mlsender.net"
