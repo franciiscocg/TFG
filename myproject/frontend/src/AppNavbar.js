@@ -30,6 +30,9 @@ const AppNavbar = () => {
             <NavItem>
               <NavLink tag={Link} to="/calendar">Calendar</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/asignaturas">Asignaturas</NavLink>
+            </NavItem>
             <NavLink onClick={handleLogout} style={{ cursor: 'pointer' }}>
                 Logout
             </NavLink>

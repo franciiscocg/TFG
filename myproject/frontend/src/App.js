@@ -12,6 +12,8 @@ import DatesResult from './files/DatesResult';
 import './App.css';
 import AppNavbar from './AppNavbar';
 import CalendarViewer from './calendar/CalendarViewer';
+import AsignaturasList from './asignaturas/AsignaturasList';
+import AsignaturaEdit from './asignaturas/AsignaturaEdit';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/loading/:fileId" element={<LoadingScreen />} />
           <Route path="/dates/:fileId" element={<DatesResult />} /> 
           <Route path="/calendar" element={<CalendarViewer />} />
+          <Route path="/asignaturas" element={<AsignaturasList/>} />
+          <Route path="/editar-asignatura/:asignaturaNombre" element={<AsignaturaEdit />} />
         </Routes>
       </div>
     </Router>

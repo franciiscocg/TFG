@@ -2170,3 +2170,495 @@
     height: 35px;
   }
 }
+/* Contenedor principal de la pantalla de AsignaturasList */
+.asignaturas-list-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23;
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+
+.asignaturas-list-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.asignaturas-list-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0;
+  color: #61dafb;
+  text-align: center;
+}
+
+.asignaturas-list-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.asignaturas-list-screen .asignaturas-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 0 20px 0;
+}
+
+.asignaturas-list-screen .asignaturas-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #2e333d;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  flex-wrap: wrap;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.asignaturas-list-screen .asignaturas-list li:hover {
+  background-color: #3a404b;
+}
+
+.asignaturas-list-screen .asignaturas-list li a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.asignaturas-list-screen .asignaturas-list li a:hover {
+  text-decoration: underline;
+}
+
+.asignaturas-list-screen .asignaturas-list li span {
+  font-size: 0.9em;
+  color: #cccccc;
+  flex-grow: 1;
+}
+
+.asignaturas-list-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.asignaturas-list-screen .screen-body p.success {
+  background-color: rgba(68, 255, 68, 0.1);
+  color: #44ff44;
+}
+
+.asignaturas-list-screen .screen-body p.error {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.asignaturas-list-screen .screen-body p:empty {
+  display: none;
+}
+
+/* Contenedor principal de la pantalla de AsignaturaEdit */
+.asignatura-edit-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1a1d23;
+  color: #ffffff;
+  box-sizing: border-box;
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+
+.asignatura-edit-screen .screen-header {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.asignatura-edit-screen .screen-header h1 {
+  font-size: 2em;
+  margin: 0;
+  color: #61dafb;
+  text-align: center;
+}
+
+.asignatura-edit-screen .screen-body {
+  background-color: #282c34;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.asignatura-edit-screen .asignatura-form {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.asignatura-edit-screen .form-section {
+  background-color: #2e333d;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #61dafb;
+}
+
+.asignatura-edit-screen .form-section h2 {
+  font-size: 1.5em;
+  color: #61dafb;
+  margin: 0 0 15px 0;
+}
+
+.asignatura-edit-screen label {
+  font-size: 1.2em;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.asignatura-edit-screen input,
+.asignatura-edit-screen select,
+.asignatura-edit-screen textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #61dafb;
+  border-radius: 5px;
+  background-color: #2e333d;
+  color: #ffffff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.asignatura-edit-screen input:focus,
+.asignatura-edit-screen select:focus,
+.asignatura-edit-screen textarea:focus {
+  border-color: #21a1f1;
+  box-shadow: 0 0 5px rgba(33, 161, 241, 0.5);
+  outline: none;
+}
+
+.asignatura-edit-screen input::placeholder,
+.asignatura-edit-screen textarea::placeholder {
+  color: #cccccc;
+  opacity: 0.8;
+}
+
+.asignatura-edit-screen textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.asignatura-edit-screen .item-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.asignatura-edit-screen .item-row input,
+.asignatura-edit-screen .item-row select {
+  flex: 1;
+  min-width: 150px;
+}
+
+.asignatura-edit-screen .new-item {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #61dafb;
+}
+
+.asignatura-edit-screen .new-item h3 {
+  font-size: 1.2em;
+  color: #61dafb;
+  margin: 0 0 10px 0;
+}
+
+.asignatura-edit-screen .save-btn,
+.asignatura-edit-screen .add-btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.asignatura-edit-screen .save-btn {
+  background-color: #44aa44;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+.asignatura-edit-screen .save-btn:hover {
+  background-color: #338833;
+  transform: scale(1.02);
+}
+
+.asignatura-edit-screen .save-btn:active {
+  transform: scale(0.98);
+}
+
+.asignatura-edit-screen .add-btn {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+.asignatura-edit-screen .add-btn:hover {
+  background-color: #21a1f1;
+  transform: scale(1.02);
+}
+
+.asignatura-edit-screen .add-btn:active {
+  transform: scale(0.98);
+}
+
+.asignatura-edit-screen .screen-body p {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.asignatura-edit-screen .screen-body p.success {
+  background-color: rgba(68, 255, 68, 0.1);
+  color: #44ff44;
+}
+
+.asignatura-edit-screen .screen-body p.error {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff4444;
+}
+
+.asignatura-edit-screen .screen-body p:empty {
+  display: none;
+}
+
+/* Responsividad para AsignaturasList */
+@media (max-width: 600px) {
+  .asignaturas-list-screen {
+    padding-top: 70px;
+  }
+
+  .asignaturas-list-screen .screen-header,
+  .asignaturas-list-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .asignaturas-list-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .asignaturas-list-screen .asignaturas-list li {
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .asignaturas-list-screen .asignaturas-list li a {
+    font-size: 1em;
+  }
+
+  .asignaturas-list-screen .asignaturas-list li span {
+    font-size: 0.8em;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .asignaturas-list-screen .screen-header,
+  .asignaturas-list-screen .screen-body {
+    max-width: 700px;
+  }
+
+  .asignaturas-list-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+}
+
+/* Responsividad para AsignaturaEdit */
+@media (max-width: 600px) {
+  .asignatura-edit-screen {
+    padding-top: 70px;
+  }
+
+  .asignatura-edit-screen .screen-header,
+  .asignatura-edit-screen .screen-body {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .asignatura-edit-screen .screen-header h1 {
+    font-size: 1.5em;
+  }
+
+  .asignatura-edit-screen .form-section h2 {
+    font-size: 1.2em;
+  }
+
+  .asignatura-edit-screen label {
+    font-size: 1em;
+  }
+
+  .asignatura-edit-screen input,
+  .asignatura-edit-screen select,
+  .asignatura-edit-screen textarea {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .asignatura-edit-screen .item-row {
+    flex-direction: column;
+  }
+
+  .asignatura-edit-screen .item-row input,
+  .asignatura-edit-screen .item-row select {
+    min-width: 100%;
+  }
+
+  .asignatura-edit-screen .new-item h3 {
+    font-size: 1em;
+  }
+
+  .asignatura-edit-screen .save-btn,
+  .asignatura-edit-screen .add-btn {
+    padding: 10px;
+    font-size: 1em;
+    max-width: 180px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .asignatura-edit-screen .screen-header,
+  .asignatura-edit-screen .screen-body {
+    max-width: 700px;
+  }
+
+  .asignatura-edit-screen .screen-header h1 {
+    font-size: 1.8em;
+  }
+
+  .asignatura-edit-screen .form-section h2 {
+    font-size: 1.4em;
+  }
+
+  .asignatura-edit-screen label {
+    font-size: 1.1em;
+  }
+
+  .asignatura-edit-screen input,
+  .asignatura-edit-screen select,
+  .asignatura-edit-screen textarea {
+    padding: 9px;
+  }
+
+  .asignatura-edit-screen .save-btn,
+  .asignatura-edit-screen .add-btn {
+    padding: 11px;
+    max-width: 190px;
+  }
+}
+/* Estilos para el botón de eliminar en AsignaturasList */
+.asignaturas-list-screen .delete-btn {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  background-color: #ff4444;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.asignaturas-list-screen .delete-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Estilos para el botón de eliminar en AsignaturaEdit */
+.asignatura-edit-screen .delete-btn {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  background-color: #ff4444;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.asignatura-edit-screen .delete-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Ajustar el modal para dos botones */
+.modal-content .modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-content .modal-buttons button:first-child {
+  background-color: #ff4444; /* Eliminar en rojo */
+}
+
+.modal-content .modal-buttons button:first-child:hover {
+  background-color: #cc0000;
+}
+
+.modal-content .modal-buttons button:last-child {
+  background-color: #61dafb; /* Cancelar en azul */
+}
+
+.modal-content .modal-buttons button:last-child:hover {
+  background-color: #21a1f1;
+}

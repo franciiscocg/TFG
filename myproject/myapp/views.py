@@ -9,6 +9,7 @@ from django.conf import settings
 from archivos.models import UploadedFile
 import re
 from .models import Asignatura, Fechas, Horario, Profesores
+from .serializers import AsignaturaSerializer
 
 # URL del servidor de Ollama
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
@@ -294,3 +295,63 @@ class GetUserCalendarDataView(APIView):
                 "message": f"Error al obtener los datos: {str(e)}",
                 "data": []
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+            
+class AsignaturaUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, nombre):
+        try:
+            asignatura = get_object_or_404(Asignatura, nombre=nombre)
+            data = request.data
+
+            # Actualizar datos básicos de la asignatura
+            asignatura_serializer = AsignaturaSerializer(asignatura, data=data['asignatura'], partial=True)
+            if asignatura_serializer.is_valid():
+                asignatura_serializer.save()
+
+            # Actualizar horarios (eliminar y recrear)
+            if 'horarios' in data:
+                Horario.objects.filter(asignatura=asignatura).delete()
+                for horario_data in data['horarios']:
+                    Horario.objects.create(asignatura=asignatura, **horario_data)
+
+            # Actualizar fechas (eliminar y recrear)
+            if 'fechas' in data:
+                Fechas.objects.filter(asignatura=asignatura).delete()
+                for fecha_data in data['fechas']:
+                    Fechas.objects.create(asignatura=asignatura, **fecha_data)
+
+            # Actualizar profesores (eliminar y recrear)
+            if 'profesores' in data:
+                Profesores.objects.filter(asignatura=asignatura).delete()
+                for profesor_data in data['profesores']:
+                    horario_data = profesor_data.pop('horario', None)
+                    horario = None
+                    if horario_data:
+                        horario = Horario.objects.create(asignatura=asignatura, **horario_data)
+                    Profesores.objects.create(asignatura=asignatura, horario=horario, **profesor_data)
+
+            return Response({
+                "message": "Asignatura actualizada con éxito"
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "message": f"Error al actualizar la asignatura: {str(e)}"
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+class AsignaturaDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, nombre):
+        try:
+            asignatura = get_object_or_404(Asignatura, nombre=nombre)
+            asignatura.delete()  # Esto elimina la asignatura y todo lo relacionado gracias a on_delete=models.CASCADE
+            return Response({
+                "message": "Asignatura eliminada con éxito"
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({
+                "message": f"Error al eliminar la asignatura: {str(e)}"
+            }, status=status.HTTP_400_BAD_REQUEST)
