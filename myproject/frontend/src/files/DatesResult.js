@@ -5,7 +5,7 @@ import '../App.css';
 
 function DatesResult() {
   const { state } = useLocation();
-  const { fileId } = useParams(); // Extrae el fileId de la URL (ej. /dates/20)
+  const { fileId } = useParams();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [editedData, setEditedData] = useState('');

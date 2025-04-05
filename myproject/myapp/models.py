@@ -1,8 +1,6 @@
 from django.db import models
 
-class Fechas(models.Model):
-    titulo = models.CharField(max_length=100)
-    fecha = models.DateField()
+
 
 class Asignatura(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,6 +8,7 @@ class Asignatura(models.Model):
     departamento = models.CharField(max_length=100)
     universidad = models.CharField(max_length=100)
     condiciones_aprobado = models.TextField(blank=True)
+    
 
 
 class Horario(models.Model):
@@ -30,3 +29,8 @@ class Profesores(models.Model):
     despacho = models.CharField(max_length=100, blank=True)
     enlace = models.URLField(blank=True)
     horario = models.OneToOneField(Horario, on_delete=models.SET_NULL, null=True, blank=True, related_name='profesor')
+    
+class Fechas(models.Model):
+    asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, related_name='fechas')
+    titulo = models.CharField(max_length=100)
+    fecha = models.DateField()

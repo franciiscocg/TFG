@@ -8,6 +8,7 @@ import json
 from django.conf import settings
 from archivos.models import UploadedFile
 import re
+from .models import Asignatura, Fechas, Horario, Profesores
 
 # URL del servidor de Ollama
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
@@ -116,3 +117,104 @@ Ahora, por favor, procesa el siguiente texto resumido:
             return Response(json_data, status=status.HTTP_200_OK)
         except json.JSONDecodeError as e:
             return Response({"error": f"Formato JSON inválido: {json_response}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+ 
+        
+class ProcessExtractedDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, file_id):
+        # Obtener el archivo subido asociado al usuario autenticado
+        file_obj = get_object_or_404(UploadedFile, id=file_id, user=request.user)
+
+        # Verificar si hay extracted_data
+        extracted_data = file_obj.extracted_data
+        if not extracted_data or not isinstance(extracted_data, list):
+            return Response({
+                "message": "No hay datos extraídos válidos para procesar",
+                "extracted_data": extracted_data  # Para depuración
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # Procesar cada elemento en extracted_data
+        for data in extracted_data:
+            if not isinstance(data, dict):
+                continue  # Saltar si no es un diccionario
+
+            # Crear o actualizar la asignatura
+            asignatura_data = data.get("asignatura") or {}
+            if not isinstance(asignatura_data, dict):
+                asignatura_data = {}
+            asignatura, _ = Asignatura.objects.get_or_create(
+                nombre=asignatura_data.get("nombre", ""),
+                defaults={
+                    "grado": asignatura_data.get("grado", ""),
+                    "departamento": asignatura_data.get("departamento", ""),
+                    "universidad": asignatura_data.get("universidad", ""),
+                    "condiciones_aprobado": asignatura_data.get("condiciones_aprobado", "")
+                }
+            )
+
+            # Crear fechas asociadas a la asignatura (evitar duplicados)
+            fechas_data = data.get("fechas") or []
+            for fecha in fechas_data:
+                if not isinstance(fecha, dict):
+                    continue
+                Fechas.objects.get_or_create(
+                    asignatura=asignatura,
+                    titulo=fecha.get("titulo", ""),
+                    fecha=fecha.get("fecha", ""),
+                )
+
+            # Crear horarios asociados a la asignatura (evitar duplicados)
+            horarios_data = data.get("horarios") or []
+            for horario in horarios_data:
+                if not isinstance(horario, dict):
+                    continue
+                Horario.objects.get_or_create(
+                    asignatura=asignatura,
+                    grupo=horario.get("grupo", ""),
+                    tipo=horario.get("tipo", "teoria"),
+                    hora=horario.get("hora", ""),
+                    aula=horario.get("aula", "")
+                )
+
+            # Crear profesores asociados a la asignatura (evitar duplicados)
+            profesores_data = data.get("profesores") or []
+            for profesor in profesores_data:
+                if not isinstance(profesor, dict):
+                    continue
+                # Si hay un horario asociado al profesor, lo creamos o buscamos
+                horario_obj = None
+                horario_data = profesor.get("horario")
+                if isinstance(horario_data, dict):
+                    horario_obj, _ = Horario.objects.get_or_create(
+                        asignatura=asignatura,
+                        grupo=horario_data.get("grupo", ""),
+                        tipo=horario_data.get("tipo", "teoria"),
+                        hora=horario_data.get("hora", ""),
+                        aula=horario_data.get("aula", "")
+                    )
+
+                # Crear o obtener el profesor
+                profesor_obj, created = Profesores.objects.get_or_create(
+                    nombre=profesor.get("nombre", ""),
+                    asignatura=asignatura,
+                    defaults={
+                        "despacho": profesor.get("despacho", ""),
+                        "enlace": profesor.get("enlace", ""),
+                        "horario": horario_obj
+                    }
+                )
+                # Si ya existe, actualizar campos opcionales si no están vacíos
+                if not created:
+                    if profesor.get("despacho") and profesor_obj.despacho != profesor.get("despacho"):
+                        profesor_obj.despacho = profesor.get("despacho")
+                    if profesor.get("enlace") and profesor_obj.enlace != profesor.get("enlace"):
+                        profesor_obj.enlace = profesor.get("enlace")
+                    if horario_obj and profesor_obj.horario != horario_obj:
+                        profesor_obj.horario = horario_obj
+                    profesor_obj.save()
+
+        # Serializar el archivo actualizado
+        return Response({
+            "message": "Datos extraídos procesados y guardados en la base de datos con éxito",
+        }, status=status.HTTP_200_OK)

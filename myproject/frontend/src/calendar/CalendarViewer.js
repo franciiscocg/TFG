@@ -60,26 +60,6 @@ function CalendarScreen() {
         loadEvents();
     }, [isAuthenticated, navigate]);
 
-    const handleDateClick = (arg) => {
-        const title = prompt('Ingresa el nombre del evento:');
-        if (title) {
-            setEvents([...events, { 
-                title, 
-                date: arg.dateStr, 
-                id: Date.now().toString(),
-                extendedProps: {
-                    filename: 'Evento manual',
-                    asignatura: 'N/A',
-                    grado: 'N/A',
-                    departamento: 'N/A',
-                    universidad: 'N/A',
-                    condiciones_aprobado: 'N/A',
-                    description: 'Evento creado manualmente'
-                }
-            }]);
-        }
-    };
-
     const handleEventClick = (clickInfo) => {
         setSelectedEvent(clickInfo.event);
         setIsModalOpen(true);
@@ -111,6 +91,7 @@ function CalendarScreen() {
     };
 
     return (
+        
         <div className="screen-container calendar-screen">
             <header className="screen-header">
                 <h1>Calendario</h1>
@@ -123,7 +104,6 @@ function CalendarScreen() {
                         initialView="dayGridMonth"
                         locale="es"
                         events={events}
-                        dateClick={handleDateClick}
                         eventClick={handleEventClick}
                         eventColor="#61dafb"
                         height="auto"
@@ -148,20 +128,19 @@ function CalendarScreen() {
                     <div className="modal-content">
                         <h2>Detalles del Evento</h2>
                         <div className="modal-details">
-                            <p><strong>Título:</strong> {selectedEvent.title}</p>
-                            <p><strong>Fecha:</strong> {selectedEvent.date}</p>
-                            <p><strong>Archivo:</strong> {selectedEvent.extendedProps.filename}</p>
-                            <p><strong>Asignatura:</strong> {selectedEvent.extendedProps.asignatura}</p>
-                            <p><strong>Grado:</strong> {selectedEvent.extendedProps.grado}</p>
-                            <p><strong>Departamento:</strong> {selectedEvent.extendedProps.departamento}</p>
-                            <p><strong>Universidad:</strong> {selectedEvent.extendedProps.universidad}</p>
-                            <p><strong>Condiciones de aprobado:</strong> {selectedEvent.extendedProps.condiciones_aprobado}</p>
-                        </div>
-                        <div className="modal-buttons">
-                            <button onClick={() => setIsModalOpen(false)}>Cerrar</button>
-                        </div>
+                        <p><strong>Título:</strong> {selectedEvent.title || 'No especificado'}</p>
+                        <p><strong>Archivo:</strong> {selectedEvent.extendedProps.filename || 'No especificado'}</p>
+                        <p><strong>Asignatura:</strong> {selectedEvent.extendedProps.asignatura || 'No especificado'}</p>
+                        <p><strong>Grado:</strong> {selectedEvent.extendedProps.grado || 'No especificado'}</p>
+                        <p><strong>Departamento:</strong> {selectedEvent.extendedProps.departamento || 'No especificado'}</p>
+                        <p><strong>Universidad:</strong> {selectedEvent.extendedProps.universidad || 'No especificado'}</p>
+                        <p><strong>Condiciones de aprobado:</strong> {selectedEvent.extendedProps.condiciones_aprobado || 'No especificado'}</p>
+                    </div>
+                    <div className="modal-buttons">
+                        <button onClick={() => setIsModalOpen(false)}>Cerrar</button>
                     </div>
                 </div>
+            </div>
             )}
         </div>
     );

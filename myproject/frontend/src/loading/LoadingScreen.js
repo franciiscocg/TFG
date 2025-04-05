@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import '../App.css';
 
 function LoadingScreen() {
-  const [timeLeft, setTimeLeft] = useState(440);
+  const [timeLeft, setTimeLeft] = useState(440); // Tiempo estimado inicial
   const [datesData, setDatesData] = useState(null);
   const [error, setError] = useState('');
   const { fileId } = useParams();
@@ -17,7 +17,7 @@ function LoadingScreen() {
       return;
     }
 
-    fetchDates();
+    fetchDates(); // Iniciamos con la primera solicitud
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
@@ -39,10 +39,35 @@ function LoadingScreen() {
       const result = await response.json();
       if (response.ok) {
         setDatesData(result);
-        setTimeLeft(0);
-        navigate(`/dates/${fileId}`, { state: { datesData: result } });
+        // Si la primera solicitud es exitosa, llamamos a processExtractedData
+        await processExtractedData();
       } else {
         setError('Error al extraer fechas: ' + JSON.stringify(result));
+        setTimeLeft(0);
+      }
+    } catch (error) {
+      setError('Error al conectar con el servidor: ' + error.message);
+      setTimeLeft(0);
+    }
+  };
+
+  const processExtractedData = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch(`http://localhost:8000/api/ai/${fileId}/process-extracted-data/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        setTimeLeft(0); // Detenemos el temporizador
+        navigate(`/dates/${fileId}`, { state: { datesData: datesData } }); // Redirigimos con los datos de fetchDates
+      } else {
+        setError('Error al procesar los datos extraídos: ' + JSON.stringify(result));
         setTimeLeft(0);
       }
     } catch (error) {
@@ -56,7 +81,7 @@ function LoadingScreen() {
   return (
     <div className="loading-screen screen-container">
       <header className="screen-header">
-        <h1>Extrayendo Fechas</h1>
+        <h1>Procesando Datos</h1>
         <div className="loading-container">
           <p>Procesando el texto... Tiempo estimado restante: {timeLeft} segundos</p>
           <div className="spinner"></div>

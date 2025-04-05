@@ -1,0 +1,174 @@
+Complementos de Bases de Datos
+Datos de la
+asignatura
+Profesorado
+Contenido
+Planificación
+Evaluación
+Objetivos
+Presentación de la asignatura
+Dudas
+Grado en Ingeniería del Software
+http://www.lsi.us.es/docencia/pagina_asignatura.php?id=112
+Departamento de Lenguajes y Sistemas Informáticos
+Universidad de Sevilla
+1Datos de la asignatura
+• Optativa 4º de Ingeniería del
+Datos de la
+asignatura
+Software
+Profesorado
+Contenido – 3,6 créditos de teoría
+Planificación
+– 2,4 créditos de laboratorio
+Evaluación
+Objetivos
+Dudas
+Organización semanal
+– 2 horas de teoría
+– 2 horas de práctica/laboratorio
+2Horarios y grupos
+• Las prácticas comienzan:
+Datos de la
+asignatura
+11 de febrero.
+Profesorado
+• Días de prácticas que vamos a teoría:
+Contenido
+Planificación
+4/2/25, 22/4/25 y 13/5/25
+Evaluación
+Objetivos
+Dudas
+GRUPO TEORÍA LABORATORIO
+Grupo 1 Miércoles 10:40-12:30 Martes 12:40-14:30
+(A2.14) (F1.32, F1.33-A2.14)
+Grupo 2 Miércoles 17:40-19:30 Martes 15:30-17:20
+(H1.10) (H1.10, F1.30, F1.33)
+3Inscripción
+• Inscripción en grupo de laboratorio
+Datos de la
+asignatura
+en Enseñanza Virtual.
+Profesorado
+Contenido
+Planificación
+Evaluación
+Objetivos
+Dudas
+4Profesorado
+Datos de la
+María Teresa Gómez López (F1.43)
+asignatura
+https://www.idea.us.es/maria-teresa-gomez/
+Profesorado
+Contenido
+Toñi Reina (F0.52)
+Planificación
+https://personal.us.es/reinaqu/
+Evaluación
+Objetivos
+Octavio Martín (F1.44)
+Dudas
+https://personal.us.es/omartindiaz
+5Contenido
+Datos de la
+• GIS
+asignatura
+• Data mining
+Profesorado
+Contenido • Bases de datos NoSQL
+Planificación • Blockchain
+Evaluación
+• Ingeniería inversa
+Objetivos
+• Bases de datos orientadas a objetos
+Dudas
+• Data warehouse
+• Web semántica
+• Big data
+• Bases de datos móviles
+• Administración de bases de datos
+• Bases de datos distribuidas
+6Planificación
+Datos de la
+asignatura
+Profesorado
+Contenido
+Planificación
+Evaluación
+Objetivos
+Dudas
+Entrega de
+proyectos
+7Evaluación Continua (por curso)
+• Exámenes Test de contenidos (EXA1 y EXA2) 18 de
+marzo y 13 de mayo.
+Datos de la
+asignatura
+• Trabajo en clase (TCL) con un máximo de 2 puntos.
+Profesorado
+• Proyecto (6 puntos).
+Contenido
+– 1 o 2 miembros por trabajo (deseable 2) sobre una
+Planificación
+de las tecnologías estudiadas.
+Evaluación
+– Exposición en clase (30 abril, 13 mayo, 14 de
+Objetivos mayo y 21 de mayo).
+Dudas – Asistencia obligatoria para evaluación continua.
+• Se guardarán las partes aprobadas hasta la Tercera
+Convocatoria.
+• Hay que sacar un mínimo de 4 en cada parte para
+hacer media. [0.5*EXA1 + 0.5*EXA2 +TCL>=4] y
+PROY>=4
+• Calificación evaluación continua:
+(0.2*EXA1 + 0.2*EXA2 +TCL)+0.6*PROYEvaluación ordinaria
+• Para los alumnos que no sigan evaluación
+Datos de la continua y todos los alumnos en la Primera,
+asignatura
+Segunda y Tercera Convocatoria.
+Profesorado
+• Examen con pruebas similares a las realizadas
+Contenido
+en la evaluación por curso.
+Planificación
+– Test
+Evaluación
+– Proyecto (mismas restricciones que en la
+Objetivos
+continua).
+Dudas
+• Se guardarán las partes aprobadas hasta la
+Tercera Convocatoria
+• Hay que sacar un mínimo de 4 en cada parte
+para hacer media .
+• Calificación convocatoria 2º y 3ª:
+0.4*EXA+0.6*PROY
+9Objetivos de la asignatura
+Datos de la
+asignatura
+Profesorado
+Contenido
+Planificación
+Evaluación
+Objetivos
+Dudas
+http://economia.elpais.com/economia/2015/01/15/actualidad/1421334018_476553.html
+10Datos de la
+asignatura
+Profesorado
+Contenido
+Planificación
+Evaluación
+Objetivos
+Dudas
+11Datos de la
+asignatura
+Profesorado
+Contenido
+Planificación
+Evaluación
+Objetivos
+Dudas
+12
