@@ -14,18 +14,24 @@ function CalendarScreen() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const fetchUserExtractedData = async () => {
+    const fetchCalendarData = async () => {
         try {
             const token = localStorage.getItem('accessToken');
-            const response = await fetch('http://localhost:8000/api/upload/extracted/', {
+            const response = await fetch('http://localhost:8000/api/ai/calendar/data/', {
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            const data = await response.json();
-            return data.data;
+            const result = await response.json();
+            if (response.ok) {
+                return result.data;
+            } else {
+                console.error('Error fetching calendar data:', result.message);
+                return [];
+            }
         } catch (error) {
-            console.error('Error fetching extracted data:', error);
+            console.error('Error fetching calendar data:', error);
             return [];
         }
     };
@@ -37,20 +43,20 @@ function CalendarScreen() {
         }
 
         const loadEvents = async () => {
-            const extractedData = await fetchUserExtractedData();
-            const calendarEvents = extractedData.flatMap(file => 
-                file.extracted_data[0].fechas.map(event => ({
-                    id: `${file.file_id}-${event.titulo}-${event.fecha}`,
+            const calendarData = await fetchCalendarData();
+            const calendarEvents = calendarData.flatMap(item => 
+                item.fechas.map(event => ({
+                    id: `${item.file_id || 'unknown'}-${event.titulo}-${event.fecha}`,
                     title: event.titulo,
                     date: event.fecha,
                     extendedProps: {
-                        filename: file.filename,
-                        asignatura: file.extracted_data[0].asignatura.nombre,
-                        grado: file.extracted_data[0].asignatura.grado,
-                        departamento: file.extracted_data[0].asignatura.departamento,
-                        universidad: file.extracted_data[0].asignatura.universidad,
-                        condiciones_aprobado: file.extracted_data[0].asignatura.condiciones_aprobado,
-                        description: `Archivo: ${file.filename}\nAsignatura: ${file.extracted_data[0].asignatura.nombre}`
+                        filename: item.filename || 'Desconocido',
+                        asignatura: item.asignatura.nombre,
+                        grado: item.asignatura.grado,
+                        departamento: item.asignatura.departamento,
+                        universidad: item.asignatura.universidad,
+                        condiciones_aprobado: item.asignatura.condiciones_aprobado,
+                        description: `Archivo: ${item.filename || 'Desconocido'}\nAsignatura: ${item.asignatura.nombre}`
                     }
                 }))
             );
@@ -91,7 +97,6 @@ function CalendarScreen() {
     };
 
     return (
-        
         <div className="screen-container calendar-screen">
             <header className="screen-header">
                 <h1>Calendario</h1>
@@ -128,19 +133,19 @@ function CalendarScreen() {
                     <div className="modal-content">
                         <h2>Detalles del Evento</h2>
                         <div className="modal-details">
-                        <p><strong>Título:</strong> {selectedEvent.title || 'No especificado'}</p>
-                        <p><strong>Archivo:</strong> {selectedEvent.extendedProps.filename || 'No especificado'}</p>
-                        <p><strong>Asignatura:</strong> {selectedEvent.extendedProps.asignatura || 'No especificado'}</p>
-                        <p><strong>Grado:</strong> {selectedEvent.extendedProps.grado || 'No especificado'}</p>
-                        <p><strong>Departamento:</strong> {selectedEvent.extendedProps.departamento || 'No especificado'}</p>
-                        <p><strong>Universidad:</strong> {selectedEvent.extendedProps.universidad || 'No especificado'}</p>
-                        <p><strong>Condiciones de aprobado:</strong> {selectedEvent.extendedProps.condiciones_aprobado || 'No especificado'}</p>
-                    </div>
-                    <div className="modal-buttons">
-                        <button onClick={() => setIsModalOpen(false)}>Cerrar</button>
+                            <p><strong>Título:</strong> {selectedEvent.title || 'No especificado'}</p>
+                            <p><strong>Archivo:</strong> {selectedEvent.extendedProps.filename || 'No especificado'}</p>
+                            <p><strong>Asignatura:</strong> {selectedEvent.extendedProps.asignatura || 'No especificado'}</p>
+                            <p><strong>Grado:</strong> {selectedEvent.extendedProps.grado || 'No especificado'}</p>
+                            <p><strong>Departamento:</strong> {selectedEvent.extendedProps.departamento || 'No especificado'}</p>
+                            <p><strong>Universidad:</strong> {selectedEvent.extendedProps.universidad || 'No especificado'}</p>
+                            <p><strong>Condiciones de aprobado:</strong> {selectedEvent.extendedProps.condiciones_aprobado || 'No especificado'}</p>
+                        </div>
+                        <div className="modal-buttons">
+                            <button onClick={() => setIsModalOpen(false)}>Cerrar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             )}
         </div>
     );

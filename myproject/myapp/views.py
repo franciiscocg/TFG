@@ -218,3 +218,79 @@ class ProcessExtractedDataView(APIView):
         return Response({
             "message": "Datos extraídos procesados y guardados en la base de datos con éxito",
         }, status=status.HTTP_200_OK)
+        
+
+class GetUserCalendarDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # Obtener todas las asignaturas creadas por el usuario (sin relación directa con UploadedFile)
+            asignaturas = Asignatura.objects.all()  # Si quieres filtrar por usuario, necesitarías otro enfoque
+
+            # Preparar los datos para el calendario
+            data = []
+            for asignatura in asignaturas:
+                fechas = Fechas.objects.filter(asignatura=asignatura)
+                horarios = Horario.objects.filter(asignatura=asignatura)
+                profesores = Profesores.objects.filter(asignatura=asignatura)
+
+                asignatura_data = {
+                    "nombre": asignatura.nombre,
+                    "grado": asignatura.grado,
+                    "departamento": asignatura.departamento,
+                    "universidad": asignatura.universidad,
+                    "condiciones_aprobado": asignatura.condiciones_aprobado,
+                }
+
+                fechas_data = [
+                    {"titulo": fecha.titulo, "fecha": fecha.fecha.strftime("%Y-%m-%d")}
+                    for fecha in fechas
+                ]
+
+                horarios_data = [
+                    {
+                        "grupo": horario.grupo,
+                        "tipo": horario.tipo,
+                        "hora": horario.hora,
+                        "aula": horario.aula,
+                    }
+                    for horario in horarios
+                ]
+
+                profesores_data = [
+                    {
+                        "nombre": profesor.nombre,
+                        "despacho": profesor.despacho,
+                        "enlace": profesor.enlace,
+                        "horario": {
+                            "grupo": profesor.horario.grupo,
+                            "tipo": profesor.horario.tipo,
+                            "hora": profesor.horario.hora,
+                            "aula": profesor.horario.aula,
+                        } if profesor.horario else None
+                    }
+                    for profesor in profesores
+                ]
+
+                # Intentar vincular con un UploadedFile (opcional, para mantener filename y file_id)
+                uploaded_file = UploadedFile.objects.filter(user=request.user).first()
+                data.append({
+                    "asignatura": asignatura_data,
+                    "fechas": fechas_data,
+                    "horarios": horarios_data,
+                    "profesores": profesores_data,
+                    "file_id": uploaded_file.id if uploaded_file else None,
+                    "filename": uploaded_file.file.name.split('/')[-1] if uploaded_file else "Desconocido",
+                })
+
+            return Response({
+                "message": "Datos obtenidos con éxito",
+                "data": data
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "message": f"Error al obtener los datos: {str(e)}",
+                "data": []
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
