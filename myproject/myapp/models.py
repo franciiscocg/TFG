@@ -8,7 +8,7 @@ class Asignatura(models.Model):
     departamento = models.CharField(max_length=100)
     universidad = models.CharField(max_length=100)
     condiciones_aprobado = models.TextField(blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='asignaturas', null=True, blank=True) 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='asignaturas') 
     
 
 
