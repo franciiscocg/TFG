@@ -11,9 +11,7 @@ function LoadingScreen() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
-  // Obtenemos el modelo seleccionado desde el estado de navegación
-  const selectedModel = location.state?.selectedModel || 'gemma2:9b'; // Valor por defecto si no se pasa
+  const { summaryModel, jsonModel } = location.state || {};
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -37,9 +35,9 @@ function LoadingScreen() {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json', // Añadimos Content-Type
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ model: selectedModel }), // Enviamos el modelo seleccionado
+        body: JSON.stringify({ summary_model: summaryModel, json_model: jsonModel }),
       });
 
       const result = await response.json();
@@ -88,7 +86,7 @@ function LoadingScreen() {
       <header className="screen-header">
         <h1>Procesando Datos</h1>
         <div className="loading-container">
-          <p>Procesando el texto con {selectedModel}... Tiempo estimado restante: {timeLeft} segundos</p>
+          <p>Procesando el texto, Tiempo estimado restante: {timeLeft} segundos</p>
           <div className="spinner"></div>
         </div>
         {error && <p className="error-message">{error}</p>}

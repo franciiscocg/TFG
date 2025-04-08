@@ -31,10 +31,14 @@ class ExtractDatesView(APIView):
         except Exception as e:
             return Response({"message": f"Error al leer el archivo de texto: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        # Obtener el modelo desde el request, con "gemma2:9b" como valor por defecto
-        selected_model = request.data.get("model", "gemma2:9b")
-        if selected_model not in ["gemma2:9b", "deepseek-r1:7b"]:
-            return Response({"message": "Modelo no válido"}, status=status.HTTP_400_BAD_REQUEST)
+        # Obtener ambos modelos desde el request, con valores por defecto
+        summary_model = request.data.get("summary_model", "gemma2:9b")
+        json_model = request.data.get("json_model", "llama3.1:8b")
+        
+        # Validar los modelos
+        valid_models = ["gemma2:9b", "llama3.1:8b"]
+        if summary_model not in valid_models or json_model not in valid_models:
+            return Response({"message": "Uno o ambos modelos no son válidos"}, status=status.HTTP_400_BAD_REQUEST)
 
         def get_json_structure():
             try:
@@ -66,7 +70,7 @@ Ahora, por favor, procesa el siguiente texto:
 [{text}]"""
 
             payload = {
-                "model": selected_model,  # Usar el modelo seleccionado
+                "model": summary_model,  # Usar el modelo para el resumen
                 "prompt": prompt,
                 "stream": False
             }
@@ -96,7 +100,7 @@ Ahora, por favor, procesa el siguiente texto resumido:
 [{summary}]"""
 
             payload = {
-                "model": selected_model,  # Usar el modelo seleccionado
+                "model": json_model,  # Usar el modelo para el JSON
                 "prompt": prompt,
                 "stream": False
             }
@@ -126,7 +130,6 @@ Ahora, por favor, procesa el siguiente texto resumido:
             return Response(json_data, status=status.HTTP_200_OK)
         except json.JSONDecodeError as e:
             return Response({"error": f"Formato JSON inválido: {json_response}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
- 
         
 class ProcessExtractedDataView(APIView):
     permission_classes = [IsAuthenticated]
@@ -158,7 +161,8 @@ class ProcessExtractedDataView(APIView):
                     "grado": asignatura_data.get("grado", ""),
                     "departamento": asignatura_data.get("departamento", ""),
                     "universidad": asignatura_data.get("universidad", ""),
-                    "condiciones_aprobado": asignatura_data.get("condiciones_aprobado", "")
+                    "condiciones_aprobado": asignatura_data.get("condiciones_aprobado", ""),
+                    "user": request.user 
                 }
             )
 

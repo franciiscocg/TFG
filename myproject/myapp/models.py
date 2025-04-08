@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 
 
 class Asignatura(models.Model):
-    nombre = models.CharField(max_length=100)
-    grado = models.CharField(max_length=100)
-    departamento = models.CharField(max_length=100)
-    universidad = models.CharField(max_length=100)
-    condiciones_aprobado = models.TextField(blank=True)
+    nombre = models.CharField(max_length=100,null=True, blank=True)
+    grado = models.CharField(max_length=100,null=True, blank=True)
+    departamento = models.CharField(max_length=100,null=True, blank=True)
+    universidad = models.CharField(max_length=100,null=True, blank=True)
+    condiciones_aprobado = models.TextField(max_length=200,null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='asignaturas') 
     
 
@@ -19,19 +19,19 @@ class Horario(models.Model):
         ('tutoria', 'Tutoría'),
     ]
     asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, related_name='horarios')
-    grupo = models.CharField(max_length=50)
+    grupo = models.CharField(max_length=50,null=True, blank=True)
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
-    hora = models.CharField(max_length=20)  # Ejemplo: "10:40-12:30"
-    aula = models.CharField(max_length=50)
+    hora = models.CharField(max_length=20,null=True, blank=True)  # Ejemplo: "10:40-12:30"
+    aula = models.CharField(max_length=50,null=True, blank=True)
 
 class Profesores(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100,null=True, blank=True)
     asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, related_name='profesores')
-    despacho = models.CharField(max_length=100, blank=True)
-    enlace = models.URLField(blank=True)
+    despacho = models.CharField(max_length=100, null=True, blank=True)
+    enlace = models.URLField(null=True, blank=True)
     horario = models.OneToOneField(Horario, on_delete=models.SET_NULL, null=True, blank=True, related_name='profesor')
     
 class Fechas(models.Model):
     asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, related_name='fechas')
-    titulo = models.CharField(max_length=100)
-    fecha = models.DateField()
+    titulo = models.CharField(max_length=100,null=True, blank=True)
+    fecha = models.DateField(null=True, blank=True)

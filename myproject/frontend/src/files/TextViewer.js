@@ -7,7 +7,8 @@ function TextViewer() {
   const [text, setText] = useState('');
   const [extractedData, setExtractedData] = useState({});
   const [message, setMessage] = useState('');
-  const [selectedModel, setSelectedModel] = useState('gemma2:9b'); // Estado para el modelo
+  const [summaryModel, setSummaryModel] = useState('gemma2:9b'); // Modelo para el resumen
+  const [jsonModel, setJsonModel] = useState('gemma2:9b'); // Modelo para el JSON
   const { fileId } = useParams();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -47,8 +48,8 @@ function TextViewer() {
   };
 
   const handleExtractDates = () => {
-    // Pasamos el modelo seleccionado al navegar
-    navigate(`/loading/${fileId}`, { state: { selectedModel } });
+    // Pasamos ambos modelos seleccionados
+    navigate(`/loading/${fileId}`, { state: { summaryModel, jsonModel } });
   };
 
   if (!isAuthenticated) return null;
@@ -62,16 +63,28 @@ function TextViewer() {
         {text ? (
           <>
             <pre className="text-content">{text}</pre>
-            {/* Selector de modelo */}
+            {/* Selector de modelo para el resumen */}
             <div>
-              <label htmlFor="model-select">Seleccionar modelo: </label>
+              <label htmlFor="summary-model-select">Modelo para resumen: </label>
               <select
-                id="model-select"
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value)}
+                id="summary-model-select"
+                value={summaryModel}
+                onChange={(e) => setSummaryModel(e.target.value)}
               >
                 <option value="gemma2:9b">Gemma2:9b</option>
-                <option value="deepseek-r1:7b">Deepseek-R1:7b</option>
+                <option value="llama3.1:8b">Llama3.1:8b</option>
+              </select>
+            </div>
+            {/* Selector de modelo para el JSON */}
+            <div>
+              <label htmlFor="json-model-select">Modelo para JSON: </label>
+              <select
+                id="json-model-select"
+                value={jsonModel}
+                onChange={(e) => setJsonModel(e.target.value)}
+              >
+                <option value="gemma2:9b">Gemma2:9b</option>
+                <option value="llama3.1:8b">Llama3.1:8b</option>
               </select>
             </div>
             {Object.keys(extractedData).length > 0 ? (
