@@ -10,6 +10,9 @@ from archivos.models import UploadedFile
 import re
 from .models import Asignatura, Fechas, Horario, Profesores
 from .serializers import AsignaturaSerializer
+from django.core.mail import send_mail
+from datetime import datetime, timedelta
+
 
 # URL del servidor de Ollama
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
@@ -355,3 +358,55 @@ class AsignaturaDeleteView(APIView):
             return Response({
                 "message": f"Error al eliminar la asignatura: {str(e)}"
             }, status=status.HTTP_400_BAD_REQUEST)
+            
+            
+class SendDateRemindersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tomorrow = datetime.now().date() + timedelta(days=1)
+        
+        # Filtra las fechas de mañana solo para el usuario autenticado
+        upcoming_dates = Fechas.objects.filter(
+            fecha=tomorrow,
+            asignatura__user=request.user,
+        ).select_related('asignatura')
+
+        if not upcoming_dates:
+            return Response({"message": "No hay fechas para mañana."}, status=status.HTTP_200_OK)
+
+        # Construye el contenido del correo
+        subject = "StudySift"
+        message = f"Hola {request.user.username},\n\nTe recordamos que para mañana {tomorrow.strftime('%d/%m/%Y')}:\n\n"
+        html_message = f"""
+        <html>
+            <body>
+                <h2>Hola {request.user.username}</h2>
+                <p>Te recordamos que para mañana <strong>{tomorrow.strftime('%d/%m/%Y')}</strong>:</p>
+                <ul>
+        """
+
+        for event in upcoming_dates:
+            message += f"- '{event.titulo}' de {event.asignatura.nombre}\n"
+            html_message += f"<li>'<em>{event.titulo}</em>' de <strong>{event.asignatura.nombre}</strong></li>"
+
+        message += "\n¡Prepárate!"
+        html_message += """
+                </ul>
+                <p>¡Prepárate!</p>
+            </body>
+        </html>
+        """
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[request.user.email],
+                html_message=html_message,
+                fail_silently=False,
+            )
+            return Response({"message": "Correo enviado exitosamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": f"Error al enviar correo: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

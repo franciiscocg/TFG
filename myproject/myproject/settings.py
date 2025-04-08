@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'archivos',
     'authentication',
+    'anymail',
 ]
 
 REST_FRAMEWORK = {
