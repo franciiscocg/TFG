@@ -7,6 +7,7 @@ function TextViewer() {
   const [text, setText] = useState('');
   const [extractedData, setExtractedData] = useState({});
   const [message, setMessage] = useState('');
+  const [selectedModel, setSelectedModel] = useState('gemma2:9b'); // Estado para el modelo
   const { fileId } = useParams();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -44,8 +45,10 @@ function TextViewer() {
   const handleViewDates = () => {
     navigate(`/dates/${fileId}`, { state: { datesData: extractedData } });
   };
+
   const handleExtractDates = () => {
-    navigate(`/loading/${fileId}`);
+    // Pasamos el modelo seleccionado al navegar
+    navigate(`/loading/${fileId}`, { state: { selectedModel } });
   };
 
   if (!isAuthenticated) return null;
@@ -59,14 +62,26 @@ function TextViewer() {
         {text ? (
           <>
             <pre className="text-content">{text}</pre>
+            {/* Selector de modelo */}
+            <div>
+              <label htmlFor="model-select">Seleccionar modelo: </label>
+              <select
+                id="model-select"
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+              >
+                <option value="gemma2:9b">Gemma2:9b</option>
+                <option value="deepseek-r1:7b">Deepseek-R1:7b</option>
+              </select>
+            </div>
             {Object.keys(extractedData).length > 0 ? (
               <button className="view-dates-btn" onClick={handleViewDates}>
                 Ver Fechas Extraídas
               </button>
             ) : (
               <button className="extract-dates-btn" onClick={handleExtractDates}>
-              Extraer Fechas
-            </button>
+                Extraer Fechas
+              </button>
             )}
           </>
         ) : (

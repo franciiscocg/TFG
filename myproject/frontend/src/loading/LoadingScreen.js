@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../App.css';
 
@@ -10,6 +10,10 @@ function LoadingScreen() {
   const { fileId } = useParams();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Obtenemos el modelo seleccionado desde el estado de navegación
+  const selectedModel = location.state?.selectedModel || 'gemma2:9b'; // Valor por defecto si no se pasa
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -33,13 +37,14 @@ function LoadingScreen() {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json', // Añadimos Content-Type
         },
+        body: JSON.stringify({ model: selectedModel }), // Enviamos el modelo seleccionado
       });
 
       const result = await response.json();
       if (response.ok) {
         setDatesData(result);
-        // Si la primera solicitud es exitosa, llamamos a processExtractedData
         await processExtractedData();
       } else {
         setError('Error al extraer fechas: ' + JSON.stringify(result));
@@ -65,7 +70,7 @@ function LoadingScreen() {
       const result = await response.json();
       if (response.ok) {
         setTimeLeft(0); // Detenemos el temporizador
-        navigate(`/dates/${fileId}`, { state: { datesData: datesData } }); // Redirigimos con los datos de fetchDates
+        navigate(`/dates/${fileId}`, { state: { datesData: datesData } });
       } else {
         setError('Error al procesar los datos extraídos: ' + JSON.stringify(result));
         setTimeLeft(0);
@@ -83,7 +88,7 @@ function LoadingScreen() {
       <header className="screen-header">
         <h1>Procesando Datos</h1>
         <div className="loading-container">
-          <p>Procesando el texto... Tiempo estimado restante: {timeLeft} segundos</p>
+          <p>Procesando el texto con {selectedModel}... Tiempo estimado restante: {timeLeft} segundos</p>
           <div className="spinner"></div>
         </div>
         {error && <p className="error-message">{error}</p>}

@@ -31,6 +31,11 @@ class ExtractDatesView(APIView):
         except Exception as e:
             return Response({"message": f"Error al leer el archivo de texto: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+        # Obtener el modelo desde el request, con "gemma2:9b" como valor por defecto
+        selected_model = request.data.get("model", "gemma2:9b")
+        if selected_model not in ["gemma2:9b", "deepseek-r1:7b"]:
+            return Response({"message": "Modelo no válido"}, status=status.HTTP_400_BAD_REQUEST)
+
         def get_json_structure():
             try:
                 with open(settings.BASE_DIR / "myapp/files/json/JSON_utilizar.json", "r", encoding="utf-8") as archivo:
@@ -61,7 +66,7 @@ Ahora, por favor, procesa el siguiente texto:
 [{text}]"""
 
             payload = {
-                "model": "gemma2:9b",
+                "model": selected_model,  # Usar el modelo seleccionado
                 "prompt": prompt,
                 "stream": False
             }
@@ -91,7 +96,7 @@ Ahora, por favor, procesa el siguiente texto resumido:
 [{summary}]"""
 
             payload = {
-                "model": "gemma2:9b",
+                "model": selected_model,  # Usar el modelo seleccionado
                 "prompt": prompt,
                 "stream": False
             }
