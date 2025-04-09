@@ -6,3 +6,5 @@ requests
 djangorestframework-simplejwt
 
 django-anymail[mailersend]
+django-allauth
+dj-rest-auth

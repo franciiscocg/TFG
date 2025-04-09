@@ -8,4 +8,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/upload/', include('archivos.urls')),
     path('api/ai/', include('myapp.urls')),
+    path('api/auth/', include('dj_rest_auth.urls')),
+    path('accounts/', include('allauth.urls')),
 ]

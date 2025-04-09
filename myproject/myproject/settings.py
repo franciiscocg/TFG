@@ -43,6 +43,13 @@ INSTALLED_APPS = [
     'archivos',
     'authentication',
     'anymail',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'django.contrib.sites',
+    'dj_rest_auth',
+    'rest_framework.authtoken', # Necesario para dj-rest-auth por defecto, aunque usemos JWT
 ]
 
 REST_FRAMEWORK = {
@@ -67,7 +74,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -161,3 +168,43 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
 DEFAULT_FROM_EMAIL = "noreply@test-65qngkd9zdjlwr12.mlsender.net"  # Usa el dominio predeterminado
 SERVER_EMAIL = "noreply@test-65qngkd9zdjlwr12.mlsender.net"
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [ # Los permisos que solicitas
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/calendar.events',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline', # ¡Importante para obtener refresh_token!
+        },
+        'OAUTH_PKCE_ENABLED': True, # Recomendado por seguridad
+    }
+}
+
+# --- Configuraciones para dj-rest-auth ---
+REST_AUTH = {
+    'USE_JWT': True, # ¡Importante! Usa JWT
+    'JWT_AUTH_HTTPONLY': True,  # Configura JWT para usar cookies HttpOnly (recomendado)
+    'JWT_AUTH_COOKIE': 'my-app-auth', # Nombre de la cookie para el access token
+    'JWT_AUTH_REFRESH_COOKIE': 'my-app-refresh-token', # Nombre de la cookie para el refresh token
+    'JWT_AUTH_SAMESITE': 'Lax', # Política SameSite para las cookies (Lax o Strict)
+    # 'USER_DETAILS_SERIALIZER': 'path.to.your.CustomUserDetailsSerializer', # Opcional: si quieres personalizar los datos del usuario devueltos
+    # 'REGISTER_SERIALIZER': 'path.to.your.CustomRegisterSerializer', # Opcional: si usas dj_rest_auth.registration
+    'SESSION_LOGIN': False, # Deshabilita el login de sesión de Django, confiaremos en JWT
+}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none' # o 'optional'/'none' según tu flujo
+ACCOUNT_AUTHENTICATION_METHOD = 'email' # o 'username' o 'username_email'
+LOGIN_REDIRECT_URL = 'http://localhost:3000/' # A dónde redirigir después del login normal
+SITE_ID = 1 
+# Indicar a allauth que no use sus vistas de login/logout (las proveerá dj-rest-auth)
+ACCOUNT_LOGOUT_ON_GET = False
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_AUTO_SIGNUP = True

@@ -12,6 +12,10 @@ from .models import Asignatura, Fechas, Horario, Profesores
 from .serializers import AsignaturaSerializer
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
+from allauth.socialaccount.models import SocialToken, SocialApp
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 
 # URL del servidor de Ollama
@@ -419,3 +423,69 @@ class SendDateRemindersView(APIView):
             return Response({"message": "Correo enviado exitosamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"message": f"Error al enviar correo: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+class ExportToGoogleCalendarView(APIView):
+    permission_classes = [IsAuthenticated] # Solo usuarios logueados
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        # Asume que recibes las fechas/eventos en el cuerpo de la solicitud
+        # Ejemplo: {'summary': 'Mi Evento desde App', 'start_date': '2025-05-10', 'end_date': '2025-05-11'}
+        event_data = request.data
+        if not all(k in event_data for k in ['summary', 'start_date', 'end_date']):
+             return Response({'error': 'Faltan datos del evento (summary, start_date, end_date)'}, status=400)
+
+        try:
+            # --- Obtener credenciales de Google del usuario ---
+            google_app = SocialApp.objects.get(provider='google')
+            social_token = SocialToken.objects.get(account__user=user, account__provider='google')
+
+            # Verificar si el token de acceso ha expirado (allauth no lo hace autom.)
+            # Si necesitas manejar la expiración y el refresh token, la lógica es más compleja
+            # Por simplicidad, asumimos que el token es válido o usamos google-auth para manejarlo mejor
+
+            credentials = Credentials(
+                token=social_token.token,
+                refresh_token=social_token.token_secret, # allauth guarda refresh token aquí
+                token_uri='https://oauth2.googleapis.com/token',
+                client_id=google_app.client_id,
+                client_secret=google_app.secret,
+                scopes=['https://www.googleapis.com/auth/calendar.events'] # Asegúrate que los scopes coincidan
+            )
+
+            # --- Crear el evento en Google Calendar ---
+            service = build('calendar', 'v3', credentials=credentials)
+
+            event = {
+                'summary': event_data['summary'],
+                'description': event_data.get('description', ''), # Descripción opcional
+                'start': {
+                    # Google Calendar API espera formato ISO (con hora/zona horaria)
+                    # Ajusta esto según cómo almacenas tus fechas
+                    'date': event_data['start_date'], # Para eventos de día completo
+                    # 'dateTime': '2025-05-10T09:00:00-07:00', # Para eventos con hora específica
+                    # 'timeZone': 'America/Los_Angeles', # Opcional si usas dateTime
+                },
+                'end': {
+                    'date': event_data['end_date'], # Para eventos de día completo
+                    # 'dateTime': '2025-05-10T17:00:00-07:00',
+                    # 'timeZone': 'America/Los_Angeles',
+                },
+                # Puedes añadir más campos: recurrence, attendees, etc.
+            }
+
+            created_event = service.events().insert(calendarId='primary', body=event).execute()
+            print(f"Evento creado: {created_event.get('htmlLink')}")
+
+            return Response({'success': True, 'message': 'Evento exportado a Google Calendar', 'event_link': created_event.get('htmlLink')})
+
+        except SocialToken.DoesNotExist:
+            return Response({'error': 'El usuario no ha vinculado su cuenta de Google.'}, status=400)
+        except HttpError as error:
+            print(f'Ocurrió un error con Google Calendar API: {error}')
+            # Podrías intentar refrescar el token aquí si el error es de autenticación
+            return Response({'error': f'Error al exportar a Google Calendar: {error}'}, status=500)
+        except Exception as e:
+             print(f'Ocurrió un error inesperado: {e}')
+             return Response({'error': 'Ocurrió un error inesperado en el servidor.'}, status=500)
