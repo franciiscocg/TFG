@@ -568,132 +568,190 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #1a1d23; /* Fondo oscuro consistente */
+  background-color: #1a1d23;
   color: #ffffff;
   box-sizing: border-box;
-  padding-top: 80px; /* Espacio para el navbar fijo, alineado con el ejemplo */
-  padding-bottom: 20px;
+  padding: 80px 20px 20px;
 }
 
-/* Encabezado de la pantalla de TextViewer */
+/* Encabezado de la pantalla */
 .text-viewer-screen .screen-header {
   background-color: #282c34;
   width: 100%;
-  max-width: 800px; /* Ancho máximo más grande para mostrar texto */
+  max-width: 900px;
   padding: 20px;
-  border-radius: 10px; /* Bordes redondeados completos */
+  border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Espacio entre header y body, alineado con el ejemplo */
+  margin-bottom: 25px;
 }
 
-/* Título */
+/* Título del encabezado */
 .text-viewer-screen .screen-header h1 {
-  font-size: 2em;
-  margin: 0; /* Sin margen inferior para header compacto */
-  color: #61dafb; /* Color destacado para el título */
+  font-size: 2.2em;
+  margin: 0;
+  color: #61dafb;
   text-align: center;
+  font-weight: 600;
 }
 
-/* Cuerpo de la pantalla de TextViewer */
+/* Cuerpo de la pantalla */
 .text-viewer-screen .screen-body {
   background-color: #282c34;
   width: 100%;
-  max-width: 800px;
-  padding: 20px;
-  border-radius: 10px; /* Bordes redondeados completos */
+  max-width: 900px;
+  padding: 25px;
+  border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 0; /* Permite que se ajuste al contenido */
-  overflow-y: auto; /* Scroll si el contenido excede la altura */
+  gap: 20px;
+  flex-grow: 1; /* Permite que ocupe el espacio disponible */
+  overflow-y: auto; /* Habilita desplazamiento si el contenido excede */
+  min-height: 0; /* Evita que se expanda más allá del contenedor padre */
 }
 
 /* Contenido del texto extraído */
 .text-viewer-screen .screen-body .text-content {
-  white-space: pre-wrap; /* Preserva saltos de línea y espacios */
-  background-color: #2e333d; /* Fondo oscuro para el texto */
+  white-space: pre-wrap;
+  background-color: #2e333d;
   padding: 20px;
-  border-radius: 5px;
-  max-height: 60vh; /* Limita la altura para scroll */
-  overflow-y: auto; /* Scroll vertical si el texto es largo */
-  color: #ffffff;
-  font-family: monospace; /* Fuente monoespaciada para legibilidad */
+  border-radius: 8px;
+  max-height: 40vh; /* Reducimos la altura máxima para dejar espacio */
+  overflow-y: auto;
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
   font-size: 1.1em;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #61dafb; /* Borde sutil para destacar */
+  border: 1px solid #61dafb;
+  line-height: 1.5;
 }
 
-/* Botones */
-.text-viewer-screen .screen-body button {
+/* Contenedor de los selectores de modelo */
+.text-viewer-screen .screen-body .model-selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   width: 100%;
-  max-width: 200px; /* Limita el ancho máximo de los botones, alineado con el ejemplo */
-  padding: 12px;
+  max-width: 400px;
+}
+
+/* Estilo de cada selector de modelo */
+.text-viewer-screen .screen-body .model-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.text-viewer-screen .screen-body .model-selector label {
+  font-size: 1.1em;
+  color: #cccccc;
+}
+
+.text-viewer-screen .screen-body .model-selector select {
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #61dafb;
+  background-color: #2e333d;
+  color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.text-viewer-screen .screen-body .model-selector select:hover {
+  border-color: #21a1f1;
+}
+
+/* Grupo de botones */
+.text-viewer-screen .screen-body .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Estilo general de los botones */
+.text-viewer-screen .screen-body button {
+  padding: 12px 20px;
   font-size: 1.1em;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.1s ease;
+  min-width: 180px;
 }
 
 /* Botón para extraer fechas */
 .text-viewer-screen .screen-body .extract-dates-btn {
-  background-color: #ffaa00; /* Color distintivo para la acción */
+  background-color: #ffaa00;
   color: #ffffff;
 }
 
 .text-viewer-screen .screen-body .extract-dates-btn:hover {
   background-color: #cc8800;
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
 .text-viewer-screen .screen-body .extract-dates-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
-/* Botón de Volver a Mis Archivos */
-.text-viewer-screen .screen-body button:not(.extract-dates-btn) {
+/* Botón para ver fechas */
+.text-viewer-screen .screen-body .view-dates-btn {
   background-color: #61dafb;
   color: #282c34;
 }
 
-.text-viewer-screen .screen-body button:not(.extract-dates-btn):hover {
+.text-viewer-screen .screen-body .view-dates-btn:hover {
   background-color: #21a1f1;
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
-.text-viewer-screen .screen-body button:not(.extract-dates-btn):active {
-  transform: scale(0.98);
+.text-viewer-screen .screen-body .view-dates-btn:active {
+  transform: scale(0.97);
 }
 
-/* Mensaje de error o estado */
+/* Botón de volver */
+.text-viewer-screen .screen-body .back-btn {
+  background-color: #cccccc;
+  color: #282c34;
+}
+
+.text-viewer-screen .screen-body .back-btn:hover {
+  background-color: #aaaaaa;
+  transform: scale(1.03);
+}
+
+.text-viewer-screen .screen-body .back-btn:active {
+  transform: scale(0.97);
+}
+
+/* Mensajes */
 .text-viewer-screen .screen-body p {
-  margin-top: 20px;
+  margin: 0;
+  padding: 10px;
   font-size: 1.1em;
   text-align: center;
-  padding: 10px;
   border-radius: 5px;
   width: 100%;
   max-width: 600px;
 }
 
-.text-viewer-screen .screen-body p:empty {
-  display: none;
-}
-
-/* Estilos condicionales para mensajes */
-.text-viewer-screen .screen-body p[data-message^="Error"] {
-  background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo tenue */
+/* Mensaje de error */
+.text-viewer-screen .screen-body .error-message {
+  background-color: rgba(255, 68, 68, 0.2);
   color: #ff4444;
 }
 
-.text-viewer-screen .screen-body p[data-message^="No hay"] {
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo neutro */
+/* Mensaje informativo */
+.text-viewer-screen .screen-body .info-message,
+.text-viewer-screen .screen-body .no-text {
+  background-color: rgba(255, 255, 255, 0.1);
   color: #cccccc;
 }
 
@@ -702,39 +760,42 @@
 /* Pantallas pequeñas (móviles, <= 600px) */
 @media (max-width: 600px) {
   .text-viewer-screen {
-    padding-top: 70px; /* Ajuste para navbar en pantallas pequeñas */
+    padding: 70px 10px 10px;
   }
 
   .text-viewer-screen .screen-header,
   .text-viewer-screen .screen-body {
-    max-width: 90%;
+    max-width: 95%;
     padding: 15px;
-  }
-
-  .text-viewer-screen .screen-header {
-    margin-bottom: 15px; /* Espacio reducido en pantallas pequeñas */
   }
 
   .text-viewer-screen .screen-header h1 {
-    font-size: 1.5em;
+    font-size: 1.6em;
   }
 
   .text-viewer-screen .screen-body .text-content {
+    font-size: 0.95em;
+    max-height: 30vh; /* Reducimos aún más en móviles */
     padding: 15px;
-    font-size: 0.9em;
-    max-height: 50vh; /* Ajuste de altura para móviles */
+  }
+
+  .text-viewer-screen .screen-body .model-selectors {
+    max-width: 100%;
+  }
+
+  .text-viewer-screen .screen-body .button-group {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .text-viewer-screen .screen-body button {
-    padding: 10px;
+    min-width: 100%;
     font-size: 1em;
-    max-width: 180px;
+    padding: 10px;
   }
 
   .text-viewer-screen .screen-body p {
-    font-size: 0.9em;
-    margin-top: 15px;
-    max-width: 100%;
+    font-size: 0.95em;
   }
 }
 
@@ -742,26 +803,20 @@
 @media (min-width: 601px) and (max-width: 900px) {
   .text-viewer-screen .screen-header,
   .text-viewer-screen .screen-body {
-    max-width: 700px;
-    padding: 20px;
-  }
-
-  .text-viewer-screen .screen-header {
-    margin-bottom: 20px;
+    max-width: 750px;
   }
 
   .text-viewer-screen .screen-header h1 {
-    font-size: 1.8em;
+    font-size: 1.9em;
   }
 
   .text-viewer-screen .screen-body .text-content {
-    padding: 18px;
     font-size: 1em;
+    max-height: 35vh; /* Ajuste intermedio */
   }
 
   .text-viewer-screen .screen-body button {
-    padding: 11px;
-    max-width: 190px;
+    min-width: 160px;
   }
 }
 /* Contenedor principal de la pantalla de FileList */
@@ -828,19 +883,28 @@
 /* Elementos de la lista */
 .file-list-screen .file-list li {
   display: flex;
+  flex-direction: column; /* Cambiado a columna para mejor control */
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 15px;
   background-color: #2e333d; /* Fondo oscuro para cada item */
   margin-bottom: 10px;
   border-radius: 5px;
-  flex-wrap: wrap; /* Permite ajuste en pantallas pequeñas */
-  gap: 10px; /* Espacio entre elementos */
+  gap: 10px;
   transition: background-color 0.3s ease;
 }
 
 .file-list-screen .file-list li:hover {
   background-color: #3a404b; /* Efecto hover sutil */
+}
+
+/* Contenedor para nombre de archivo y fecha */
+.file-list-screen .file-list li > div:first-child {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
 }
 
 /* Enlace al archivo */
@@ -862,58 +926,55 @@
   flex-grow: 1; /* Permite que ocupe espacio disponible */
 }
 
-/* Enlace a texto extraído */
-.file-list-screen .file-list li .text-link {
-  margin-left: 10px;
-  color: #44ff44;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 1em;
+/* Grupo de botones */
+.file-list-screen .button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
 }
 
-.file-list-screen .file-list li .text-link:hover {
-  text-decoration: underline;
-}
-
-/* Indicador de datos extraídos */
-.file-list-screen .file-list li .extracted-indicator {
-  color: #44ff44;
-  margin-left: 10px;
-  font-style: italic;
+/* Estilo base para todos los botones de acción */
+.file-list-screen .action-btn {
+  padding: 6px 12px;
   font-size: 0.9em;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none; /* Para los botones dentro de Link */
+  background-color: #0ba47e; /* Color por defecto para Ver Texto (morado) */
+}
+
+/* Hover para el botón Ver Texto por defecto */
+.file-list-screen .action-btn:hover {
+  background-color: #0d7059; /* Morado más oscuro para hover */
 }
 
 /* Botón de extraer texto */
-.file-list-screen .file-list li .extract-btn {
-  padding: 6px 12px;
-  font-size: 0.9em;
+.file-list-screen .extract-btn {
   background-color: #44aa44; /* Verde para acción de extracción */
-  border: none;
-  border-radius: 3px;
-  color: #ffffff;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.3s ease;
 }
 
-.file-list-screen .file-list li .extract-btn:hover {
+.file-list-screen .extract-btn:hover {
   background-color: #338833;
 }
 
-/* Botón de eliminar */
-.file-list-screen .file-list li .delete-btn {
-  padding: 6px 12px;
-  font-size: 0.9em;
-  background-color: #ff4444; /* Rojo para acción de eliminación */
-  border: none;
-  border-radius: 3px;
-  color: #ffffff;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.3s ease;
+/* Botón de ver datos extraídos */
+.file-list-screen .data-btn {
+  background-color: #2196F3; /* Azul para datos extraídos */
 }
 
-.file-list-screen .file-list li .delete-btn:hover {
+.file-list-screen .data-btn:hover {
+  background-color: #1e87db;
+}
+
+/* Botón de eliminar */
+.file-list-screen .delete-btn {
+  background-color: #ff4444; /* Rojo para acción de eliminación */
+}
+
+.file-list-screen .delete-btn:hover {
   background-color: #cc0000;
 }
 
@@ -951,7 +1012,7 @@
 }
 
 /* Botones de navegación (Subir archivo, Volver al Inicio) */
-.file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button) {
+.file-list-screen button:not(.action-btn):not(.pagination button) {
   padding: 12px 20px;
   font-size: 1.1em;
   background-color: #61dafb;
@@ -963,21 +1024,21 @@
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-.file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button):hover {
+.file-list-screen button:not(.action-btn):not(.pagination button):hover {
   background-color: #21a1f1;
   transform: scale(1.02);
 }
 
-.file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button):active {
+.file-list-screen button:not(.action-btn):not(.pagination button):active {
   transform: scale(0.98);
 }
 
 /* Segundo botón (Volver al Inicio) con estilo diferente */
-.file-list-screen .screen-body button:nth-child(2):not(.extract-btn):not(.delete-btn):not(.pagination button) {
+.file-list-screen .screen-body button:nth-child(2):not(.action-btn):not(.pagination button) {
   background-color: #ffaa00;
 }
 
-.file-list-screen .screen-body button:nth-child(2):not(.extract-btn):not(.delete-btn):not(.pagination button):hover {
+.file-list-screen .screen-body button:nth-child(2):not(.action-btn):not(.pagination button):hover {
   background-color: #cc8800;
 }
 
@@ -1040,8 +1101,6 @@
 
   .file-list-screen .file-list li {
     padding: 10px;
-    flex-direction: column;
-    align-items: flex-start;
     gap: 8px;
   }
 
@@ -1053,12 +1112,15 @@
     font-size: 0.8em;
   }
 
-  .file-list-screen .file-list li .text-link,
-  .file-list-screen .file-list li .extract-btn,
-  .file-list-screen .file-list li .delete-btn {
-    margin-left: 0;
-    font-size: 0.85em;
+  .file-list-screen .button-group {
+    gap: 8px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .file-list-screen .action-btn {
     padding: 5px 10px;
+    font-size: 0.85em;
   }
 
   .file-list-screen .pagination {
@@ -1074,7 +1136,7 @@
     font-size: 0.9em;
   }
 
-  .file-list-screen button:not(.extract-btn):not(.delete-btn):not(.pagination button) {
+  .file-list-screen button:not(.action-btn):not(.pagination button) {
     padding: 10px 16px;
     font-size: 1em;
     margin: 8px 0;
@@ -1114,6 +1176,14 @@
 
   .file-list-screen .file-list li span {
     font-size: 0.85em;
+  }
+
+  .file-list-screen .button-group {
+    gap: 8px;
+  }
+
+  .file-list-screen .action-btn {
+    padding: 6px 12px;
   }
 }
 /* Contenedor principal de la pantalla de DatesResult */

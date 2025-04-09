@@ -111,25 +111,35 @@ function FileList() {
             <ul className="file-list">
               {files.map((file) => (
                 <li key={file.id}>
-                  <a href={file.file_url} target="_blank" rel="noopener noreferrer">
-                    {file.file.split('/').pop()}
-                  </a>
-                  <span> (Subido el: {new Date(file.uploaded_at).toLocaleString()})</span>
-                  {file.text_file_url ? (
-                    <Link to={`/text/${file.id}`} className="text-link">
-                      Ver Texto
-                    </Link>
-                  ) : (
-                    <button className="extract-btn" onClick={() => handleExtractText(file.id)}>
-                      Extraer Texto
+                  <div>
+                    <a>{file.file.split('/').pop()}</a>
+                    <span> (Subido el: {new Date(file.uploaded_at).toLocaleString()})</span>
+                  </div>
+                  <div className="button-group">
+                    {file.text_file_url ? (
+                      <Link to={`/text/${file.id}`}>
+                        <button className="action-btn">Ver Texto</button>
+                      </Link>
+                    ) : (
+                      <button 
+                        className="action-btn extract-btn" 
+                        onClick={() => handleExtractText(file.id)}
+                      >
+                        Extraer Texto
+                      </button>
+                    )}
+                    {file.extracted_data && Object.keys(file.extracted_data).length > 0 && (
+                      <Link to={`/dates/${file.id}`}>
+                        <button className="action-btn data-btn">Ver Datos Extraídos</button>
+                      </Link>
+                    )}
+                    <button 
+                      className="action-btn delete-btn" 
+                      onClick={() => handleDelete(file.id)}
+                    >
+                      Eliminar
                     </button>
-                  )}
-                  {file.extracted_data && Object.keys(file.extracted_data).length > 0 && (
-                    <span className="extracted-indicator"> (Datos extraídos)</span>
-                  )}
-                  <button className="delete-btn" onClick={() => handleDelete(file.id)}>
-                    Eliminar
-                  </button>
+                  </div>
                 </li>
               ))}
             </ul>

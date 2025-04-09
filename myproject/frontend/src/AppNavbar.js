@@ -17,33 +17,33 @@ const AppNavbar = () => {
     <Navbar color="dark" dark expand="md" className="app-navbar">
       <Nav navbar className="nav-horizontal">
         <NavItem>
-          <NavLink tag={Link} to="/">Home</NavLink>
+          <NavLink tag={Link} to="/">Inicio</NavLink>
         </NavItem>
         {isAuthenticated ? (
           <>
             <NavItem>
-              <NavLink tag={Link} to="/upload">Upload</NavLink>
+              <NavLink tag={Link} to="/upload">Subir PDF</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/files">My Files</NavLink>
+              <NavLink tag={Link} to="/files">Mis archivos</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/calendar">Calendar</NavLink>
+              <NavLink tag={Link} to="/calendar">Calendario</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to="/asignaturas">Asignaturas</NavLink>
             </NavItem>
             <NavLink onClick={handleLogout} style={{ cursor: 'pointer' }}>
-                Logout
+                Cerrar sesión
             </NavLink>
           </>
         ) : (
           <>
             <NavItem>
-              <NavLink tag={Link} to="/login">Login</NavLink>
+              <NavLink tag={Link} to="/login">Iniciar sesión</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/register">Register</NavLink>
+              <NavLink tag={Link} to="/register">Registrarse</NavLink>
             </NavItem>
           </>
         )}

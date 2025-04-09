@@ -7,8 +7,8 @@ function TextViewer() {
   const [text, setText] = useState('');
   const [extractedData, setExtractedData] = useState({});
   const [message, setMessage] = useState('');
-  const [summaryModel, setSummaryModel] = useState('gemma2:9b'); // Modelo para el resumen
-  const [jsonModel, setJsonModel] = useState('gemma2:9b'); // Modelo para el JSON
+  const [summaryModel, setSummaryModel] = useState('gemma2:9b');
+  const [jsonModel, setJsonModel] = useState('gemma2:9b');
   const { fileId } = useParams();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -48,7 +48,6 @@ function TextViewer() {
   };
 
   const handleExtractDates = () => {
-    // Pasamos ambos modelos seleccionados
     navigate(`/loading/${fileId}`, { state: { summaryModel, jsonModel } });
   };
 
@@ -63,47 +62,49 @@ function TextViewer() {
         {text ? (
           <>
             <pre className="text-content">{text}</pre>
-            {/* Selector de modelo para el resumen */}
-            <div>
-              <label htmlFor="summary-model-select">Modelo para resumen: </label>
-              <select
-                id="summary-model-select"
-                value={summaryModel}
-                onChange={(e) => setSummaryModel(e.target.value)}
-              >
-                <option value="gemma2:9b">Gemma2:9b</option>
-                <option value="llama3.1:8b">Llama3.1:8b</option>
-              </select>
+            <div className="model-selectors">
+              <div className="model-selector">
+                <label htmlFor="summary-model-select">Modelo para resumen:</label>
+                <select
+                  id="summary-model-select"
+                  value={summaryModel}
+                  onChange={(e) => setSummaryModel(e.target.value)}
+                >
+                  <option value="gemma2:9b">Gemma2:9b</option>
+                  <option value="llama3.1:8b">Llama3.1:8b</option>
+                </select>
+              </div>
+              <div className="model-selector">
+                <label htmlFor="json-model-select">Modelo para JSON:</label>
+                <select
+                  id="json-model-select"
+                  value={jsonModel}
+                  onChange={(e) => setJsonModel(e.target.value)}
+                >
+                  <option value="gemma2:9b">Gemma2:9b</option>
+                  <option value="llama3.1:8b">Llama3.1:8b</option>
+                </select>
+              </div>
             </div>
-            {/* Selector de modelo para el JSON */}
-            <div>
-              <label htmlFor="json-model-select">Modelo para JSON: </label>
-              <select
-                id="json-model-select"
-                value={jsonModel}
-                onChange={(e) => setJsonModel(e.target.value)}
-              >
-                <option value="gemma2:9b">Gemma2:9b</option>
-                <option value="llama3.1:8b">Llama3.1:8b</option>
-              </select>
+            <div className="button-group">
+              {Object.keys(extractedData).length > 0 ? (
+                <button className="view-dates-btn" onClick={handleViewDates}>
+                  Ver Fechas Extraídas
+                </button>
+              ) : (
+                <button className="extract-dates-btn" onClick={handleExtractDates}>
+                  Extraer Fechas
+                </button>
+              )}
+              <Link to="/files">
+                <button className="back-btn">Volver a Mis Archivos</button>
+              </Link>
             </div>
-            {Object.keys(extractedData).length > 0 ? (
-              <button className="view-dates-btn" onClick={handleViewDates}>
-                Ver Fechas Extraídas
-              </button>
-            ) : (
-              <button className="extract-dates-btn" onClick={handleExtractDates}>
-                Extraer Fechas
-              </button>
-            )}
           </>
         ) : (
-          <p>No hay texto disponible aún.</p>
+          <p className="no-text">No hay texto disponible aún.</p>
         )}
-        <Link to="/files">
-          <button>Volver a Mis Archivos</button>
-        </Link>
-        {message && <p>{message}</p>}
+        {message && <p className={message.startsWith('Error') ? 'error-message' : 'info-message'}>{message}</p>}
       </div>
     </div>
   );
