@@ -14,6 +14,7 @@ import AppNavbar from './AppNavbar';
 import CalendarViewer from './calendar/CalendarViewer';
 import AsignaturasList from './asignaturas/AsignaturasList';
 import AsignaturaEdit from './asignaturas/AsignaturaEdit';
+import AuthCallback from './context/AuthCallback';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/calendar" element={<CalendarViewer />} />
           <Route path="/asignaturas" element={<AsignaturasList/>} />
           <Route path="/editar-asignatura/:asignaturaNombre" element={<AsignaturaEdit />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
         </Routes>
       </div>
     </Router>

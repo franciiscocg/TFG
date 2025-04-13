@@ -190,14 +190,14 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # --- Configuraciones para dj-rest-auth ---
 REST_AUTH = {
-    'USE_JWT': True, # ¡Importante! Usa JWT
-    'JWT_AUTH_HTTPONLY': True,  # Configura JWT para usar cookies HttpOnly (recomendado)
-    'JWT_AUTH_COOKIE': 'my-app-auth', # Nombre de la cookie para el access token
-    'JWT_AUTH_REFRESH_COOKIE': 'my-app-refresh-token', # Nombre de la cookie para el refresh token
-    'JWT_AUTH_SAMESITE': 'Lax', # Política SameSite para las cookies (Lax o Strict)
-    # 'USER_DETAILS_SERIALIZER': 'path.to.your.CustomUserDetailsSerializer', # Opcional: si quieres personalizar los datos del usuario devueltos
-    # 'REGISTER_SERIALIZER': 'path.to.your.CustomRegisterSerializer', # Opcional: si usas dj_rest_auth.registration
-    'SESSION_LOGIN': False, # Deshabilita el login de sesión de Django, confiaremos en JWT
+    'USE_JWT': True,
+    'JWT_AUTH_HTTPONLY': False,  # <--- Cambia esto a False
+    # 'JWT_AUTH_COOKIE': 'my-app-auth', # Ya no es necesario
+    # 'JWT_AUTH_REFRESH_COOKIE': 'my-app-refresh-token', # Ya no es necesario
+    # 'JWT_AUTH_SAMESITE': 'Lax', # Ya no es necesario
+    'SESSION_LOGIN': False,
+    # Puedes añadir un serializador si quieres personalizar los datos del usuario devueltos en login/registro
+    # 'USER_DETAILS_SERIALIZER': 'authentication.serializers.CustomUserDetailsSerializer',
 }
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none' # o 'optional'/'none' según tu flujo
@@ -208,3 +208,9 @@ SITE_ID = 1
 ACCOUNT_LOGOUT_ON_GET = False
 SOCIALACCOUNT_LOGIN_ON_GET=True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+
+FRONTEND_BASE_URL = 'http://localhost:3000'
+FRONTEND_CALLBACK_URL = f"{FRONTEND_BASE_URL}/auth/callback"
+FRONTEND_LOGIN_URL = f"{FRONTEND_BASE_URL}/login"
+
+ACCOUNT_ADAPTER = 'authentication.views.CustomAccountAdapter'
