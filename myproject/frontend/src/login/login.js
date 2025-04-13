@@ -10,6 +10,11 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  // Define la URL base de tu backend Django
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  // URL del endpoint de dj-rest-auth para iniciar el login con Google
+  const googleLoginUrl = `${backendUrl}/accounts/google/login/`;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { username, password };
@@ -88,6 +93,36 @@ function Login() {
             />
           </div>
           <button type="submit">Iniciar Sesión</button>
+          <a href={googleLoginUrl} style={{ textDecoration: 'none' }}>
+            <button
+              type="button"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#fff',
+                color: '#333',
+                border: '1px solid #dadce0',
+                borderRadius: '4px',
+                padding: '10px 16px',
+                fontSize: '14px',
+                fontWeight: '500',
+                fontFamily: 'Roboto, sans-serif',
+                width: '100%',
+                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.15)',
+                marginTop: '10px',
+                marginBottom: '10px',
+                cursor: 'pointer',
+              }}
+            >
+              <img
+                src="https://www.google.com/favicon.ico"
+                alt="Google icon"
+                style={{ width: '18px', height: '18px', marginRight: '8px' }}
+              />
+              Iniciar sesion con Google
+            </button>
+          </a>
           <Link to="/register">
             <button type="button">Registrarse</button>
           </Link>
