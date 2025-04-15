@@ -12,20 +12,20 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-insecure-key-for-dev-only-CHANGE-ME')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r7&7s2^0u_9dv2)50-_dsvjsi(4qmaoa(loksil(80ktc9v$t8'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+allowed_hosts_str = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',') if host.strip()]
 
-ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -76,9 +76,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+
+cors_allowed_origins_str = os.environ.get('DJANGO_CORS_ALLOWED_ORIGINS', 'http://localhost:3000')
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_allowed_origins_str.split(',') if origin.strip()]
 
 ROOT_URLCONF = 'myproject.urls'
 
@@ -100,20 +100,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# Configuración básica para SQLite (podrías hacerla más compleja para otros DBs)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ.get('DJANGO_DB_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': BASE_DIR / os.environ.get('DJANGO_DB_NAME', 'db.sqlite3'),
+        # Añadir USER, PASSWORD, HOST, PORT si usas PostgreSQL/MySQL/etc.
+        # 'USER': os.environ.get('DJANGO_DB_USER'),
+        # 'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
+        # 'HOST': os.environ.get('DJANGO_DB_HOST'),
+        # 'PORT': os.environ.get('DJANGO_DB_PORT'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,10 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -142,32 +136,22 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo; ajusta en producción
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 ANYMAIL = {
-    "MAILERSEND_API_TOKEN": "mlsn.ac95e289755540602d32f6f7bc81ebceb18d20931ef39a60ca3a531807bb694b",  # Tu clave API de MailerSend
-    "MAILERSEND_SENDER_DOMAIN": "test-65qngkd9zdjlwr12.mlsender.net",  # Dominio predeterminado de MailerSend
+    "MAILERSEND_API_TOKEN": os.environ.get('MAILERSEND_API_TOKEN'),
+    "MAILERSEND_SENDER_DOMAIN": os.environ.get('MAILERSEND_SENDER_DOMAIN', 'test-domain.mlsender.net'),
 }
 
-# Configura el backend de correo
+# Configuración de Anymail para MailerSend
 EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
-DEFAULT_FROM_EMAIL = "noreply@test-65qngkd9zdjlwr12.mlsender.net"  # Usa el dominio predeterminado
-SERVER_EMAIL = "noreply@test-65qngkd9zdjlwr12.mlsender.net"
+DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'noreply@test-domain.mlsender.net')
+SERVER_EMAIL = os.environ.get('DJANGO_SERVER_EMAIL', DEFAULT_FROM_EMAIL)
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -182,7 +166,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'https://www.googleapis.com/auth/calendar.events',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'offline', # ¡Importante para obtener refresh_token!
+            'access_type': 'offline',
         },
         'OAUTH_PKCE_ENABLED': True, # Recomendado por seguridad
     }
@@ -191,18 +175,13 @@ SOCIALACCOUNT_PROVIDERS = {
 # --- Configuraciones para dj-rest-auth ---
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_HTTPONLY': False,  # <--- Cambia esto a False
-    # 'JWT_AUTH_COOKIE': 'my-app-auth', # Ya no es necesario
-    # 'JWT_AUTH_REFRESH_COOKIE': 'my-app-refresh-token', # Ya no es necesario
-    # 'JWT_AUTH_SAMESITE': 'Lax', # Ya no es necesario
+    'JWT_AUTH_HTTPONLY': False,
     'SESSION_LOGIN': False,
-    # Puedes añadir un serializador si quieres personalizar los datos del usuario devueltos en login/registro
-    # 'USER_DETAILS_SERIALIZER': 'authentication.serializers.CustomUserDetailsSerializer',
 }
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'none' # o 'optional'/'none' según tu flujo
-ACCOUNT_AUTHENTICATION_METHOD = 'email' # o 'username' o 'username_email'
-LOGIN_REDIRECT_URL = 'http://localhost:3000/' # A dónde redirigir después del login normal
+ACCOUNT_EMAIL_VERIFICATION = 'none' 
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = os.environ.get('DJANGO_LOGIN_REDIRECT_URL', '/') # A dónde redirigir después del login normal
 SITE_ID = 1 
 # Indicar a allauth que no use sus vistas de login/logout (las proveerá dj-rest-auth)
 ACCOUNT_LOGOUT_ON_GET = False
@@ -210,66 +189,9 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_STORE_TOKENS = True
 
-FRONTEND_BASE_URL = 'http://localhost:3000'
+FRONTEND_BASE_URL = os.environ.get('DJANGO_FRONTEND_BASE_URL', 'http://localhost:3000')
 FRONTEND_CALLBACK_URL = f"{FRONTEND_BASE_URL}/auth/callback"
 FRONTEND_LOGIN_URL = f"{FRONTEND_BASE_URL}/login"
 
 ACCOUNT_ADAPTER = 'authentication.views.CustomAccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'authentication.views.CustomSocialAccountAdapter'
-
-# settings.py
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            # Puedes añadir un formateador si quieres más detalle
-            # 'formatter': 'verbose',
-        },
-    },
-    # Formateadores opcionales para más detalle
-    # 'formatters': {
-    #     'verbose': {
-    #         'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-    #         'style': '{',
-    #     },
-    #     'simple': {
-    #         'format': '{levelname} {message}',
-    #         'style': '{',
-    #     },
-    # },
-    'root': { # Logger raíz, captura todo si no se especifica lo contrario
-        'handlers': ['console'],
-        'level': 'INFO', # Nivel por defecto para todo (puedes poner DEBUG aquí también)
-    },
-    'loggers': {
-        'django': { # Logger específico para Django
-            'handlers': ['console'],
-            'level': 'INFO', # Cambiar a DEBUG si quieres ver TODO de Django
-            'propagate': False, # No enviar logs de Django al logger raíz
-        },
-        'django.request': { # Logger para peticiones/respuestas de Django
-             'handlers': ['console'],
-             'level': 'DEBUG', # Ver detalle de peticiones
-             'propagate': False,
-         },
-        'allauth': { # Logger específico para allauth
-            'handlers': ['console'],
-            'level': 'DEBUG', # <-- ¡IMPORTANTE! Nivel DEBUG para allauth
-            'propagate': True, # Permitir que también vayan al logger raíz si quieres
-        },
-         # Puedes añadir loggers para otras librerías si sospechas de ellas
-         # 'oauthlib': {
-         #    'handlers': ['console'],
-         #    'level': 'DEBUG',
-         #    'propagate': True,
-         # },
-         # 'requests_oauthlib': {
-         #     'handlers': ['console'],
-         #     'level': 'DEBUG',
-         #     'propagate': True,
-         # },
-    },
-}

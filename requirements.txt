@@ -10,3 +10,4 @@ django-allauth
 dj-rest-auth
 google-auth
 google-api-python-client
+python-dotenv
