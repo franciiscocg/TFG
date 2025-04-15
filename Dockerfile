@@ -20,9 +20,6 @@ COPY requirements.txt .
 # Instalar dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Instalar dependencias adicionales para Google OAuth2
-RUN pip install --no-cache-dir google-auth google-api-python-client
-
 # Copiar el proyecto
 COPY myproject/ .
 
