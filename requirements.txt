@@ -11,3 +11,4 @@ dj-rest-auth
 google-auth
 google-api-python-client
 python-dotenv
+python-pptx

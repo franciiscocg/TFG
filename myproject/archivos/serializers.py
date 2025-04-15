@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import UploadedFile
+import os
 
 
 class FileUploadSerializer(serializers.ModelSerializer):
     MAX_FILE_SIZE = 5 * 1024 * 1024
+    ALLOWED_EXTENSIONS = ['.pdf', '.pptx']
 
     class Meta:
         model = UploadedFile
@@ -13,8 +15,10 @@ class FileUploadSerializer(serializers.ModelSerializer):
     def validate_file(self, value):
         if value.size > self.MAX_FILE_SIZE:
             raise serializers.ValidationError("El archivo excede el tamaño máximo de 5MB.")
-        if not value.name.endswith('.pdf'):
-            raise serializers.ValidationError("Solo se permiten archivos PDF.")
+        ext = os.path.splitext(value.name)[1].lower()
+        if ext not in self.ALLOWED_EXTENSIONS:
+            allowed_ext_str = ", ".join(self.ALLOWED_EXTENSIONS)
+            raise serializers.ValidationError(f"Tipo de archivo no permitido. Solo se aceptan: {allowed_ext_str}")
         return value
 
 class UploadedFileSerializer(serializers.ModelSerializer):

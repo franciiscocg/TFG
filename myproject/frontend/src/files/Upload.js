@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import AppNavbar from '../AppNavbar';
 import '../App.css';
 
 function Upload() {
@@ -9,31 +8,45 @@ function Upload() {
   const [message, setMessage] = useState('');
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB en bytes
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+  const ALLOWED_MIME_TYPES = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  ];
+
+  const ALLOWED_EXTENSIONS_STRING = ".pdf,.pptx";
+
+
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      // Validar tipo y tamaño
-      if (selectedFile.type !== 'application/pdf') {
-        setMessage('Por favor, selecciona un archivo PDF válido.');
+      if (!ALLOWED_MIME_TYPES.includes(selectedFile.type)) {
+        setMessage('Por favor, selecciona un archivo PDF o PowerPoint (.pptx) válido.');
         setFile(null);
+        e.target.value = '';
         return;
       }
+
       if (selectedFile.size > MAX_FILE_SIZE) {
         setMessage('El archivo excede el tamaño máximo de 5MB.');
         setFile(null);
+        e.target.value = '';
         return;
       }
+
       setFile(selectedFile);
-      setMessage(''); // Limpia mensajes previos
+      setMessage(''); 
+    } else {
+        setFile(null);
+        setMessage('');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) {
-      setMessage('Por favor, selecciona un archivo PDF');
+      setMessage('Por favor, selecciona un archivo PDF o PowerPoint');
       return;
     }
 
@@ -42,7 +55,7 @@ function Upload() {
 
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://localhost:8000/api/upload/', {
+      const response = await fetch('http://localhost:8000/api/upload/', { 
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -50,47 +63,54 @@ function Upload() {
         body: formData,
       });
 
-      const result = await response.json();
+      const result = await response.json(); 
+
       if (response.ok) {
-        setMessage('Archivo subido con éxito');
+        setMessage(`Archivo "${file.name}" subido con éxito.`);
         setFile(null);
-        document.querySelector('input[type="file"]').value = ''; // Limpia el input
+        document.querySelector('input[type="file"]').value = '';
       } else {
-        setMessage('Error: ' + JSON.stringify(result));
+         const errorDetail = result?.file?.[0] || result?.message || JSON.stringify(result);
+         setMessage(`Error al subir el archivo: ${errorDetail}`);
       }
     } catch (error) {
-      setMessage('Error al conectar con el servidor: ' + error.message);
+       console.error("Error en handleSubmit:", error);
+       setMessage(`Error de red o al conectar con el servidor: ${error.message}`);
     }
   };
 
-  if (!isAuthenticated) {
-    navigate('/login');
-    return null;
-  }
+  React.useEffect(() => {
+      if (!isAuthenticated) {
+          navigate('/login');
+      }
+  }, [isAuthenticated, navigate]);
+
 
   return (
     <div className="upload-screen screen-container">
       <header className="screen-header">
-        <h1>Subir un PDF</h1>
+        <h1>Subir Archivo</h1>
       </header>
       <div className="screen-body">
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Selecciona un archivo PDF (máx. 5MB):</label>
+            <label>Selecciona un archivo PDF o PowerPoint (máx. 5MB):</label>
             <input
               type="file"
-              accept="application/pdf"
+  
+              accept={ALLOWED_EXTENSIONS_STRING}
               onChange={handleFileChange}
+              key={file ? 'file-selected' : 'no-file'}
             />
           </div>
-          <button type="submit">Subir</button>
+          <button type="submit" disabled={!file}>Subir Archivo</button>
           <Link to="/">
             <button type="button">Volver al Inicio</button>
           </Link>
         </form>
-        {message && <p>{message}</p>}
+        {message && <p className={`message ${message.startsWith('Error') ? 'error' : 'success'}`}>{message}</p>}
       </div>
-  </div>
+    </div>
   );
 }
 
