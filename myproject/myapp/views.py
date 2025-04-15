@@ -242,8 +242,8 @@ class GetUserCalendarDataView(APIView):
 
     def get(self, request):
         try:
-            # Obtener todas las asignaturas creadas por el usuario (sin relación directa con UploadedFile)
-            asignaturas = Asignatura.objects.all()  # Si quieres filtrar por usuario, necesitarías otro enfoque
+            
+            asignaturas = Asignatura.objects.filter(user=request.user)
 
             # Preparar los datos para el calendario
             data = []

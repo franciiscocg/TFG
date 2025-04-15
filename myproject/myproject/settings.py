@@ -160,7 +160,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 ANYMAIL = {
-    "MAILERSEND_API_TOKEN": "mlsn.09acea69f980d687e8e369146302a62217755b8063933e158f9050ccf84abd92",  # Tu clave API de MailerSend
+    "MAILERSEND_API_TOKEN": "mlsn.ac95e289755540602d32f6f7bc81ebceb18d20931ef39a60ca3a531807bb694b",  # Tu clave API de MailerSend
     "MAILERSEND_SENDER_DOMAIN": "test-65qngkd9zdjlwr12.mlsender.net",  # Dominio predeterminado de MailerSend
 }
 
@@ -208,9 +208,68 @@ SITE_ID = 1
 ACCOUNT_LOGOUT_ON_GET = False
 SOCIALACCOUNT_LOGIN_ON_GET=True
 SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_STORE_TOKENS = True
 
 FRONTEND_BASE_URL = 'http://localhost:3000'
 FRONTEND_CALLBACK_URL = f"{FRONTEND_BASE_URL}/auth/callback"
 FRONTEND_LOGIN_URL = f"{FRONTEND_BASE_URL}/login"
 
 ACCOUNT_ADAPTER = 'authentication.views.CustomAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'authentication.views.CustomSocialAccountAdapter'
+
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            # Puedes añadir un formateador si quieres más detalle
+            # 'formatter': 'verbose',
+        },
+    },
+    # Formateadores opcionales para más detalle
+    # 'formatters': {
+    #     'verbose': {
+    #         'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+    #         'style': '{',
+    #     },
+    #     'simple': {
+    #         'format': '{levelname} {message}',
+    #         'style': '{',
+    #     },
+    # },
+    'root': { # Logger raíz, captura todo si no se especifica lo contrario
+        'handlers': ['console'],
+        'level': 'INFO', # Nivel por defecto para todo (puedes poner DEBUG aquí también)
+    },
+    'loggers': {
+        'django': { # Logger específico para Django
+            'handlers': ['console'],
+            'level': 'INFO', # Cambiar a DEBUG si quieres ver TODO de Django
+            'propagate': False, # No enviar logs de Django al logger raíz
+        },
+        'django.request': { # Logger para peticiones/respuestas de Django
+             'handlers': ['console'],
+             'level': 'DEBUG', # Ver detalle de peticiones
+             'propagate': False,
+         },
+        'allauth': { # Logger específico para allauth
+            'handlers': ['console'],
+            'level': 'DEBUG', # <-- ¡IMPORTANTE! Nivel DEBUG para allauth
+            'propagate': True, # Permitir que también vayan al logger raíz si quieres
+        },
+         # Puedes añadir loggers para otras librerías si sospechas de ellas
+         # 'oauthlib': {
+         #    'handlers': ['console'],
+         #    'level': 'DEBUG',
+         #    'propagate': True,
+         # },
+         # 'requests_oauthlib': {
+         #     'handlers': ['console'],
+         #     'level': 'DEBUG',
+         #     'propagate': True,
+         # },
+    },
+}
