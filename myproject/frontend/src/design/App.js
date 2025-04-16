@@ -16,7 +16,7 @@ import TextViewer from './design/components/TextViewer';
 import LoadingScreen from './design/components/LoadingScreen';
 import DatesResult from './design/components/DatesResult';
 import AsignaturaEdit from './design/components/AsignaturaEdit';
-import AuthCallback from './context/AuthCallback';
+import AuthCallback from './design/components/AuthCallback';
 
 // Importar componentes de optimización
 import { ResourcePreloader } from './design/components/PerformanceComponents';

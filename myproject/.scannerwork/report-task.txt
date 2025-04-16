@@ -1,0 +1,6 @@
+projectKey=StudySift
+serverUrl=http://localhost:9000
+serverVersion=25.4.0.105899
+dashboardUrl=http://localhost:9000/dashboard?id=StudySift
+ceTaskId=841c35ff-e067-440e-8a97-2f117d206bec
+ceTaskUrl=http://localhost:9000/api/ce/task?id=841c35ff-e067-440e-8a97-2f117d206bec
