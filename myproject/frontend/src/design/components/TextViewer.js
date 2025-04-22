@@ -248,7 +248,7 @@ function TextViewer() {
   const [error, setError] = useState('');
   const [summaryModel, setSummaryModel] = useState('gemma2:9b');
   const [jsonModel, setJsonModel] = useState('gemma2:9b');
-
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
   // Efecto para cargar datos al montar
   useEffect(() => {
     if (!isAuthenticated) {
@@ -265,7 +265,7 @@ function TextViewer() {
 
         // --- ÚNICA LLAMADA: Obtener texto Y datos extraídos (si existen) ---
         // Usamos el endpoint del "Functional" que parece devolver ambos
-        const textResponse = await fetch(`/api/upload/${fileId}/text/`, { // Endpoint del Functional
+        const textResponse = await fetch(`${backendUrl}/api/upload/${fileId}/text/`, { // Endpoint del Functional
           method: 'GET',
           headers: { 'Authorization': `Bearer ${token}` },
         });

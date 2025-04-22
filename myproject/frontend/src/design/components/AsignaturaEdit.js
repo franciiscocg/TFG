@@ -443,6 +443,7 @@ function AsignaturaEdit() {
   const [message, setMessage] = useState({ text: '', type: '' }); // Objeto para texto y tipo
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'; // URL del backend
 
   // Verificar autenticación
   useEffect(() => {
@@ -462,7 +463,7 @@ function AsignaturaEdit() {
       try {
         const token = localStorage.getItem('accessToken');
         // Usamos el endpoint del segundo ejemplo para obtener todos los datos
-        const response = await fetch('http://localhost:8000/api/ai/calendar/data/', {
+        const response = await fetch(`${backendUrl}/api/ai/calendar/data/`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -508,7 +509,7 @@ function AsignaturaEdit() {
     };
 
     fetchAsignatura();
-  }, [isAuthenticated, asignaturaNombre, navigate, initialAsignaturaData.asignatura]);
+  }, [isAuthenticated, asignaturaNombre, navigate]);
   // --- Handlers (Copiados y adaptados del segundo bloque) ---
 
   const handleDataChange = (field, value, section = 'asignatura', index = null) => {

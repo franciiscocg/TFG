@@ -222,6 +222,7 @@ function Upload() {
   const [message, setMessage] = useState({ text: '', type: '' });
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'; // Asegúrate de que esta variable esté definida
 
   // **NUEVO:** Tipos de archivo permitidos (MIME types)
   const ALLOWED_MIME_TYPES = [
@@ -325,7 +326,7 @@ function Upload() {
       formData.append('file', file); // El backend espera 'file'
 
       // Asegúrate que la URL del API sea la correcta
-      const response = await fetch('/api/upload/', {
+      const response = await fetch(`${backendUrl}/api/upload/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

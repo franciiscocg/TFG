@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:slim
 
 # Establecer directorio de trabajo
 WORKDIR /app

@@ -256,12 +256,6 @@ const AppNavbar = () => {
     if (isOpen) setIsOpen(false);
   };
 
-  // Obtener iniciales del usuario para el avatar
-  const getUserInitials = () => {
-    if (!user || !user.username) return 'U';
-    return user.username.charAt(0).toUpperCase();
-  };
-
   // Verificar si una ruta está activa
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(path + '/');
@@ -335,7 +329,6 @@ const AppNavbar = () => {
               </NavItem>
               
               <UserSection>
-                <UserAvatar>{getUserInitials()}</UserAvatar>
                 <LogoutButton onClick={handleLogout}>
                   <i className="fas fa-sign-out-alt" style={{ marginRight: '0.25rem' }}></i>
                   Cerrar sesión

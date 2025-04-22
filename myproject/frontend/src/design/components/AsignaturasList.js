@@ -369,6 +369,7 @@ function AsignaturasListComponent() {
   const [messageType, setMessageType] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [asignaturaToDelete, setAsignaturaToDelete] = useState(null);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -382,7 +383,7 @@ function AsignaturasListComponent() {
   const fetchAsignaturas = async () => {
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('/api/ai/calendar/data/', {
+      const response = await fetch(`${backendUrl}/api/ai/calendar/data/`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -410,7 +411,7 @@ function AsignaturasListComponent() {
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch(`/api/ai/asignaturas/${asignaturaToDelete.asignatura.nombre}/delete/`, {
+      const response = await fetch(`${backendUrl}/api/ai/asignaturas/${asignaturaToDelete.asignatura.nombre}/delete/`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

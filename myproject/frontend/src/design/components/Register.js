@@ -168,6 +168,7 @@ function Register() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -182,7 +183,7 @@ function Register() {
     const data = { username, email, password };
 
     try {
-      const response = await fetch('http://localhost:8000/api/register/', {
+      const response = await fetch(`${backendUrl}/api/register/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

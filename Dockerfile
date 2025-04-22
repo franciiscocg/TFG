@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:alpine
 
 # Establecer variables de entorno
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -9,10 +9,12 @@ ENV DJANGO_SETTINGS_MODULE=myproject.settings
 WORKDIR /app
 
 # Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache \
+    postgresql-dev \
+    gcc \
+    musl-dev \
+    dcron \
+    && rm -rf /var/cache/apk/*
 
 # Copiar requirements.txt primero para aprovechar la caché de Docker
 COPY requirements.txt .
@@ -23,6 +25,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar el proyecto
 COPY myproject/ .
 
+COPY ../myproject/.env ./
+
+# Recordatorios cron
+RUN touch /var/log/cron.log
+COPY django-cron /etc/crontabs/root
+RUN chmod 0644 /etc/crontabs/root
+
 # Crear directorio para archivos media si no existe
 RUN mkdir -p media
 
@@ -30,4 +39,4 @@ RUN mkdir -p media
 EXPOSE 8000
 
 # Comando para ejecutar las migraciones y el servidor
-CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+CMD python manage.py migrate && crond -b -l 8 -L /var/log/cron.log && python manage.py runserver 0.0.0.0:8000

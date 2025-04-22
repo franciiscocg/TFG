@@ -463,6 +463,7 @@ function FileList() {
   const [fileToDelete, setFileToDelete] = useState(null);
   const [loading, setLoading] = useState(false);
   const [extractingId, setExtractingId] = useState(null);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -474,14 +475,13 @@ function FileList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, navigate]);
 
-  const fetchFiles = async (url = '/api/upload/list/') => {
+  const fetchFiles = async (url = `${backendUrl}/api/upload/list/`) => {
     setLoading(true);
     setMessage('');
     setMessageType('');
     try {
       const token = localStorage.getItem('accessToken');
-      const relativeUrl = url.replace(/^https?:\/\/[^/]+/, '');
-      const response = await fetch(relativeUrl, {
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -491,7 +491,7 @@ function FileList() {
       const result = await response.json();
       if (response.ok) {
         setFiles(result.results || []);
-        const currentPage = getCurrentPageFromUrl(relativeUrl);
+        const currentPage = getCurrentPageFromUrl(url);
         const pageSize = 6;
         const totalPages = Math.ceil(result.count / pageSize);
         setPagination({
@@ -539,7 +539,7 @@ function FileList() {
     setLoading(true);
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch(`http://localhost:8000/api/upload/delete/${fileToDelete.id}/`, {
+      const response = await fetch(`${backendUrl}/api/upload/delete/${fileToDelete.id}/`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -579,7 +579,7 @@ function FileList() {
       setMessageType('');
       try {
           const token = localStorage.getItem('accessToken');
-          const response = await fetch(`/api/upload/${fileId}/extract/`, {
+          const response = await fetch(`${backendUrl}/api/upload/${fileId}/extract/`, {
               method: 'POST',
               headers: {
                   'Authorization': `Bearer ${token}`,
@@ -747,7 +747,7 @@ function FileList() {
             <ModalDetails>
               <p>¿Estás seguro de que quieres eliminar el archivo <strong>{getFilenameFromUrl(fileToDelete?.file)}</strong>?</p>
               <p>Esta acción no se puede deshacer.</p>
-            </ModalDetails>
+            </ModalDetails>A
             <ModalButtons>
               <CancelButton onClick={() => setShowModal(false)} disabled={loading}>Cancelar</CancelButton>
               <ConfirmButton onClick={confirmDelete} disabled={loading}>

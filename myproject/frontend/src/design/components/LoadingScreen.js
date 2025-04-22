@@ -154,7 +154,8 @@ function LoadingScreenFunctionalStyled() {
     const [error, setError] = useState(null);
     // Estado para guardar los datos de la primera llamada y pasarlos en la navegación
     const [datesDataForNav, setDatesDataForNav] = useState(null);
-    
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'; // Asegúrate de que esta variable esté definida en tu .env
+
     useEffect(() => {
         // 1. Comprobar autenticación
         if (!isAuthenticated) {
@@ -197,7 +198,7 @@ function LoadingScreenFunctionalStyled() {
                 setStatus('Extrayendo información clave...');
                 setProgress(10); // Progreso inicial simulado
 
-                const fetchDatesResponse = await fetch(`http://localhost:8000/api/ai/${fileId}/dates/`, {
+                const fetchDatesResponse = await fetch(`${backendUrl}/api/ai/${fileId}/dates/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -218,7 +219,7 @@ function LoadingScreenFunctionalStyled() {
                 setStatus('Procesando datos extraídos...');
                 setProgress(50); 
                 // --- Paso 2: Procesar Datos Extraídos ---
-                const processDataResponse = await fetch(`http://localhost:8000/api/ai/${fileId}/process-extracted-data/`, {
+                const processDataResponse = await fetch(`${backendUrl}/api/ai/${fileId}/process-extracted-data/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,

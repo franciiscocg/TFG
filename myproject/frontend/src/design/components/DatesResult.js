@@ -341,6 +341,7 @@ function DatesResult() {
   // Estado para mensajes
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
   // Carga inicial de datos
   const fetchData = async () => {
@@ -352,7 +353,7 @@ function DatesResult() {
           const token = localStorage.getItem('accessToken');
           if (!token) throw new Error("No autenticado.");
 
-          const response = await fetch(`/api/upload/${fileId}/text/`, {
+          const response = await fetch(`${backendUrl}/api/upload/${fileId}/text/`, {
               method: 'GET',
               headers: { 'Authorization': `Bearer ${token}` },
           });

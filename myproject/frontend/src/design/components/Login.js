@@ -210,7 +210,7 @@ function Login() {
 
     try {
       // 1. Solicitud de autenticación
-      const response = await fetch('http://localhost:8000/api/token/', {
+      const response = await fetch(`${backendUrl}/api/token/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -224,28 +224,7 @@ function Login() {
         setMessageType('success');
         login(result.access, result.refresh); // Guarda los tokens en el contexto
 
-        // 2. Llamada a /api/send-reminders/ con el token
-        try {
-          const reminderResponse = await fetch('http://localhost:8000/api/ai/send-reminders/', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${result.access}`, // Usa el token de acceso
-            },
-          });
-
-          const reminderResult = await reminderResponse.json();
-          if (reminderResponse.ok) {
-            setMessage((prev) => `${prev} - ${reminderResult.message}`);
-          } else {
-            setMessage((prev) => `${prev} - Error al enviar recordatorios: ${reminderResult.message}`);
-            setMessageType('error');
-          }
-        } catch (error) {
-          setMessage((prev) => `${prev} - Error al conectar con el servidor de recordatorios: ${error.message}`);
-          setMessageType('error');
-        }
-
-        // 3. Limpia los campos y redirige
+        // 2. Limpia los campos y redirige
         setUsername('');
         setPassword('');
         navigate('/');
