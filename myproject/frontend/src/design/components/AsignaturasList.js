@@ -371,7 +371,8 @@ function AsignaturasListComponent() {
   const [asignaturaToDelete, setAsignaturaToDelete] = useState(null);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
       navigate('/login');
       return;
     }

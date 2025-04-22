@@ -271,8 +271,8 @@ const AppNavbar = () => {
     <StyledNavbar expand="md" style={{ boxShadow: scrolled ? theme.shadows.lg : theme.shadows.md }}>
       <NavbarContainer>
         <NavbarBrand to="/" onClick={closeNavbar}>
-          <BrandIcon>A</BrandIcon>
-          Academia
+          <BrandIcon>S</BrandIcon>
+          StudySift
         </NavbarBrand>
         
         <NavbarToggler onClick={toggleNavbar}>
@@ -300,7 +300,7 @@ const AppNavbar = () => {
                   onClick={closeNavbar}
                 >
                   <i className="fas fa-upload" style={{ marginRight: '0.25rem' }}></i>
-                  Subir PDF
+                  Subir PDF/PPTX
                 </NavLink>
               </NavItem>
               <NavItem>

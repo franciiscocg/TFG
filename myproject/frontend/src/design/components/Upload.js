@@ -232,10 +232,12 @@ function Upload() {
   const USER_FRIENDLY_TYPES = "PDF o PPTX";
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
       navigate('/login');
+      return;
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
   const handleDragOver = (e) => {
     e.preventDefault();

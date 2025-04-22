@@ -478,7 +478,8 @@ function FileList() {
   const [extractingId, setExtractingId] = useState(null);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
       navigate('/login');
       return;
     }
@@ -504,8 +505,8 @@ function FileList() {
       if (response.ok) {
         setFiles(result.results || []);
         const currentPage = getCurrentPageFromUrl(relativeUrl);
-        const pageSize = result.results?.length || 10;
-        const totalPages = Math.ceil((result.count || 0) / pageSize);
+        const pageSize = 6;
+        const totalPages = Math.ceil(result.count / pageSize);
         setPagination({
           count: result.count || 0,
           next: result.next,

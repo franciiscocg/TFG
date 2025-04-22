@@ -495,8 +495,6 @@ function StyledCalendarScreen() {
                                  universidad: item.asignatura?.universidad || 'N/A',
                                  condiciones_aprobado: item.asignatura?.condiciones_aprobado || 'N/A',
                                  description: `Archivo: ${item.filename || 'Desconocido'}\nAsignatura: ${item.asignatura?.nombre || 'N/A'}`,
-                                 tipo: event.tipo || 'Evento', // Añadido de CalendarViewer
-                                 lugar: event.lugar || 'No especificado' // Añadido de CalendarViewer
                              }
                          };
                      }).filter(event => event !== null); // Filtra eventos nulos (sin fecha)
@@ -571,7 +569,6 @@ function StyledCalendarScreen() {
       if (!events || events.length === 0) {
           // Puedes usar un estado para mostrar mensajes en vez de alert
           alert("No hay eventos para exportar.");
-          // setExportICalStatus("No hay eventos para exportar."); // Si prefieres un mensaje en la UI
           return;
       }
 
@@ -591,17 +588,11 @@ function StyledCalendarScreen() {
 
           window.URL.revokeObjectURL(url); // Liberar memoria
 
-          // Opcional: Mostrar mensaje de éxito
-          // setExportICalStatus("¡Archivo .ics generado con éxito!");
-          // setTimeout(() => setExportICalStatus(""), 5000);
-
       } catch (error) {
           console.error("Error al generar el archivo iCal:", error);
           alert("Hubo un error al generar el archivo iCal. Revisa la consola para más detalles.");
-          // setExportICalStatus("Error al generar el archivo iCal.");
       }
   };
-  // --- *** FIN LÓGICA iCal *** ---
 
     // --- Exportar a Google Calendar (de CalendarScreen) ---
     const handleExportToGoogle = async () => {
@@ -679,12 +670,15 @@ function StyledCalendarScreen() {
         }
 
 
-        currentStatus.push(`\nExportación completada. Éxitos: ${successCount}, Errores: ${errorCount}.`);
+        if (errorCount > 0) {
+            currentStatus.push(`\nExportación completada. Éxitos: ${successCount}, Errores: ${errorCount}`);
+        } else {
+            currentStatus.push(`\nExportación completada`);
+        }
         setExportGoogleStatus(currentStatus.join('\n'));
         setIsExportingGoogle(false);
 
-        // Opcional: Limpiar mensaje después de unos segundos
-        // setTimeout(() => setExportGoogleStatus(''), 10000);
+        setTimeout(() => setExportGoogleStatus(''), 10000);
     };
     // --- ************************************************ ---
 
@@ -697,44 +691,39 @@ function StyledCalendarScreen() {
     return (
         <CalendarContainer>
             <CalendarHeader>
-                <HeaderTitle>Calendario de Eventos</HeaderTitle>
-                {/* Podrías añadir botones de acción globales aquí si quisieras */}
+                <HeaderTitle>Calendario</HeaderTitle>
             </CalendarHeader>
 
-             {/* FullCalendar se renderiza aquí, dentro del contenedor principal */}
             <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin]} // Añade interactionPlugin si quieres seleccionar fechas/eventos
+                plugins={[dayGridPlugin, interactionPlugin]} 
                 initialView="dayGridMonth"
-                locale="es" // Configura el idioma español
-                events={events} // Pasa los eventos formateados
-                eventClick={handleEventClick} // Manejador para clic en evento
-                // eventColor="#378006" // Color por defecto (puedes quitarlo si manejas colores por evento)
-                height="auto" // Ajusta la altura automáticamente
-                headerToolbar={{ // Configuración de la barra de herramientas
+                locale="es" 
+                events={events} 
+                eventClick={handleEventClick} 
+                height="auto" 
+                headerToolbar={{ 
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,dayGridWeek' // Añade vista semanal si quieres
+                    right: 'dayGridMonth,dayGridWeek' 
                 }}
-                buttonText={{ // Textos en español para los botones
+                buttonText={{ 
                     today:    'Hoy',
                     month:    'Mes',
                     week:     'Semana',
                     day:      'Día',
                     list:     'Lista'
                   }}
-                dayMaxEvents={true} // Muestra "+X more" si hay muchos eventos
+                dayMaxEvents={true} 
                 eventDidMount={(info) => {
-                     // Añadir Tooltip (título HTML) con detalles básicos
                      info.el.title = `${info.event.title}\nAsignatura: ${info.event.extendedProps.asignatura || 'N/A'}`;
-                     // Podrías usar librerías como Tippy.js para tooltips más avanzados
                  }}
             />
 
             <ActionButtonsContainer>
                  <StyledButton
                      onClick={exportToICal}
-                     disabled={events.length === 0} // Deshabilitar si no hay eventos
-                     bgColor={theme.colors.accent.info} /* Un color diferente para iCal */
+                     disabled={events.length === 0} 
+                     bgColor={theme.colors.accent.info}
                      color="white"
                  >
                      <i className="fas fa-file-download"></i> Exportar a iCal
@@ -744,7 +733,7 @@ function StyledCalendarScreen() {
                      <StyledButton
                          onClick={handleExportToGoogle}
                          disabled={isExportingGoogle || events.length === 0}
-                         bgColor="#DB4437" /* Color de Google */
+                         bgColor="#DB4437" 
                          color="white"
                      >
                          {isExportingGoogle ? (
@@ -769,7 +758,7 @@ function StyledCalendarScreen() {
             </ActionButtonsContainer>
 
              {/* Mensaje de Estado de Exportación Google */}
-             <ExportStatusMessage className={exportGoogleStatus.includes('Error') ? 'error' : (exportGoogleStatus ? 'success' : '')}>
+             <ExportStatusMessage className={exportGoogleStatus.includes('Errores:') ? 'error' : (exportGoogleStatus ? 'success' : '')}>
                  {exportGoogleStatus}
              </ExportStatusMessage>
 
@@ -778,7 +767,6 @@ function StyledCalendarScreen() {
                 <ModalOverlay onClick={() => setIsModalOpen(false)} /* Cierra al hacer clic fuera */ >
                     <ModalContent onClick={(e) => e.stopPropagation()} /* Evita cierre al hacer clic dentro */ >
                         <ModalTitle>
-                             <i className="fas fa-calendar-check"></i> {/* Icono para el título */}
                              Detalles del Evento
                         </ModalTitle>
 

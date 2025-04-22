@@ -12,7 +12,7 @@ import os
 from pptx import Presentation
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 4  # 4 archivos por página
+    page_size = 6  # 4 archivos por página
     page_size_query_param = 'page_size'
     max_page_size = 100
 

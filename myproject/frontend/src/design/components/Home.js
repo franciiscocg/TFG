@@ -206,10 +206,10 @@ function Home() {
   return (
     <HomeContainer>
       <HomeHeader>
-        <HeaderTitle>Plataforma Académica</HeaderTitle>
+        <HeaderTitle>StudySift</HeaderTitle>
         <HeaderSubtitle>
-          Gestiona tus asignaturas, archivos y calendario académico en un solo lugar. 
-          Una solución completa para organizar tu vida estudiantil.
+        Sube las planificaciones de la asignatura, gestiona tus asignaturas y calendario con las fechas importantes en un solo lugar. 
+        Una solución completa para organizar tu vida estudiantil.
         </HeaderSubtitle>
         <ButtonsContainer>
           <PrimaryButton to="/register">Comenzar ahora</PrimaryButton>
@@ -224,7 +224,7 @@ function Home() {
           </FeatureIcon>
           <FeatureTitle>Gestión de Archivos</FeatureTitle>
           <FeatureDescription>
-            Sube y organiza tus documentos PDF. Extrae fechas importantes automáticamente para mantener tu calendario actualizado.
+            Sube los archivos PPTX o PDF de las presentaciones o planificaciones academicas de tus asignaturas.
           </FeatureDescription>
         </FeatureCard>
         
@@ -234,9 +234,10 @@ function Home() {
           </FeatureIcon>
           <FeatureTitle>Calendario Inteligente</FeatureTitle>
           <FeatureDescription>
-            Visualiza todas tus fechas importantes en un calendario interactivo. Nunca más te perderás una entrega o examen.
+            Visualiza todas tus fechas importantes en un calendario interactivo. Toda la informacion que necesites, hay la encontraras.
           </FeatureDescription>
         </FeatureCard>
+        
         
         <FeatureCard>
           <FeatureIcon gradient="linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%)">
@@ -244,9 +245,40 @@ function Home() {
           </FeatureIcon>
           <FeatureTitle>Gestión de Asignaturas</FeatureTitle>
           <FeatureDescription>
-            Administra tus asignaturas, profesores y horarios en un solo lugar. Mantén toda tu información académica organizada.
+            Administra tus asignaturas, profesores y horarios en un solo lugar. Mantén toda tu información académica actualizada.
           </FeatureDescription>
         </FeatureCard>
+
+        <FeatureCard>
+          <FeatureIcon gradient="linear-gradient(135deg,rgb(182, 38, 38) 0%,rgb(234, 138, 138) 100%)">
+            <i className="fas fa-book"></i>
+          </FeatureIcon>
+          <FeatureTitle>Recordatorios</FeatureTitle>
+          <FeatureDescription>
+            Nunca olvidaras un examen o entrega mas. Gracias a las notificaciones al correo.
+          </FeatureDescription>
+        </FeatureCard>
+
+        <FeatureCard>
+          <FeatureIcon gradient="linear-gradient(135deg,rgb(226, 224, 78) 0%,rgb(237, 234, 36) 100%)">
+            <i className="fas fa-book"></i>
+          </FeatureIcon>
+          <FeatureTitle>No pierdas el tiempo</FeatureTitle>
+          <FeatureDescription>
+            Extrae fechas importantes automáticamente para mantener tu calendario actualizado
+          </FeatureDescription>
+        </FeatureCard>
+
+        <FeatureCard>
+          <FeatureIcon gradient="linear-gradient(135deg,rgb(21, 218, 208) 0%,rgb(71, 255, 252) 100%)">
+            <i className="fas fa-book"></i>
+          </FeatureIcon>
+          <FeatureTitle>Exporta tus datos</FeatureTitle>
+          <FeatureDescription>
+            Puedes exportar las fechas en formato .ics para importarlos a otras aplicaciones de calendario.
+          </FeatureDescription>
+        </FeatureCard>
+
       </HomeBody>
     </HomeContainer>
   );
