@@ -140,19 +140,6 @@ const FileHeader = styled.div`
   gap: 1rem;
 `;
 
-const FileIcon = styled.div`
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: ${theme.borderRadius.md};
-  background-color: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  color: ${theme.colors.primary.contrast};
-  flex-shrink: 0;
-`;
-
 const FileName = styled.h3`
   font-size: ${theme.typography.fontSize.lg};
   font-weight: ${theme.typography.fontWeight.semibold};

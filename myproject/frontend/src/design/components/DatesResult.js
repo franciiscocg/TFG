@@ -169,110 +169,12 @@ const DateTitle = styled.h3`
   margin: 0;
 `;
 
-const DateTag = styled.span`
-  padding: 0.25rem 0.75rem;
-  border-radius: ${theme.borderRadius.full};
-  background-color: ${theme.colors.primary.main}20;
-  color: ${theme.colors.primary.main};
-  font-size: ${theme.typography.fontSize.sm};
-  font-weight: ${theme.typography.fontWeight.medium};
-  white-space: nowrap;
-`;
 
 const DateContent = styled.div`
   font-size: ${theme.typography.fontSize.base};
   color: ${theme.colors.text.secondary};
   line-height: 1.5;
   margin-bottom: 1rem;
-`;
-
-const DateContext = styled.div`
-  margin-top: 0.75rem;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border-radius: ${theme.borderRadius.md};
-  background-color: ${theme.colors.background.paper};
-  border-left: 3px solid ${theme.colors.primary.main};
-  font-size: ${theme.typography.fontSize.sm};
-  color: ${theme.colors.text.secondary};
-`;
-
-const AddToCalendarButton = styled.button`
-  padding: 0.5rem 1rem;
-  font-size: ${theme.typography.fontSize.sm};
-  font-weight: ${theme.typography.fontWeight.medium};
-  background-color: ${props => props.disabled ? theme.colors.neutral.light : theme.colors.secondary.main};
-  color: ${props => props.disabled ? theme.colors.text.secondary : theme.colors.secondary.contrast};
-  border: none;
-  border-radius: ${theme.borderRadius.md};
-  cursor: ${props => props.disabled ? 'default' : 'pointer'};
-  transition: ${theme.transitions.default};
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  float: right;
-
-  &:hover:not(:disabled) {
-      background-color: ${theme.colors.secondary.light};
-      transform: translateY(-1px);
-  }
-  &:disabled {
-      opacity: 0.7;
-  }
-  i {
-      font-size: 0.875rem;
-  }
-`;
-
-// --- Estilos para la VISTA DE EDICIÓN ---
-const EditorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const JsonTextarea = styled.textarea`
-  width: 100%;
-  min-height: 400px;
-  padding: 1rem;
-  border-radius: ${theme.borderRadius.md};
-  border: 1px solid ${theme.colors.border.medium};
-  font-family: ${theme.typography.fontFamily.mono};
-  font-size: ${theme.typography.fontSize.sm};
-  line-height: 1.5;
-  background-color: ${theme.colors.background.alt};
-  color: ${theme.colors.text.primary};
-  resize: vertical;
-
-  &:focus {
-    outline: none;
-    border-color: ${theme.colors.primary.main};
-    box-shadow: 0 0 0 2px ${theme.colors.primary.main}30;
-  }
-`;
-
-const EditorActions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-`;
-
-const SaveButton = styled(ActionButton)`
-  background: ${theme.colors.accent.success};
-  color: white;
-
-  &:hover:not(:disabled) {
-      background: #388e3c;
-  }
-`;
-
-const CancelEditButton = styled(ActionButton)`
-  background: ${theme.colors.neutral.light};
-  color: ${theme.colors.text.primary};
-
-   &:hover:not(:disabled) {
-      background: ${theme.colors.neutral.lighter};
-  }
 `;
 
 // --- Otros Estilos (Loading, NoResults, Message) ---

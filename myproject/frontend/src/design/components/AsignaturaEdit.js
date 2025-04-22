@@ -508,8 +508,7 @@ function AsignaturaEdit() {
     };
 
     fetchAsignatura();
-  }, [isAuthenticated, asignaturaNombre, navigate]); // Dependencias clave
-
+  }, [isAuthenticated, asignaturaNombre, navigate, initialAsignaturaData.asignatura]);
   // --- Handlers (Copiados y adaptados del segundo bloque) ---
 
   const handleDataChange = (field, value, section = 'asignatura', index = null) => {

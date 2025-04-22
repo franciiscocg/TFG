@@ -251,7 +251,7 @@ function Home() {
 
         <FeatureCard>
           <FeatureIcon gradient="linear-gradient(135deg,rgb(182, 38, 38) 0%,rgb(234, 138, 138) 100%)">
-            <i className="fas fa-book"></i>
+            <i className="fas fa-bell"></i>
           </FeatureIcon>
           <FeatureTitle>Recordatorios</FeatureTitle>
           <FeatureDescription>
@@ -261,7 +261,7 @@ function Home() {
 
         <FeatureCard>
           <FeatureIcon gradient="linear-gradient(135deg,rgb(226, 224, 78) 0%,rgb(237, 234, 36) 100%)">
-            <i className="fas fa-book"></i>
+            <i className="fas fa-wand-magic-sparkles"></i>
           </FeatureIcon>
           <FeatureTitle>No pierdas el tiempo</FeatureTitle>
           <FeatureDescription>
@@ -271,11 +271,11 @@ function Home() {
 
         <FeatureCard>
           <FeatureIcon gradient="linear-gradient(135deg,rgb(21, 218, 208) 0%,rgb(71, 255, 252) 100%)">
-            <i className="fas fa-book"></i>
+            <i className="fas fa-file-export"></i>
           </FeatureIcon>
           <FeatureTitle>Exporta tus datos</FeatureTitle>
           <FeatureDescription>
-            Puedes exportar las fechas en formato .ics para importarlos a otras aplicaciones de calendario.
+          Descargar las fechas en formato ICS para exportarlas a otras aplicaciones de calendario.
           </FeatureDescription>
         </FeatureCard>
 

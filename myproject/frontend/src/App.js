@@ -20,11 +20,8 @@ import AuthCallback from './context/AuthCallback';
 
 // Importar componentes de optimización
 import { ResourcePreloader } from './design/components/PerformanceComponents';
-import { SkipLink } from './design/components/AccessibilityComponents';
 
 // Importar estilos CSS
-import './design/responsive.css';
-import './design/navbar-responsive.css';
 
 function App() {
   return (
@@ -32,7 +29,6 @@ function App() {
       <ResponsiveProvider>
         <ResourcePreloader />
         <Router>
-          <SkipLink href="#main-content">Saltar al contenido principal</SkipLink>
           <AppNavbar />
           <main id="main-content">
             <Routes>

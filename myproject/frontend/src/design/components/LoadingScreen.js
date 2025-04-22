@@ -154,7 +154,7 @@ function LoadingScreenFunctionalStyled() {
     const [error, setError] = useState(null);
     // Estado para guardar los datos de la primera llamada y pasarlos en la navegación
     const [datesDataForNav, setDatesDataForNav] = useState(null);
-
+    
     useEffect(() => {
         // 1. Comprobar autenticación
         if (!isAuthenticated) {
@@ -214,10 +214,9 @@ function LoadingScreenFunctionalStyled() {
                     throw new Error(`Error ${fetchDatesResponse.status} al extraer: ${errorMsg}`);
                 }
 
-                setDatesDataForNav(datesResult); // Guarda los datos para pasarlos al navegar
+                setDatesDataForNav(datesResult);
                 setStatus('Procesando datos extraídos...');
-                setProgress(50); // Progreso simulado tras el paso 1
-
+                setProgress(50); 
                 // --- Paso 2: Procesar Datos Extraídos ---
                 const processDataResponse = await fetch(`http://localhost:8000/api/ai/${fileId}/process-extracted-data/`, {
                     method: 'POST',

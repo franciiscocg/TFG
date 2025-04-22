@@ -338,7 +338,7 @@ const AppNavbar = () => {
                 <UserAvatar>{getUserInitials()}</UserAvatar>
                 <LogoutButton onClick={handleLogout}>
                   <i className="fas fa-sign-out-alt" style={{ marginRight: '0.25rem' }}></i>
-                  Salir
+                  Cerrar sesión
                 </LogoutButton>
               </UserSection>
             </>

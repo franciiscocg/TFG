@@ -12,7 +12,6 @@ function AuthCallback() {
     // Parsea los parámetros de búsqueda de la URL actual
     const params = new URLSearchParams(location.search);
     const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token'); // Obtenemos también el refresh token
 
     if (accessToken) {
       console.log("AuthCallback: Access token received.");
