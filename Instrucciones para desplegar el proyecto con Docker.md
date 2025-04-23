@@ -15,7 +15,7 @@ Se han creado tres archivos principales para facilitar el despliegue:
 
 1. `Dockerfile` (en la raíz del proyecto): Define la imagen para el backend Django.
 2. `frontend/Dockerfile` (en el directorio frontend): Define la imagen para el frontend React.
-3. `docker-compose.yml` (en la raíz del proyecto): Configura ambos servicios, sus volúmenes, puertos y la comunicación entre ellos.
+3. `docker-compose.yml` (en la raíz del proyecto): Configura ambos servicios y ollama, sus volúmenes, puertos y la comunicación entre ellos.
 
 ## Pasos para desplegar la aplicación fullstack
 
@@ -32,7 +32,15 @@ cd TFG
 docker-compose up --build
 ```
 
+
 Este comando construirá las imágenes Docker para el backend y el frontend según las especificaciones de los Dockerfiles y levantará los contenedores. La opción `--build` asegura que las imágenes se construyan antes de iniciar los contenedores.
+
+Se descargar automaticamente dos modelos, llama y gemma2 siendo gemma2 la recomendada su uso debido a que es la que mejor resultados a dado
+
+```bash
+docker exec -it ollama_service ollama pull <nombre_del_modelo>
+```
+Para descargar cualquier otro modelo utilice el comando de arriba
 
 ### 3. Acceder a la aplicación
 

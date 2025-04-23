@@ -11,10 +11,13 @@ services:
     environment:
       - DEBUG=True
       - DJANGO_SETTINGS_MODULE=myproject.settings
+      - OLLAMA_API_URL=http://ollama:11434
     networks:
       - app-network
     env_file:
       - myproject/.env
+    depends_on:
+      - ollama
 
   frontend:
     build:
@@ -31,6 +34,33 @@ services:
     env_file:
       - myproject/.env
 
+  ollama:
+    image: ollama/ollama 
+    container_name: ollama_service 
+    ports:
+      - "11434:11434"
+    volumes:
+      # Usa un volumen nombrado para persistir los modelos descargados
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_NO_TLS_VERIFY=true
+    networks:
+      - app-network # Conéctalo a la misma red que los otros servicios
+    restart: unless-stopped 
+    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull llama3.1:8b && ollama pull gemma2:9b && wait"]
+    # Esta sección para el soporte de GPU( si desa runear con CPU borre el deploy)
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: 1
+#              capabilities: [gpu]
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  # Declara el volumen nombrado para los datos de Ollama
+  ollama_data: {}

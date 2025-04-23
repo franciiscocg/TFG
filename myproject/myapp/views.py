@@ -16,10 +16,12 @@ from allauth.socialaccount.models import SocialToken, SocialApp
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import os
 
 
 # URL del servidor de Ollama
-OLLAMA_API_URL = "http://localhost:11434/api/generate"
+
+OLLAMA_API_URL = os.environ.get('OLLAMA_API_URL') + "/api/generate"
 
 class ExtractDatesView(APIView):
     permission_classes = [IsAuthenticated]
