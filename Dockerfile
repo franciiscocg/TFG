@@ -27,16 +27,15 @@ COPY myproject/ .
 
 COPY ../myproject/.env ./
 
-# Recordatorios cron
-RUN touch /var/log/cron.log
-COPY django-cron /etc/crontabs/root
-RUN chmod 0644 /etc/crontabs/root
-
 # Crear directorio para archivos media si no existe
 RUN mkdir -p media
+
+# Copiar y configurar el servicio de recordatorios
+COPY myproject/reminder_service.py /app/
+RUN chmod +x /app/reminder_service.py
 
 # Exponer el puerto que utilizará Django
 EXPOSE 8000
 
 # Comando para ejecutar las migraciones y el servidor
-CMD python manage.py migrate && crond -b -l 8 -L /var/log/cron.log && python manage.py runserver 0.0.0.0:8000
+CMD python manage.py migrate && python /app/reminder_service.py & python manage.py runserver 0.0.0.0:8000

@@ -1,4 +1,0 @@
-# Ejecutar todos los días a las 8:00 AM (ajusta la hora según necesites)
-0 8 * * * python /app/manage.py send_reminders >> /var/log/cron.log 2>&1
-
-# ¡IMPORTANTE! Asegúrate de que este archivo termina con una línea nueva vacía.
