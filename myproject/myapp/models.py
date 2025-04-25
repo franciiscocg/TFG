@@ -33,7 +33,7 @@ class Horario(models.Model):
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
     hora = models.CharField(max_length=20,null=True, blank=True) 
     aula = models.CharField(max_length=50,null=True, blank=True)
-    dia = models.CharField(max_length=20,choices=SEMANA_CHOICES, null=True, blank=True)  
+    dia = models.CharField(max_length=20,choices=SEMANA_CHOICES)  
 
 class Profesores(models.Model):
     nombre = models.CharField(max_length=100,null=True, blank=True)
