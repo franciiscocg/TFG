@@ -193,7 +193,8 @@ class ProcessExtractedDataView(APIView):
                     grupo=horario.get("grupo", ""),
                     tipo=horario.get("tipo", "teoria"),
                     hora=horario.get("hora", ""),
-                    aula=horario.get("aula", "")
+                    aula=horario.get("aula", ""),
+                    dia=horario.get("dia", "Lunes")
                 )
 
             # Crear profesores asociados a la asignatura (evitar duplicados)
@@ -210,7 +211,8 @@ class ProcessExtractedDataView(APIView):
                         grupo=horario_data.get("grupo", ""),
                         tipo=horario_data.get("tipo", "teoria"),
                         hora=horario_data.get("hora", ""),
-                        aula=horario_data.get("aula", "")
+                        aula=horario_data.get("aula", ""),
+                        dia=horario_data.get("dia", "Lunes")
                     )
 
                 # Crear o obtener el profesor
@@ -273,6 +275,7 @@ class GetUserCalendarDataView(APIView):
                         "tipo": horario.tipo,
                         "hora": horario.hora,
                         "aula": horario.aula,
+                        "dia": horario.dia,
                     }
                     for horario in horarios
                 ]
@@ -287,6 +290,7 @@ class GetUserCalendarDataView(APIView):
                             "tipo": profesor.horario.tipo,
                             "hora": profesor.horario.hora,
                             "aula": profesor.horario.aula,
+                            "dia": profesor.horario.dia,
                         } if profesor.horario else None
                     }
                     for profesor in profesores

@@ -18,11 +18,22 @@ class Horario(models.Model):
         ('practica', 'Práctica'),
         ('tutoria', 'Tutoría'),
     ]
+    SEMANA_CHOICES = [
+        ('Lunes', 'Lunes'),
+        ('Martes', 'Martes'),
+        ('Miércoles', 'Miércoles'),
+        ('Jueves', 'Jueves'),
+        ('Viernes', 'Viernes'),
+        ('Sábado', 'Sábado'),
+        ('Domingo', 'Domingo'),
+    ]
+        
     asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, related_name='horarios')
     grupo = models.CharField(max_length=50,null=True, blank=True)
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
-    hora = models.CharField(max_length=20,null=True, blank=True)  # Ejemplo: "10:40-12:30"
+    hora = models.CharField(max_length=20,null=True, blank=True) 
     aula = models.CharField(max_length=50,null=True, blank=True)
+    dia = models.CharField(max_length=20,choices=SEMANA_CHOICES, null=True, blank=True)  
 
 class Profesores(models.Model):
     nombre = models.CharField(max_length=100,null=True, blank=True)

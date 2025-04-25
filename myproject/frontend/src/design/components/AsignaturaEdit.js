@@ -501,8 +501,6 @@ function AsignaturaEdit() {
           text: `Error al cargar datos: ${error.message}`,
           type: 'error'
         });
-        // Opcional: redirigir si no se encuentra o hay error grave
-        // setTimeout(() => navigate('/asignaturas'), 3000);
       } finally {
         setLoading(false);
       }
@@ -538,7 +536,7 @@ function AsignaturaEdit() {
       ...prev,
       horarios: [...prev.horarios, newHorario],
     }));
-    setNewHorario({ grupo: '', tipo: 'teoria', hora: '', aula: '' }); // Resetear formulario
+    setNewHorario({ grupo: '', tipo: 'teoria', hora: '', dia: 'Lunes', aula: '' }); // Resetear formulario
     setMessage({ text: 'Horario añadido temporalmente. Guarda para confirmar.', type: 'success' });
   };
 
@@ -754,6 +752,18 @@ function AsignaturaEdit() {
                   onChange={(e) => handleDataChange('hora', e.target.value, 'horarios', index)}
                   placeholder="Hora (Ej: Lunes 10:00-12:00)"
                 />
+                <FormSelect
+                  value={horario.dia}
+                  onChange={(e) => handleDataChange('dia', e.target.value, 'horarios', index)}
+                >
+                  <option value="Lunes">Lunes</option>
+                  <option value="Martes">Martes</option>
+                  <option value="Miércoles">Miércoles</option>
+                  <option value="Jueves">Jueves</option>
+                  <option value="Viernes">Viernes</option>
+                  <option value="Sábado">Sábado</option>
+                  <option value="Domingo">Domingo</option>
+                </FormSelect>
                 <FormInput
                   value={horario.aula}
                   onChange={(e) => handleDataChange('aula', e.target.value, 'horarios', index)}
@@ -770,11 +780,28 @@ function AsignaturaEdit() {
                  <FormInput
                   value={newHorario.grupo}
                   onChange={(e) => setNewHorario({ ...newHorario, grupo: e.target.value })}
-                  placeholder="Grupo"
+                  placeholder="Grupo*"
                 />
                 <FormSelect
                   value={newHorario.tipo}
                   onChange={(e) => setNewHorario({ ...newHorario, tipo: e.target.value })}
+                >
+                  <option value="Lunes">Lunes</option>
+                  <option value="Martes">Martes</option>
+                  <option value="Miércoles">Miércoles</option>
+                  <option value="Jueves">Jueves</option>
+                  <option value="Viernes">Viernes</option>
+                  <option value="Sábado">Sábado</option>
+                  <option value="Domingo">Domingo</option>
+                </FormSelect>
+                <FormInput
+                  value={newHorario.hora}
+                  onChange={(e) => setNewHorario({ ...newHorario, hora: e.target.value })}
+                  placeholder="Hora*"
+                />
+                <FormSelect
+                  value={newHorario.dia}
+                  onChange={(e) => setNewHorario({ ...newHorario, dia: e.target.value })}
                 >
                   <option value="teoria">Teoría</option>
                   <option value="practica">Práctica</option>
@@ -782,11 +809,6 @@ function AsignaturaEdit() {
                   <option value="laboratorio">Laboratorio</option>
                    <option value="seminario">Seminario</option>
                 </FormSelect>
-                <FormInput
-                  value={newHorario.hora}
-                  onChange={(e) => setNewHorario({ ...newHorario, hora: e.target.value })}
-                  placeholder="Hora"
-                />
                 <FormInput
                   value={newHorario.aula}
                   onChange={(e) => setNewHorario({ ...newHorario, aula: e.target.value })}
