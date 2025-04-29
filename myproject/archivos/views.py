@@ -158,6 +158,7 @@ class UserExtractedDataView(APIView):
         if not files_with_data.exists():
             return Response({
                 "message": "No se encontraron datos extraídos para este usuario",
+                "count": 0,
                 "data": []
             }, status=status.HTTP_200_OK)
 

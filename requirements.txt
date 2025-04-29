@@ -12,3 +12,8 @@ google-auth
 google-api-python-client
 python-dotenv
 python-pptx
+pytest 
+pytest-django 
+coverage
+pytest-cov
+pytest-mock
