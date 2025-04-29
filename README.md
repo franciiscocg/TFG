@@ -21,12 +21,34 @@ myproject/
 │   ├── node_modules/          # Dependencias de Node.js
 │   ├── .gitignore             # Archivos ignorados por Git
 │   └── Dockerfile             # Configuración para Docker
-├── settings/                  # Configuraciones del proyecto
+├── media/uploads/             # Archivos subidos
+│   └── <user>/                # Carpeta que contiene los archivos del usuario
+│        ├── pdf/              # Archivos PDF y PPTX para la extraccion
+│        └── txt/              # Archivos TXT de la extraccion del PDF
+├── myapp/                     # Aplicacion core del proyecto
+│   ├── files/                 # Archivos usados y guardados para probar la IA
+│   │    ├── json/             # Archivos json generados y usados por la IA
+│   │    ├── pdf/              # Archivos pdf usados por la IA
+│   │    └── txt/              # Archivos txt generados y usador por la IA
+│   ├── management/            # Llamada para enviar recordatorios (mensajes de correo)
+│   ├── migrations/            # Migraciones de la base de datos
 │   ├── __init__.py            # Inicialización del paquete
-│   ├── allauth_settings.py    # Configuración para django-allauth
-│   └── social_auth.py         # Configuración para autenticación social
+│   ├── admin.py               # Configuración del panel de administración
+│   ├── models.py              # Modelos de datos para asignaturas, horarios, profesores y fechas
+│   ├── serializers.py         # Serializadores para la API REST
+│   ├── urls.py                # Rutas de la API para myapp
+│   └── views.py               # Vistas y lógica de negocio
+├── myproject/                 # Directorio del proyecto
+│   ├── __init__.py            # Inicialización del paquete
+│   ├── asgi.py                # Punto de entrada ASGI
+│   ├── settings.py            # Configuracion del proyecto
+│   ├── urls.py                # Rutas de la API del proyecto
+│   └── wsgi.py                # Punto de entrada WSGI
 ├── .env                       # Variables de entorno
-└── db.sqlite3                 # Base de datos SQLite
+├── db.sqlite                  # Base de datos para el desarrollo
+├── manage.py                  # Punto de entrada Djanjo
+├── reminder_service.py        # Script de recordatorio automatico
+└── sonar-project.properties   # Configuracion SonarQube
 ```
 
 ## Características Principales
