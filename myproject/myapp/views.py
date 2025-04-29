@@ -432,66 +432,135 @@ class SendDateRemindersView(APIView):
         
 
 class ExportToGoogleCalendarView(APIView):
-    permission_classes = [IsAuthenticated] # Solo usuarios logueados
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        # Asume que recibes las fechas/eventos en el cuerpo de la solicitud
-        # Ejemplo: {'summary': 'Mi Evento desde App', 'start_date': '2025-05-10', 'end_date': '2025-05-11'}
         event_data = request.data
+
+        # Validate required fields
         if not all(k in event_data for k in ['summary', 'start_date', 'end_date']):
-             return Response({'error': 'Faltan datos del evento (summary, start_date, end_date)'}, status=400)
+            return Response(
+                {'error': 'Faltan datos del evento (summary, start_date, end_date)'},
+                status=400
+            )
 
         try:
-            # --- Obtener credenciales de Google del usuario ---
+            # Get Google credentials
             google_app = SocialApp.objects.get(provider='google')
             social_token = SocialToken.objects.get(account__user=user, account__provider='google')
 
-            # Verificar si el token de acceso ha expirado (allauth no lo hace autom.)
-            # Si necesitas manejar la expiración y el refresh token, la lógica es más compleja
-            # Por simplicidad, asumimos que el token es válido o usamos google-auth para manejarlo mejor
-
             credentials = Credentials(
                 token=social_token.token,
-                refresh_token=social_token.token_secret, # allauth guarda refresh token aquí
+                refresh_token=social_token.token_secret,
                 token_uri='https://oauth2.googleapis.com/token',
                 client_id=google_app.client_id,
                 client_secret=google_app.secret,
-                scopes=['https://www.googleapis.com/auth/calendar.events'] # Asegúrate que los scopes coincidan
+                scopes=['https://www.googleapis.com/auth/calendar.events']
             )
 
-            # --- Crear el evento en Google Calendar ---
+            # Build Google Calendar service
             service = build('calendar', 'v3', credentials=credentials)
 
+            # Prepare event data
             event = {
                 'summary': event_data['summary'],
-                'description': event_data.get('description', ''), # Descripción opcional
+                'description': event_data.get('description', ''),
                 'start': {
-                    # Google Calendar API espera formato ISO (con hora/zona horaria)
-                    # Ajusta esto según cómo almacenas tus fechas
-                    'date': event_data['start_date'], # Para eventos de día completo
-                    # 'dateTime': '2025-05-10T09:00:00-07:00', # Para eventos con hora específica
-                    # 'timeZone': 'America/Los_Angeles', # Opcional si usas dateTime
+                    'date': event_data['start_date'],
                 },
                 'end': {
-                    'date': event_data['end_date'], # Para eventos de día completo
-                    # 'dateTime': '2025-05-10T17:00:00-07:00',
-                    # 'timeZone': 'America/Los_Angeles',
+                    'date': event_data['end_date'],
                 },
-                # Puedes añadir más campos: recurrence, attendees, etc.
+                # Optionally, store a unique ID in extendedProperties for precise matching
+                'extendedProperties': {
+                    'private': {
+                        'studySiftEventId': event_data.get('event_id', f"{event_data['summary']}_{event_data['start_date']}"),
+                    }
+                }
             }
 
-            created_event = service.events().insert(calendarId='primary', body=event).execute()
-            print(f"Evento creado: {created_event.get('htmlLink')}")
+            # Search for existing events on the same date
+            start_date = event_data['start_date']
+            end_date = event_data['end_date']
+            calendar_id = 'primary'
 
-            return Response({'success': True, 'message': 'Evento exportado a Google Calendar', 'event_link': created_event.get('htmlLink')})
+            # Query events in the date range
+            time_min = f"{start_date}T00:00:00Z"
+            time_max = f"{end_date}T23:59:59Z"
+            events_result = service.events().list(
+                calendarId=calendar_id,
+                timeMin=time_min,
+                timeMax=time_max,
+                q=event_data['summary'],  # Search by summary
+                singleEvents=True,
+                orderBy='startTime'
+            ).execute()
+
+            existing_events = events_result.get('items', [])
+
+            # Check if an event matches (by summary and date, or by studySiftEventId)
+            matching_event = None
+            for existing_event in existing_events:
+                existing_start = existing_event.get('start', {}).get('date')
+                existing_summary = existing_event.get('summary', '')
+                existing_event_id = (
+                    existing_event.get('extendedProperties', {})
+                    .get('private', {})
+                    .get('studySiftEventId', '')
+                )
+
+                if (
+                    existing_start == start_date and
+                    (
+                        existing_summary == event_data['summary'] or
+                        existing_event_id == event_data.get('event_id', f"{event_data['summary']}_{start_date}")
+                    )
+                ):
+                    matching_event = existing_event
+                    break
+
+            if matching_event:
+                # Update existing event
+                event_id = matching_event['id']
+                updated_event = service.events().update(
+                    calendarId=calendar_id,
+                    eventId=event_id,
+                    body=event
+                ).execute()
+                print(f"Evento actualizado: {updated_event.get('htmlLink')}")
+                return Response({
+                    'success': True,
+                    'message': 'Evento actualizado en Google Calendar',
+                    'event_link': updated_event.get('htmlLink')
+                })
+            else:
+                # Create new event
+                created_event = service.events().insert(
+                    calendarId=calendar_id,
+                    body=event
+                ).execute()
+                print(f"Evento creado: {created_event.get('htmlLink')}")
+                return Response({
+                    'success': True,
+                    'message': 'Evento exportado a Google Calendar',
+                    'event_link': created_event.get('htmlLink')
+                })
 
         except SocialToken.DoesNotExist:
-            return Response({'error': 'El usuario no ha vinculado su cuenta de Google.'}, status=400)
+            return Response(
+                {'error': 'El usuario no ha vinculado su cuenta de Google.'},
+                status=400
+            )
         except HttpError as error:
             print(f'Ocurrió un error con Google Calendar API: {error}')
-            # Podrías intentar refrescar el token aquí si el error es de autenticación
-            return Response({'error': f'Error al exportar a Google Calendar: {error}'}, status=500)
+            return Response(
+                {'error': f'Error al exportar a Google Calendar: {error}'},
+                status=500
+            )
         except Exception as e:
-             print(f'Ocurrió un error inesperado: {e}')
-             return Response({'error': 'Ocurrió un error inesperado en el servidor.'}, status=500)
+            print(f'Ocurrió un error inesperado: {e}')
+            return Response(
+                {'error': 'Ocurrió un error inesperado en el servidor.'},
+                status=500
+            )

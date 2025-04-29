@@ -746,11 +746,11 @@ function StyledCalendarScreen() {
       setExportGoogleStatus('Necesitas vincular tu cuenta de Google primero.');
       return;
     }
-
+  
     setIsExportingGoogle(true);
     setExportGoogleStatus('Exportando eventos a Google Calendar...');
     let currentStatus = ['Exportando eventos a Google Calendar...'];
-
+  
     const token = localStorage.getItem('accessToken');
     if (!token) {
       setExportGoogleStatus('Error de autenticación. Intenta iniciar sesión de nuevo.');
@@ -758,23 +758,24 @@ function StyledCalendarScreen() {
       navigate('/login');
       return;
     }
-
+  
     let successCount = 0;
     let errorCount = 0;
-
+  
     for (const event of events) {
       const eventData = {
+        event_id: event.id, // Send unique event ID
         summary: event.title,
         start_date: event.date,
         end_date: event.end,
         description: event.extendedProps?.description || '',
         location: event.extendedProps?.lugar || '',
       };
-
+  
       try {
         currentStatus.push(`Intentando exportar: "${event.title}"...`);
         setExportGoogleStatus(currentStatus.join('\n'));
-
+  
         const response = await fetch(exportApiUrl, {
           method: 'POST',
           headers: {
@@ -783,12 +784,12 @@ function StyledCalendarScreen() {
           },
           body: JSON.stringify(eventData),
         });
-
+  
         if (response.ok) {
           successCount++;
           const result = await response.json();
           currentStatus.pop();
-          currentStatus.push(`✅ Éxito: "${event.title}" exportado.`);
+          currentStatus.push(`✅ Éxito: "${event.title}" ${result.message.includes('actualizado') ? 'actualizado' : 'exportado'}.`);
           console.log('Exportación exitosa para:', event.title, result);
         } else {
           errorCount++;
@@ -806,7 +807,7 @@ function StyledCalendarScreen() {
       }
       setExportGoogleStatus(currentStatus.join('\n'));
     }
-
+  
     if (errorCount > 0) {
       currentStatus.push(`\nExportación completada. Éxitos: ${successCount}, Errores: ${errorCount}`);
     } else {
@@ -814,7 +815,7 @@ function StyledCalendarScreen() {
     }
     setExportGoogleStatus(currentStatus.join('\n'));
     setIsExportingGoogle(false);
-
+  
     setTimeout(() => setExportGoogleStatus(''), 10000);
   };
 
