@@ -16,6 +16,10 @@ class UploadedFile(models.Model):
     text_file = models.FileField(upload_to=user_txt_path, null=True, blank=True)
     extracted_data = models.JSONField(default=dict, null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-uploaded_at', 'id']
+
 
     def __str__(self):
         return f"{self.user.username} - {self.file.name}"

@@ -17,6 +17,8 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import os
+from rest_framework.exceptions import ValidationError
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # URL del servidor de Ollama
@@ -324,59 +326,106 @@ class AsignaturaUpdateView(APIView):
 
     def put(self, request, nombre):
         try:
-            asignatura = get_object_or_404(Asignatura, nombre=nombre)
+            asignatura = get_object_or_404(Asignatura, nombre=nombre, user=request.user)
+        
+        except ObjectDoesNotExist:
+            # If you want DRF's default 404 handling, you could re-raise Http404
+            # raise Http404
+            # Or return a custom 404 response directly
+                return Response(
+                 {"message": f"Asignatura '{nombre}' no encontrada para este usuario."},
+                 status=status.HTTP_404_NOT_FOUND
+                )
+        try:        
             data = request.data
-
+            asignatura_data = data.get('asignatura')
+            if asignatura_data is None:
+                raise ValidationError({"asignatura": ["Este campo es requerido."]})
             # Actualizar datos básicos de la asignatura
-            asignatura_serializer = AsignaturaSerializer(asignatura, data=data['asignatura'], partial=True)
-            if asignatura_serializer.is_valid():
-                asignatura_serializer.save()
+            asignatura_serializer = AsignaturaSerializer(asignatura, data=asignatura_data, partial=True)
+            asignatura_serializer.is_valid(raise_exception=True) # Raise ValidationError if invalid
+            asignatura_serializer.save()
 
             # Actualizar horarios (eliminar y recrear)
             if 'horarios' in data:
-                Horario.objects.filter(asignatura=asignatura).delete()
-                for horario_data in data['horarios']:
-                    Horario.objects.create(asignatura=asignatura, **horario_data)
+                    # Check if data['horarios'] is a list
+                    if not isinstance(data['horarios'], list):
+                         raise ValidationError({"horarios": ["Se esperaba una lista de objetos."]})
+                    Horario.objects.filter(asignatura=asignatura).delete()
+                    for horario_data in data['horarios']:
+                         # Add validation for horario_data if necessary
+                        Horario.objects.create(asignatura=asignatura, **horario_data)
 
             # Actualizar fechas (eliminar y recrear)
             if 'fechas' in data:
-                Fechas.objects.filter(asignatura=asignatura).delete()
-                for fecha_data in data['fechas']:
-                    Fechas.objects.create(asignatura=asignatura, **fecha_data)
+                    if not isinstance(data['fechas'], list):
+                        raise ValidationError({"fechas": ["Se esperaba una lista de objetos."]})
+                    Fechas.objects.filter(asignatura=asignatura).delete()
+                    for fecha_data in data['fechas']:
+                        # Add validation for fecha_data if necessary
+                        Fechas.objects.create(asignatura=asignatura, **fecha_data)
 
             # Actualizar profesores (eliminar y recrear)
             if 'profesores' in data:
-                Profesores.objects.filter(asignatura=asignatura).delete()
-                for profesor_data in data['profesores']:
-                    horario_data = profesor_data.pop('horario', None)
-                    horario = None
-                    if horario_data:
-                        horario = Horario.objects.create(asignatura=asignatura, **horario_data)
-                    Profesores.objects.create(asignatura=asignatura, horario=horario, **profesor_data)
-
+                    if not isinstance(data['profesores'], list):
+                        raise ValidationError({"profesores": ["Se esperaba una lista de objetos."]})
+                    Profesores.objects.filter(asignatura=asignatura).delete()
+                    for profesor_data in data['profesores']:
+                        # Add validation for profesor_data if necessary
+                        horario_data = profesor_data.pop('horario', None)
+                        horario = None
+                        if horario_data:
+                            horario = Horario.objects.create(asignatura=asignatura, **horario_data)
+                        Profesores.objects.create(asignatura=asignatura, horario=horario, **profesor_data)
+                        
             return Response({
                 "message": "Asignatura actualizada con éxito"
             }, status=status.HTTP_200_OK)
-
-        except Exception as e:
+            
+            # Catch specific errors related to data processing/validation
+        except ValidationError as e:
             return Response({
-                "message": f"Error al actualizar la asignatura: {str(e)}"
+                "message": "Error de validación.",
+                "errors": e.detail
             }, status=status.HTTP_400_BAD_REQUEST)
+        except (KeyError, TypeError, ValueError) as e:
+            return Response({
+                "message": "Error en el formato o tipo de los datos proporcionados.",
+                "error_detail": str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e: # Catch *really* unexpected processing errors
+            # Log the full traceback here for debugging
+            import traceback
+            traceback.print_exc()
+            return Response({
+                "message": "Error interno grave durante el procesamiento.",
+                "error_detail": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+        except Exception as e: # Catch truly unexpected errors (e.g., DB connection issues)
+             # Log the error
+            return Response({
+                "message": "Error inesperado en el servidor."
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
 class AsignaturaDeleteView(APIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, nombre):
+        # get_object_or_404 will raise Http404 if not found.
+        # DRF's default exception handler will turn this into a 404 response.
+        asignatura = get_object_or_404(Asignatura, nombre=nombre, user=request.user)
         try:
-            asignatura = get_object_or_404(Asignatura, nombre=nombre)
-            asignatura.delete()  # Esto elimina la asignatura y todo lo relacionado gracias a on_delete=models.CASCADE
+            asignatura.delete() # This operation itself could potentially fail (rarely)
             return Response({
                 "message": "Asignatura eliminada con éxito"
             }, status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception as e: # Catch unexpected errors during the delete operation itself
+            # Log the error for debugging
             return Response({
-                "message": f"Error al eliminar la asignatura: {str(e)}"
-            }, status=status.HTTP_400_BAD_REQUEST)
+                "message": f"Error interno al intentar eliminar la asignatura: {str(e)}"
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
             
 class SendDateRemindersView(APIView):

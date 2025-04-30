@@ -135,8 +135,10 @@ def test_upload_file_unauthenticated(api_client):
 # --- Tests para FileListView ---
 
 def test_list_files_success(authenticated_client, test_user, create_uploaded_file):
+    # Crear archivos para test_user
     create_uploaded_file(filename="file1.pdf")
     create_uploaded_file(filename="file2.pptx")
+
     # Crear archivo para otro usuario (no debe aparecer)
     other_user = User.objects.create_user(username='otheruser', password='password123')
     other_file_obj = SimpleUploadedFile("other.pdf", b"other content")
@@ -146,13 +148,25 @@ def test_list_files_success(authenticated_client, test_user, create_uploaded_fil
     response = authenticated_client.get(url)
 
     assert response.status_code == status.HTTP_200_OK
-    # La paginación envuelve los resultados
+    # Verificar el número total de resultados para el usuario
     assert response.data['count'] == 2
-    assert len(response.data['results']) == 2
-    assert 'file1.pdf' in response.data['results'][0]['file_url']
-    assert 'file2.pptx' in response.data['results'][1]['file_url']
-    # Asegurarse de que el archivo del otro usuario no está
-    assert 'other.pdf' not in str(response.data['results'])
+    results = response.data['results']
+    assert len(results) == 2
+
+    # --- Verificaciones independientes del orden ---
+    # 1. Extraer todas las URLs de archivo de la respuesta
+    file_urls = [item['file_url'] for item in results]
+
+    # 2. Comprobar que cada archivo esperado está presente en alguna de las URLs
+    assert any('file1.pdf' in url for url in file_urls), "file1.pdf no encontrado en las URLs"
+    assert any('file2.pptx' in url for url in file_urls), "file2.pptx no encontrado en las URLs"
+
+    # 3. Comprobar que el archivo del otro usuario NO está presente
+    assert not any('other.pdf' in url for url in file_urls), "Archivo de otro usuario encontrado incorrectamente"
+
+    # Opcional: Verificar la estructura de un elemento (si quieres)
+    # assert 'id' in results[0]
+    # assert 'uploaded_at' in results[0]
 
 def test_list_files_empty(authenticated_client):
     url = reverse('api_list')
