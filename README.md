@@ -74,18 +74,39 @@ myproject/
 
 ### API REST
 
-- **Endpoints para archivos**:
-  - `POST /archivos/`: Subir un nuevo archivo PDF.
-  - `GET /archivos/list/`: Listar archivos subidos (paginado).
-  - `DELETE /archivos/delete/<id>/`: Eliminar un archivo.
-  - `POST /archivos/<id>/extract/`: Extraer texto de un PDF.
-  - `GET /archivos/<id>/text/`: Obtener el texto extraído de un PDF.
-  - `GET /archivos/extracted/`: Obtener datos estructurados de todos los archivos.
-  - `PUT /archivos/<id>/update-extracted/`: Actualizar datos estructurados de un archivo.
+La API REST proporciona los siguientes endpoints principales:
 
-- **Endpoints para autenticación**:
-  - `POST /authentication/`: Registrar un nuevo usuario.
-  - Rutas de django-allauth para autenticación social.
+**Autenticación y Gestión de Usuarios:**
+
+*   `POST /api/register/`: Registrar un nuevo usuario.
+*   `POST /api/token/`: Obtener token JWT (login con username/password).
+*   `/api/auth/`: Endpoints proporcionados por `dj_rest_auth` para login, logout, gestión de usuario, cambio/reseteo de contraseña.
+*   `/accounts/`: Endpoints proporcionados por `django-allauth` para flujos de autenticación social (ej. `GET /accounts/google/login/`).
+
+**Gestión de Archivos:**
+
+*   `POST /api/upload/`: Subir un nuevo archivo (PDF o PPTX).
+*   `GET /api/upload/list/`: Listar archivos subidos por el usuario (paginado).
+*   `DELETE /api/upload/delete/<int:file_id>/`: Eliminar un archivo específico.
+*   `POST /api/upload/<int:file_id>/extract/`: Extraer texto del archivo especificado.
+*   `GET /api/upload/<int:file_id>/text/`: Obtener el texto previamente extraído de un archivo.
+*   `GET /api/upload/extracted/`: Obtener los datos estructurados (JSON) de todos los archivos del usuario.
+*   `PUT /api/upload/<int:file_id>/update-extracted/`: Actualizar los datos estructurados (JSON) de un archivo específico.
+
+**Procesamiento IA y Gestión Académica:**
+
+*   `POST /api/ai/<int:file_id>/dates/`: Iniciar la extracción de datos estructurados (asignatura, fechas, horarios, profesores) usando IA (Ollama).
+*   `POST /api/ai/<int:file_id>/process-extracted-data/`: Procesar los datos extraídos por IA y guardarlos en la base de datos.
+*   `GET /api/ai/calendar/data/`: Obtener todos los datos académicos del usuario para el calendario.
+*   `PUT /api/ai/asignaturas/<str:nombre>/`: Actualizar los detalles de una asignatura y sus datos relacionados (fechas, horarios, profesores).
+*   `DELETE /api/ai/asignaturas/<str:nombre>/delete/`: Eliminar una asignatura y todos sus datos relacionados.
+*   `POST /api/ai/send-reminders/`: Disparar manualmente el envío de recordatorios por correo.
+*   `POST /api/ai/export-google-calendar/`: Exportar fechas importantes a Google Calendar.
+
+**Administración:**
+
+*   `GET /admin/`: Interfaz de administración de Django (requiere superusuario).
+
 
 ## Tecnologías Utilizadas
 
