@@ -17,3 +17,4 @@ pytest-django
 coverage
 pytest-cov
 pytest-mock
+google-genai

@@ -19,6 +19,9 @@ from googleapiclient.errors import HttpError
 import os
 from rest_framework.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
+from google import genai
+from google.genai import types
+
 
 
 # URL del servidor de Ollama
@@ -39,14 +42,48 @@ class ExtractDatesView(APIView):
         except Exception as e:
             return Response({"message": f"Error al leer el archivo de texto: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        # Obtener ambos modelos desde el request, con valores por defecto
+        # Obtener parámetros desde el request
+        model_mode = request.data.get("model_mode", "local")
         summary_model = request.data.get("summary_model", "gemma2:9b")
-        json_model = request.data.get("json_model", "llama3.1:8b")
-        
-        # Validar los modelos
-        valid_models = ["gemma2:9b", "llama3.1:8b"]
-        if summary_model not in valid_models or json_model not in valid_models:
-            return Response({"message": "Uno o ambos modelos no son válidos"}, status=status.HTTP_400_BAD_REQUEST)
+        json_model = request.data.get("json_model", "gemma2:9b")
+
+        # Validar los modelos si el modo es local
+        if model_mode == "local":
+            valid_models = ["gemma2:9b", "llama3.1:8b"]
+            if summary_model not in valid_models or json_model not in valid_models:
+                return Response({"message": "Uno o ambos modelos no son válidos"}, status=status.HTTP_400_BAD_REQUEST)
+
+        def generate_gemini_response(text):
+            try:
+                client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+                model = "gemini-2.5-flash-preview-04-17"
+                contents = [
+                    types.Content(
+                        role="user",
+                        parts=[types.Part.from_text(text=text)],
+                    ),
+                ]
+                generate_content_config = types.GenerateContentConfig(
+                    response_mime_type="application/json",  # Cambiado a JSON para forzar formato correcto
+                    system_instruction=[
+                        types.Part.from_text(text=f"""Actúa como un experto en extracción y estructuración de información a partir de documentos académicos (guías docentes, syllabus, etc.). Tu tarea es analizar el texto proporcionado y generar un único objeto JSON que contenga la información relevante sobre la asignatura, siguiendo estrictamente la estructura especificada.
+                                             **Estructura JSON Requerida:**
+                                             {get_json_structure()}
+                                             Asegúrate de que el JSON sea sintácticamente correcto, sin comas adicionales ni errores de formato."""),
+                    ],
+                )
+
+                response_text = ""
+                for chunk in client.models.generate_content_stream(
+                    model=model,
+                    contents=contents,
+                    config=generate_content_config,
+                ):
+                    response_text += chunk.text
+
+                return response_text
+            except Exception as e:
+                return f"Error al conectar con Gemini API: {str(e)}"
 
         def get_json_structure():
             try:
@@ -59,86 +96,108 @@ class ExtractDatesView(APIView):
         def generate_response_summary(text):
             prompt = f"""Eres un asistente de IA avanzado diseñado para resumir textos relacionados con asignaturas universitarias, extrayendo solo la información relevante. A continuación, te proporcionaré un texto que describe una asignatura. Tu tarea es:
 
-1. Analizar el texto y resumirlo, incluyendo únicamente los siguientes tipos de información:
-   - Nombre de la asignatura.
-   - Nombre del grado al que pertenece.
-   - Nombre del departamento responsable.
-   - Nombre de la universidad.
-   - Condiciones para aprobar (si se mencionan).
-   - Fechas relevantes (como exámenes, inicio de prácticas, etc.) con su propósito o descripción.
-   - Detalles de horarios (grupos, tipo de sesión, horas y aulas, si se especifican).
-   - Nombre, despacho, enlace y horario de tutorías de los profesores (si se mencionan).
+            1. Analizar el texto y resumirlo, incluyendo únicamente los siguientes tipos de información:
+               - Nombre de la asignatura.
+               - Nombre del grado al que pertenece.
+               - Nombre del departamento responsable.
+               - Nombre de la universidad.
+               - Condiciones para aprobar (si se mencionan).
+               - Fechas relevantes (como exámenes, inicio de prácticas, etc.) con su propósito o descripción.
+               - Detalles de horarios (grupos, tipo de sesión, horas y aulas, si se especifican).
+               - Nombre, despacho, enlace y horario de tutorías de los profesores (si se mencionan).
 
-2. Descartar cualquier información no relevante para estos campos.
+            2. Descartar cualquier información no relevante para estos campos.
 
-3. Proporciona el resumen como un texto plano, incluyendo solo los datos extraídos y omitiendo explicaciones adicionales.
+            3. Proporciona el resumen como un texto plano, incluyendo solo los datos extraídos y omitiendo explicaciones adicionales.
 
-Ahora, por favor, procesa el siguiente texto:
+            Ahora, por favor, procesa el siguiente texto:
 
-[{text}]"""
+            [{text}]"""
 
             payload = {
-                "model": summary_model,  # Usar el modelo para el resumen
+                "model": summary_model,
                 "prompt": prompt,
                 "stream": False
             }
 
             try:
                 response = requests.post(OLLAMA_API_URL, json=payload)
-                if response.status_code == 200:
-                    resultado = response.json()
-                    return resultado["response"]
-                else:
-                    return f"Error: {response.status_code} - {response.text}"
+                response.raise_for_status()
+                return response.json()["response"]
             except Exception as e:
                 return f"Error al conectar con Ollama: {str(e)}"
+
+        def clean_json_string(json_string):
+            # Eliminar bloques de código Markdown
+            json_string = re.sub(r'^```json\s*|\s*```$', '', json_string, flags=re.MULTILINE).strip()
+            # Eliminar comas finales antes de corchetes o llaves
+            json_string = re.sub(r',\s*([\]\}])', r'\1', json_string)
+            # Reemplazar comillas simples por dobles (si el modelo las usa)
+            json_string = json_string.replace("'", '"')
+            # Asegurar que el string sea UTF-8 válido
+            json_string = json_string.encode('utf-8').decode('utf-8')
+            # Asegurar que el string termine correctamente
+            json_string = json_string.strip()
+            return json_string
 
         def generate_response_json(summary):
             prompt = f"""Eres un asistente de IA avanzado diseñado para transformar un texto resumido sobre una asignatura universitaria en un JSON estructurado. A continuación, te proporcionaré un texto resumido que contiene solo la información relevante para rellenar una estructura JSON. Tu tarea es:
 
-1. Convertir el texto resumido en un JSON con la siguiente estructura:
-   [{get_json_structure()}]
+            1. Convertir el texto resumido en un JSON con la siguiente estructura:
+               {get_json_structure()}
 
-2. Si alguna información no está presente en el texto resumido, deja el campo correspondiente con la información más probable, pero mantén la estructura JSON intacta.
-3. Asegúrate de que las fechas estén en formato "YYYY-MM-DD" si se proporcionan, y convierte cualquier formato de texto (como "18 de marzo de 2023") a este estándar.
-4. Proporciona solo el JSON como salida, sin explicaciones adicionales.
+            2. Si alguna información no está presente en el texto resumido, deja el campo correspondiente con la información más probable, pero mantén la estructura JSON intacta.
+            3. Asegúrate de que las fechas estén en formato "YYYY-MM-DD" si se proporcionan, y convierte cualquier formato de texto (como "18 de marzo de 2023") a este estándar.
+            4. Proporciona solo el JSON como salida, sin explicaciones adicionales, y asegúrate de que sea sintácticamente correcto, sin comas adicionales ni errores de formato.
 
-Ahora, por favor, procesa el siguiente texto resumido:
+            Ahora, por favor, procesa el siguiente texto resumido:
 
-[{summary}]"""
+            [{summary}]"""
 
             payload = {
-                "model": json_model,  # Usar el modelo para el JSON
+                "model": json_model,
                 "prompt": prompt,
                 "stream": False
             }
 
             try:
                 response = requests.post(OLLAMA_API_URL, json=payload)
-                if response.status_code == 200:
-                    resultado = response.json()
-                    raw_response = resultado["response"]
-                    cleaned_response = re.sub(r'^```json\s*|\s*```$', '', raw_response, flags=re.MULTILINE).strip()
-                    return cleaned_response
-                else:
-                    return f"Error: {response.status_code} - {response.text}"
+                response.raise_for_status()
+                raw_response = response.json()["response"]
+                cleaned_response = clean_json_string(raw_response)
+                # Validar el JSON antes de devolverlo
+                json.loads(cleaned_response)  # Esto lanzará un error si el JSON es inválido
+                return cleaned_response
+            except json.JSONDecodeError as e:
+                return f"Error: JSON inválido generado: {cleaned_response}"
             except Exception as e:
                 return f"Error al conectar con Ollama: {str(e)}"
 
-        # Procesar el texto
-        summary = generate_response_summary(text_content)
-        if summary.startswith("Error"):
-            return Response({"error": summary}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        json_response = generate_response_json(summary)
-        try:
-            json_data = json.loads(json_response)
+        # Procesar según el modo
+        if model_mode == "api":
+            json_response = generate_gemini_response(text_content)
+            json_data = json.loads(clean_json_string(json_response))
             file_obj.extracted_data = json_data
             file_obj.save()
             return Response(json_data, status=status.HTTP_200_OK)
-        except json.JSONDecodeError as e:
-            return Response({"error": f"Formato JSON inválido: {json_response}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+        else:
+            summary = generate_response_summary(text_content)
+            if summary.startswith("Error"):
+                return Response({"error": summary}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            json_response = generate_response_json(summary)
+            if json_response.startswith("Error"):
+                return Response({"error": json_response}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            try:
+                json_data = json.loads(json_response)
+                file_obj.extracted_data = json_data
+                file_obj.save()
+                return Response(json_data, status=status.HTTP_200_OK)
+            except json.JSONDecodeError as e:
+                return Response({"error": f"Formato JSON inválido: {json_response}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class ProcessExtractedDataView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -148,18 +207,27 @@ class ProcessExtractedDataView(APIView):
 
         # Verificar si hay extracted_data
         extracted_data = file_obj.extracted_data
-        if not extracted_data or not isinstance(extracted_data, list):
+        if not extracted_data:
             return Response({
                 "message": "No hay datos extraídos válidos para procesar",
                 "extracted_data": extracted_data  # Para depuración
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Procesar cada elemento en extracted_data
-        for data in extracted_data:
-            if not isinstance(data, dict):
-                continue  # Saltar si no es un diccionario
+        # Normalizar extracted_data como una lista
+        if isinstance(extracted_data, dict):
+            data_list = [extracted_data]  # Convertir objeto en lista de un solo elemento
+        elif isinstance(extracted_data, list):
+            data_list = extracted_data
+        else:
+            return Response({
+                "message": "Formato de datos extraídos no válido",
+                "extracted_data": extracted_data
+            }, status=status.HTTP_400_BAD_REQUEST)
 
-            # Crear o actualizar la asignatura
+        # Procesar cada elemento en data_list
+        for data in data_list:
+            if not isinstance(data, dict):
+                continue 
             asignatura_data = data.get("asignatura") or {}
             if not isinstance(asignatura_data, dict):
                 asignatura_data = {}
@@ -170,7 +238,7 @@ class ProcessExtractedDataView(APIView):
                     "departamento": asignatura_data.get("departamento", ""),
                     "universidad": asignatura_data.get("universidad", ""),
                     "condiciones_aprobado": asignatura_data.get("condiciones_aprobado", ""),
-                    "user": request.user 
+                    "user": request.user
                 }
             )
 
@@ -182,7 +250,7 @@ class ProcessExtractedDataView(APIView):
                 Fechas.objects.get_or_create(
                     asignatura=asignatura,
                     titulo=fecha.get("titulo", ""),
-                    fecha=fecha.get("fecha", ""),
+                    fecha=fecha.get("fecha", "")
                 )
 
             # Crear horarios asociados a la asignatura (evitar duplicados)
@@ -197,6 +265,7 @@ class ProcessExtractedDataView(APIView):
                     hora=horario.get("hora", ""),
                     aula=horario.get("aula", ""),
                     dia=horario.get("dia", "Lunes")
+                    
                 )
 
             # Crear profesores asociados a la asignatura (evitar duplicados)
@@ -204,18 +273,18 @@ class ProcessExtractedDataView(APIView):
             for profesor in profesores_data:
                 if not isinstance(profesor, dict):
                     continue
-                # Si hay un horario asociado al profesor, lo creamos o buscamos
+                # Manejar el campo horario del profesor
                 horario_obj = None
                 horario_data = profesor.get("horario")
-                if isinstance(horario_data, dict):
+                if isinstance(horario_data, dict):  # Verificar si es un diccionario válido
                     horario_obj, _ = Horario.objects.get_or_create(
                         asignatura=asignatura,
                         grupo=horario_data.get("grupo", ""),
                         tipo=horario_data.get("tipo", "teoria"),
                         hora=horario_data.get("hora", ""),
                         aula=horario_data.get("aula", ""),
-                        dia=horario_data.get("dia", "Lunes")
                     )
+                # Si horario es null o una cadena vacía, horario_obj sigue siendo None
 
                 # Crear o obtener el profesor
                 profesor_obj, created = Profesores.objects.get_or_create(
@@ -233,8 +302,10 @@ class ProcessExtractedDataView(APIView):
                         profesor_obj.despacho = profesor.get("despacho")
                     if profesor.get("enlace") and profesor_obj.enlace != profesor.get("enlace"):
                         profesor_obj.enlace = profesor.get("enlace")
-                    if horario_obj and profesor_obj.horario != horario_obj:
+                    if horario_obj is not None and profesor_obj.horario != horario_obj:
                         profesor_obj.horario = horario_obj
+                    elif horario_data is None and profesor_obj.horario is not None:
+                        profesor_obj.horario = None  # Permitir actualizar a null
                     profesor_obj.save()
 
         # Serializar el archivo actualizado
@@ -613,3 +684,4 @@ class ExportToGoogleCalendarView(APIView):
                 {'error': 'Ocurrió un error inesperado en el servidor.'},
                 status=500
             )
+            

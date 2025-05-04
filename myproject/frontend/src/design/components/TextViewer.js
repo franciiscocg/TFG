@@ -5,7 +5,7 @@ import styled, { keyframes } from 'styled-components';
 import theme from '../theme';
 import { LoadingScreen } from '../components/UXComponents';
 
-// --- Estilos (Sin cambios respecto a la versión anterior) ---
+// --- Estilos ---
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -22,7 +22,7 @@ const TextViewerContainer = styled.div`
   background-color: ${theme.colors.background.default};
   color: ${theme.colors.text.primary};
   box-sizing: border-box;
-  padding-top: 6rem; /* Espacio para navbar fijo */
+  padding-top: 6rem;
   padding-bottom: 2rem;
   animation: ${fadeIn} 0.5s ease-out;
 `;
@@ -67,12 +67,12 @@ const HeaderTitle = styled.h1`
 `;
 
 const HeaderActions = styled.div`
- display: flex;
- gap: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
 
- @media (max-width: ${theme.breakpoints.md}) {
+  @media (max-width: ${theme.breakpoints.md}) {
     justify-content: center;
- }
+  }
 `;
 
 // Botón de Acción Genérico
@@ -102,14 +102,45 @@ const ActionButton = styled.button`
     box-shadow: ${theme.shadows.sm};
   }
   &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   i {
     font-size: 1rem;
+  }
+`;
+
+// Botón de Alternancia
+const ToggleButton = styled.button`
+  padding: 0.75rem 1.25rem;
+  font-size: ${theme.typography.fontSize.base};
+  font-weight: ${theme.typography.fontWeight.semibold};
+  background: ${theme.colors.primary.main};
+  border: none;
+  border-radius: ${theme.borderRadius.md};
+  color: ${theme.colors.primary.contrast};
+  cursor: pointer;
+  transition: ${theme.transitions.default};
+  box-shadow: ${theme.shadows.sm};
+  align-self: center;
+
+  &:hover {
+    background: ${theme.colors.primary.light};
+    transform: translateY(-2px);
+    box-shadow: ${theme.shadows.md};
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: ${theme.shadows.sm};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    text-align: center;
   }
 `;
 
@@ -154,19 +185,18 @@ const TextContent = styled.div`
 // Selectores de Modelo
 const ModelSelectors = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   padding: 1rem;
   background-color: ${theme.colors.background.alt};
   border-radius: ${theme.borderRadius.md};
-  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-      flex-direction: column;
-      gap: 1rem;
-      align-items: stretch;
+    flex-direction: column;
+    align-items: stretch;
   }
 `;
 
@@ -192,18 +222,20 @@ const ModelSelector = styled.div`
     min-width: 200px;
     cursor: pointer;
 
-     &:focus {
-        outline: none;
-        border-color: ${theme.colors.primary.main};
-        box-shadow: 0 0 0 2px ${theme.colors.primary.main}30;
-     }
+    &:focus {
+      outline: none;
+      border-color: ${theme.colors.primary.main};
+      box-shadow: 0 0 0 2px ${theme.colors.primary.main}30;
+    }
   }
-   @media (max-width: ${theme.breakpoints.sm}) {
-       align-items: stretch;
-       select {
-           min-width: unset;
-       }
-   }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    align-items: stretch;
+    select {
+      min-width: unset;
+      width: 100%;
+    }
+  }
 `;
 
 // Mensaje de Feedback
@@ -234,21 +266,22 @@ const Message = styled.p`
   }
 `;
 
-
-// --- Componente React Modificado ---
+// --- Componente React ---
 function TextViewer() {
   const { fileId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
-  // Estados: Eliminado fileInfo
+  // Estados
   const [text, setText] = useState('');
   const [extractedData, setExtractedData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [summaryModel, setSummaryModel] = useState('gemma2:9b');
   const [jsonModel, setJsonModel] = useState('gemma2:9b');
+  const [modelMode, setModelMode] = useState('local'); // 'local' o 'api'
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+
   // Efecto para cargar datos al montar
   useEffect(() => {
     if (!isAuthenticated) {
@@ -263,24 +296,20 @@ function TextViewer() {
         const token = localStorage.getItem('accessToken');
         if (!token) throw new Error("No autenticado.");
 
-        // --- ÚNICA LLAMADA: Obtener texto Y datos extraídos (si existen) ---
-        // Usamos el endpoint del "Functional" que parece devolver ambos
-        const textResponse = await fetch(`${backendUrl}/api/upload/${fileId}/text/`, { // Endpoint del Functional
+        const textResponse = await fetch(`${backendUrl}/api/upload/${fileId}/text/`, {
           method: 'GET',
           headers: { 'Authorization': `Bearer ${token}` },
         });
 
         if (!textResponse.ok) {
-            const errData = await textResponse.json().catch(()=>({}));
-            // Intenta obtener un mensaje de error útil de la respuesta
-            const detailError = errData.detail || errData.message || JSON.stringify(errData);
-            throw new Error(`No se pudo obtener el texto del archivo: ${detailError || textResponse.statusText}`);
+          const errData = await textResponse.json().catch(() => ({}));
+          const detailError = errData.detail || errData.message || JSON.stringify(errData);
+          throw new Error(`No se pudo obtener el texto del archivo: ${detailError || textResponse.statusText}`);
         }
 
         const textData = await textResponse.json();
-        setText(textData.text || ''); // Establece el texto
-        setExtractedData(textData.extracted_data || {}); // Establece datos extraídos (vacío si no hay)
-
+        setText(textData.text || '');
+        setExtractedData(textData.extracted_data || {});
       } catch (err) {
         setError(`Error al cargar datos: ${err.message}`);
         console.error("Error fetching file data:", err);
@@ -292,14 +321,29 @@ function TextViewer() {
     fetchFileData();
   }, [fileId, isAuthenticated, navigate]);
 
-  // Navegar a la pantalla de fechas (si ya existen)
+  // Manejar alternancia entre local y API
+  const handleToggleModelMode = () => {
+    setModelMode(prev => (prev === 'local' ? 'api' : 'local'));
+    // Reiniciar modelos al cambiar al modo local
+    if (modelMode === 'api') {
+      setSummaryModel('gemma2:9b');
+      setJsonModel('gemma2:9b');
+    }
+  };
+
+  // Navegar a la pantalla de fechas
   const handleViewDates = () => {
     navigate(`/dates/${fileId}`, { state: { datesData: extractedData } });
   };
 
-  // Navegar a la pantalla de carga para extraer fechas
-  const handleExtractDates = () => {
-    navigate(`/loading/${fileId}`, { state: { summaryModel, jsonModel } });
+  // Manejar extracción de fechas
+  const handleExtractDates = async () => {
+    const payload = {
+      model_mode: modelMode,
+      summary_model: modelMode === 'api' ? 'gemini-2.5-flash' : summaryModel,
+      json_model: modelMode === 'api' ? 'gemini-2.5-flash' : jsonModel,
+    };
+    navigate(`/loading/${fileId}`, { state: payload });
   };
 
   // Volver a la lista de archivos
@@ -312,75 +356,80 @@ function TextViewer() {
     return <LoadingScreen isLoading={true} message="Cargando texto del archivo..." />;
   }
 
-  // Determina si hay datos extraídos para mostrar el botón correcto
   const hasExtractedData = extractedData && Object.keys(extractedData).length > 0;
 
   return (
     <TextViewerContainer>
       <TextViewerHeader>
-        {/* Título genérico ya que no tenemos el nombre del archivo */}
         <HeaderTitle>Texto del Archivo</HeaderTitle>
         <HeaderActions>
           <ActionButton onClick={handleBack}>
             <i className="fas fa-arrow-left"></i>
             Volver
           </ActionButton>
-          {/* Botón condicional: Ver Fechas o Extraer Fechas */}
           {hasExtractedData ? (
-             <ActionButton secondary onClick={handleViewDates}>
-               <i className="fas fa-calendar-check"></i>
-               Ver Fechas
-             </ActionButton>
+            <ActionButton secondary onClick={handleViewDates}>
+              <i className="fas fa-calendar-check"></i>
+              Ver Fechas
+            </ActionButton>
           ) : (
-             <ActionButton secondary onClick={handleExtractDates}>
-               <i className="fas fa-cogs"></i>
-               Extraer Fechas
-             </ActionButton>
+            <ActionButton secondary onClick={handleExtractDates}>
+              <i className="fas fa-cogs"></i>
+              Extraer Fechas
+            </ActionButton>
           )}
         </HeaderActions>
       </TextViewerHeader>
 
       <TextViewerBody>
-        {/* Muestra error si existe */}
         {error && <Message data-type="error">{error}</Message>}
 
-        {/* Muestra el texto si no hay error */}
         {!error && (
           <TextContent>
             {text || 'No hay texto disponible para mostrar.'}
           </TextContent>
         )}
 
-        {/* Selectores de Modelo (solo si no hay error y hay texto para procesar) */}
-        {/* Se muestran incluso si ya hay datos, por si se quiere re-extraer con otros modelos? Ocultar si hasExtractedData es true? */}
-        {/* Decisión: Mostrar siempre si hay texto, ya que la extracción podría querer repetirse */}
         {!error && text && (
           <ModelSelectors>
-            <ModelSelector>
-              <label htmlFor="summary-model-select">Modelo para resumen:</label>
-              <select
-                id="summary-model-select"
-                value={summaryModel}
-                onChange={(e) => setSummaryModel(e.target.value)}
-              >
-                <option value="gemma2:9b">Gemma2 9B</option>
-                <option value="llama3.1:8b">Llama3.1 8B</option>
-              </select>
-            </ModelSelector>
-            <ModelSelector>
-              <label htmlFor="json-model-select">Modelo para extraer JSON:</label>
-              <select
-                id="json-model-select"
-                value={jsonModel}
-                onChange={(e) => setJsonModel(e.target.value)}
-              >
-                <option value="gemma2:9b">Gemma2 9B</option>
-                <option value="llama3.1:8b">Llama3.1 8B</option>
-              </select>
-            </ModelSelector>
+            <ToggleButton onClick={handleToggleModelMode}>
+              {modelMode === 'local' ? 'Usar API' : 'Usar Modelos Locales'}
+            </ToggleButton>
+            {modelMode === 'local' ? (
+              <>
+                <ModelSelector>
+                  <label htmlFor="summary-model-select">Modelo para resumen:</label>
+                  <select
+                    id="summary-model-select"
+                    value={summaryModel}
+                    onChange={(e) => setSummaryModel(e.target.value)}
+                  >
+                    <option value="gemma2:9b">Gemma2 9B</option>
+                    <option value="llama3.1:8b">Llama3.1 8B</option>
+                  </select>
+                </ModelSelector>
+                <ModelSelector>
+                  <label htmlFor="json-model-select">Modelo para extraer JSON:</label>
+                  <select
+                    id="json-model-select"
+                    value={jsonModel}
+                    onChange={(e) => setJsonModel(e.target.value)}
+                  >
+                    <option value="gemma2:9b">Gemma2 9B</option>
+                    <option value="llama3.1:8b">Llama3.1 8B</option>
+                  </select>
+                </ModelSelector>
+              </>
+            ) : (
+              <ModelSelector>
+                <label htmlFor="api-model-select">Modelo API:</label>
+                <select id="api-model-select" value="gemini-2.5-flash" disabled>
+                  <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                </select>
+              </ModelSelector>
+            )}
           </ModelSelectors>
         )}
-
       </TextViewerBody>
     </TextViewerContainer>
   );

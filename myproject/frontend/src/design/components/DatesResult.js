@@ -364,7 +364,7 @@ function DatesResult() {
           }
 
           const result = await response.json();
-          const extractedObj = result.extracted_data?.[0] || null;
+          const extractedObj = result.extracted_data || null;
           setRawExtractedData(extractedObj); // Guarda el objeto JSON crudo
 
           if (extractedObj && Array.isArray(extractedObj.fechas)) {
