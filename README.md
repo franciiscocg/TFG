@@ -155,12 +155,12 @@ La API REST proporciona los siguientes endpoints principales:
       # Google OAuth 2
       SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 
       SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 
-
-      #Django Core
-      DJANGO_SECRET_KEY='' # ¡Genera una nueva y segura para producción!
+      
+      # Django Core
+      DJANGO_SECRET_KEY='' 
       DJANGO_DEBUG=True
       DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
-
+      
       # Base de datos (Ejemplo para SQLite, ajusta si usas otra)
       DJANGO_DB_ENGINE=django.db.backends.sqlite3
       DJANGO_DB_NAME=db.sqlite3
@@ -168,21 +168,25 @@ La API REST proporciona los siguientes endpoints principales:
       # DJANGO_DB_PASSWORD=tu_password_db
       # DJANGO_DB_HOST=localhost
       # DJANGO_DB_PORT=5432 # Para PostgreSQL
-
+      
       # CORS
       DJANGO_CORS_ALLOWED_ORIGINS=http://localhost:3000
-
+      
       # Email (MailerSend)
-      MAILERSEND_API_TOKEN=''
-      MAILERSEND_SENDER_DOMAIN=''
+      MAILERSEND_API_TOKEN='' # ¡Tu API Token real!
+      MAILERSEND_SENDER_DOMAIN='' # Tu dominio de MailerSend
       DJANGO_DEFAULT_FROM_EMAIL=''
       DJANGO_SERVER_EMAIL=''
-
+      
       # allauth / dj-rest-auth
       DJANGO_LOGIN_REDIRECT_URL=/ 
-
-      # Frontend URLs
+      
+      #URLs
       DJANGO_FRONTEND_BASE_URL=http://localhost:3000
+      REACT_APP_BACKEND_URL=http://localhost:8000
+      OLLAMA_API_URL=http://localhost:11434
+      
+      GEMINI_API_KEY=
      ```
 
 5. Aplicar migraciones:
