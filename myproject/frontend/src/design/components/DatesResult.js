@@ -466,15 +466,6 @@ function DatesResult() {
                       <h3>No se encontraron fechas</h3>
                       <p>No se pudieron extraer fechas o el formato es inesperado.</p>
                       {/* Botón Ver JSON aquí también por si hay raw data pero no fechas */}
-                       {rawExtractedData && (
-                           <ActionButton
-                               secondary
-                               onClick={() => setShowJsonModal(true)}
-                               style={{marginTop: '1rem', background: theme.colors.secondary.main, color: theme.colors.secondary.contrast }}
-                           >
-                               <i className="fas fa-code"></i> Ver JSON Crudo
-                           </ActionButton>
-                       )}
                    </NoResults>
               )}
           </DatesBody>
