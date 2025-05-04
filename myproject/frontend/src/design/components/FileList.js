@@ -747,7 +747,7 @@ function FileList() {
             <ModalDetails>
               <p>¿Estás seguro de que quieres eliminar el archivo <strong>{getFilenameFromUrl(fileToDelete?.file)}</strong>?</p>
               <p>Esta acción no se puede deshacer.</p>
-            </ModalDetails>A
+            </ModalDetails>
             <ModalButtons>
               <CancelButton onClick={() => setShowModal(false)} disabled={loading}>Cancelar</CancelButton>
               <ConfirmButton onClick={confirmDelete} disabled={loading}>
