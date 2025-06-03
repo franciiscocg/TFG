@@ -12,7 +12,8 @@ Grado en Ingeniería del Software
 http://www.lsi.us.es/docencia/pagina_asignatura.php?id=112
 Departamento de Lenguajes y Sistemas Informáticos
 Universidad de Sevilla
-1Datos de la asignatura
+1
+Datos de la asignatura
 • Optativa 4º de Ingeniería del
 Datos de la
 asignatura
@@ -27,7 +28,8 @@ Dudas
 Organización semanal
 – 2 horas de teoría
 – 2 horas de práctica/laboratorio
-2Horarios y grupos
+2
+Horarios y grupos
 • Las prácticas comienzan:
 Datos de la
 asignatura
@@ -45,7 +47,8 @@ Grupo 1 Miércoles 10:40-12:30 Martes 12:40-14:30
 (A2.14) (F1.32, F1.33-A2.14)
 Grupo 2 Miércoles 17:40-19:30 Martes 15:30-17:20
 (H1.10) (H1.10, F1.30, F1.33)
-3Inscripción
+3
+Inscripción
 • Inscripción en grupo de laboratorio
 Datos de la
 asignatura
@@ -56,7 +59,8 @@ Planificación
 Evaluación
 Objetivos
 Dudas
-4Profesorado
+4
+Profesorado
 Datos de la
 María Teresa Gómez López (F1.43)
 asignatura
@@ -71,7 +75,8 @@ Objetivos
 Octavio Martín (F1.44)
 Dudas
 https://personal.us.es/omartindiaz
-5Contenido
+5
+Contenido
 Datos de la
 • GIS
 asignatura
@@ -90,7 +95,8 @@ Dudas
 • Bases de datos móviles
 • Administración de bases de datos
 • Bases de datos distribuidas
-6Planificación
+6
+Planificación
 Datos de la
 asignatura
 Profesorado
@@ -101,7 +107,8 @@ Objetivos
 Dudas
 Entrega de
 proyectos
-7Evaluación Continua (por curso)
+7
+Evaluación Continua (por curso)
 • Exámenes Test de contenidos (EXA1 y EXA2) 18 de
 marzo y 13 de mayo.
 Datos de la
@@ -123,7 +130,8 @@ Convocatoria.
 hacer media. [0.5*EXA1 + 0.5*EXA2 +TCL>=4] y
 PROY>=4
 • Calificación evaluación continua:
-(0.2*EXA1 + 0.2*EXA2 +TCL)+0.6*PROYEvaluación ordinaria
+(0.2*EXA1 + 0.2*EXA2 +TCL)+0.6*PROY
+Evaluación ordinaria
 • Para los alumnos que no sigan evaluación
 Datos de la continua y todos los alumnos en la Primera,
 asignatura
@@ -145,7 +153,8 @@ Tercera Convocatoria
 para hacer media .
 • Calificación convocatoria 2º y 3ª:
 0.4*EXA+0.6*PROY
-9Objetivos de la asignatura
+9
+Objetivos de la asignatura
 Datos de la
 asignatura
 Profesorado
@@ -155,7 +164,8 @@ Evaluación
 Objetivos
 Dudas
 http://economia.elpais.com/economia/2015/01/15/actualidad/1421334018_476553.html
-10Datos de la
+10
+Datos de la
 asignatura
 Profesorado
 Contenido
@@ -163,7 +173,8 @@ Planificación
 Evaluación
 Objetivos
 Dudas
-11Datos de la
+11
+Datos de la
 asignatura
 Profesorado
 Contenido

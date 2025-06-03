@@ -124,9 +124,9 @@ const ErrorDisplay = styled.div`
   color: ${theme.colors.accent.error};
   margin-bottom: 1.5rem;
   padding: 0.75rem;
-  background-color: rgba(244, 67, 54, 0.1);
+  background-color: rgba(243, 234, 51, 0.18);
   border-radius: ${theme.borderRadius.md};
-  border: 1px solid rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(190, 244, 54, 0.2);
   font-size: ${theme.typography.fontSize.sm};
   text-align: left;
   word-break: break-word;
@@ -251,15 +251,10 @@ function LoadingScreenFunctionalStyled() {
 
   }, [isAuthenticated, navigate, fileId, model_mode, summary_model, json_model]);
 
-  // Función para el botón Cancelar
-  const handleCancel = () => {
-    console.log("Proceso cancelado por el usuario.");
-    navigate('/files');
-  };
 
   // Renderizado condicional
   const showSpinner = !error && progress < 100;
-  const showCancelButton = !error && progress < 100;
+
   const showProgressBar = !error && progress > 0;
 
   return (
@@ -280,15 +275,10 @@ function LoadingScreenFunctionalStyled() {
 
         {error && (
           <ErrorDisplay>
-            <strong>Error:</strong> {error}
+            <strong>Algo ha fallado. Espere un momento, si no vuelva a archivos y repita el proceso</strong>
           </ErrorDisplay>
         )}
 
-        {showCancelButton && (
-          <CancelButton onClick={handleCancel} disabled={status === 'Procesamiento completado.'}>
-            Cancelar
-          </CancelButton>
-        )}
       </LoadingCard>
     </LoadingContainer>
   );
